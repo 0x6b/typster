@@ -1,3 +1,6 @@
+// Shamelessly copied from https://zenn.dev/monaqa/articles/2023-04-19-typst-introduction
+// Thank you!
+
 // --------- ちょっとした設定 ---------
 
 // フォント周り
