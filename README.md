@@ -2,6 +2,15 @@
 
 Naive Rust library for compiling [typst](https://typst.app/) documents.
 
+## Features
+
+- Limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli)
+- Support PDF (default) and PNG output. Output format can be determined by file extension.
+- Following fonts are embedded in the binary, in addition to the typst-cli defaults:
+    - [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)
+    - [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
+    - [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)
+
 ## Usage
 
 ```console
@@ -49,4 +58,8 @@ See [examples/main.rs](examples/main.rs) for an example of how to use the librar
         - [`assets/NotoSerifJP-Medium.otf`](assets/NotoSerifJP-Medium.otf)
         - [`assets/NotoSerifJP-Regular.otf`](assets/NotoSerifJP-Regular.otf)
         - [`assets/NotoSerifJP-SemiBold.otf`](assets/NotoSerifJP-SemiBold.otf)
-
+    - https://github.com/iaolo/iA-Fonts/blob/f32c04c3058a75d7ce28919ce70fe8800817491b/iA%20Writer%20Duo/LICENSE.md
+        - [`assets/iAWriterDuoS-Bold.ttf`](assets/iAWriterDuoS-Bold.ttf)
+        - [`assets/iAWriterDuoS-BoldItalic.ttf`](assets/iAWriterDuoS-BoldItalic.ttf)
+        - [`assets/iAWriterDuoS-Italic.ttf`](assets/iAWriterDuoS-Italic.ttf)
+        - [`assets/iAWriterDuoS-Regular.ttf`](assets/iAWriterDuoS-Regular.ttf)

@@ -111,6 +111,10 @@ impl FontSearcher {
         add!("NotoSerifJP-Medium.otf");
         add!("NotoSerifJP-Regular.otf");
         add!("NotoSerifJP-SemiBold.otf");
+        add!("iAWriterDuoS-Bold.ttf");
+        add!("iAWriterDuoS-BoldItalic.ttf");
+        add!("iAWriterDuoS-Italic.ttf");
+        add!("iAWriterDuoS-Regular.ttf");
     }
 
     /// Search for fonts in the linux system font directories.

@@ -7,16 +7,16 @@ use crate::world::SystemWorld;
 /// Parameters for a compilation.
 #[derive(Debug, Clone)]
 pub struct CompileParams {
-    /// Path to input Typst file
+    /// Path to input Typst file.
     pub input: PathBuf,
 
-    /// Path to output file (PDF, PNG, or SVG)
+    /// Path to output file (PDF, PNG). Output format is determined by extension, and only PNG and PDF are supported.
     pub output: PathBuf,
 
-    /// Adds additional directories to search for fonts
+    /// Adds additional directories to search for fonts.
     pub font_paths: Vec<PathBuf>,
 
-    /// Configures the project root (for absolute paths)
+    /// Configures the project root (for absolute paths).
     pub root: Option<PathBuf>,
 
     /// The PPI (pixels per inch) to use for PNG export. None means 144.
