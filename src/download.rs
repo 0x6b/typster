@@ -115,8 +115,7 @@ impl RemoteReader {
                     self.downloaded_last_few_secs.pop_back();
                 }
 
-                self.downloaded_last_few_secs
-                    .push_front(self.downloaded_this_sec);
+                self.downloaded_last_few_secs.push_front(self.downloaded_this_sec);
                 self.downloaded_this_sec = 0;
 
                 if let Some(n) = self.displayed_charcount {
@@ -140,11 +139,7 @@ impl RemoteReader {
     fn display(&mut self) {
         let sum: usize = self.downloaded_last_few_secs.iter().sum();
         let len = self.downloaded_last_few_secs.len();
-        let speed = if len > 0 {
-            sum / len
-        } else {
-            self.content_len.unwrap_or(0)
-        };
+        let speed = if len > 0 { sum / len } else { self.content_len.unwrap_or(0) };
 
         let total = as_time_unit(self.total_downloaded, false);
         let speed_h = as_time_unit(speed, true);

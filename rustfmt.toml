@@ -1,0 +1,8 @@
+use_small_heuristics = "Max"
+max_width = 100
+chain_width = 70
+struct_lit_width = 50
+use_field_init_shorthand = true
+merge_derives = false
+wrap_comments = true
+comment_width = 100

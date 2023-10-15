@@ -11,10 +11,7 @@ use crate::download::download;
 
 /// Make a package available in the on-disk cache.
 pub fn prepare_package(spec: &PackageSpec) -> PackageResult<PathBuf> {
-    let subdir = format!(
-        "typst/packages/{}/{}/{}",
-        spec.namespace, spec.name, spec.version
-    );
+    let subdir = format!("typst/packages/{}/{}/{}", spec.namespace, spec.name, spec.version);
 
     if let Some(data_dir) = dirs::data_dir() {
         let dir = data_dir.join(&subdir);
@@ -45,10 +42,7 @@ fn download_package(spec: &PackageSpec, package_dir: &Path) -> PackageResult<()>
     // fetching.
     assert_eq!(spec.namespace, "preview");
 
-    let url = format!(
-        "https://packages.typst.org/preview/{}-{}.tar.gz",
-        spec.name, spec.version
-    );
+    let url = format!("https://packages.typst.org/preview/{}-{}.tar.gz", spec.name, spec.version);
 
     let data = match download(&url) {
         Ok(data) => data,
@@ -57,10 +51,8 @@ fn download_package(spec: &PackageSpec, package_dir: &Path) -> PackageResult<()>
     };
 
     let decompressed = flate2::read::GzDecoder::new(data.as_slice());
-    tar::Archive::new(decompressed)
-        .unpack(package_dir)
-        .map_err(|err| {
-            fs::remove_dir_all(package_dir).ok();
-            PackageError::MalformedArchive(Some(eco_format!("{err}")))
-        })
+    tar::Archive::new(decompressed).unpack(package_dir).map_err(|err| {
+        fs::remove_dir_all(package_dir).ok();
+        PackageError::MalformedArchive(Some(eco_format!("{err}")))
+    })
 }

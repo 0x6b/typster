@@ -10,7 +10,8 @@ pub struct CompileParams {
     /// Path to input Typst file.
     pub input: PathBuf,
 
-    /// Path to output file (PDF, PNG). Output format is determined by extension, and only PNG and PDF are supported.
+    /// Path to output file (PDF, PNG). Output format is determined by extension, and only PNG and
+    /// PDF are supported.
     pub output: PathBuf,
 
     /// Adds additional directories to search for fonts.
@@ -58,10 +59,7 @@ fn export_image(
     let string = &params.output.to_str().unwrap_or_default();
     let numbered = string.contains("{n}");
     if !numbered && document.pages.len() > 1 {
-        panic!(
-            "{}",
-            "cannot export multiple images without `{{n}}` in output path"
-        );
+        panic!("{}", "cannot export multiple images without `{{n}}` in output path");
     }
 
     // Find a number width that accommodates all pages. For instance, the

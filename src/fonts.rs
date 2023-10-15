@@ -43,10 +43,7 @@ impl FontSlot {
 impl FontSearcher {
     /// Create a new, empty system searcher.
     pub fn new() -> Self {
-        Self {
-            book: FontBook::new(),
-            fonts: vec![],
-        }
+        Self { book: FontBook::new(), fonts: vec![] }
     }
 
     /// Search everything that is available.

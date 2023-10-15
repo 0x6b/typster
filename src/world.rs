@@ -61,10 +61,7 @@ impl SystemWorld {
 
         // Resolve the system-global root directory.
         let root = {
-            let path = root
-                .as_deref()
-                .or_else(|| input.parent())
-                .unwrap_or(Path::new("."));
+            let path = root.as_deref().or_else(|| input.parent()).unwrap_or(Path::new("."));
             path.canonicalize()?
         };
 
@@ -158,9 +155,7 @@ impl SystemWorld {
             .clone()?;
 
         Ok(RefMut::map(self.slots.borrow_mut(), |paths| {
-            paths
-                .entry(hash)
-                .or_insert_with(|| PathSlot::new(id, system_path))
+            paths.entry(hash).or_insert_with(|| PathSlot::new(id, system_path))
         }))
     }
 }
@@ -283,7 +278,5 @@ fn read(path: &Path) -> FileResult<Vec<u8>> {
 /// Decode UTF-8 with an optional BOM.
 fn decode_utf8(buf: &[u8]) -> FileResult<&str> {
     // Remove UTF-8 BOM.
-    Ok(std::str::from_utf8(
-        buf.strip_prefix(b"\xef\xbb\xbf").unwrap_or(buf),
-    )?)
+    Ok(std::str::from_utf8(buf.strip_prefix(b"\xef\xbb\xbf").unwrap_or(buf))?)
 }
