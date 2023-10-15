@@ -2,6 +2,15 @@
 
 Naive Rust library for compiling [typst](https://typst.app/) documents.
 
+## Features
+
+- Limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli)
+- Support PDF (default) and PNG output. Output format can be determined by file extension.
+- Following fonts are embedded in the binary, in addition to the typst-cli defaults:
+    - [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)
+    - [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
+    - [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)
+
 ## Usage
 
 ```console
