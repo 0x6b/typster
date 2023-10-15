@@ -49,4 +49,8 @@ See [examples/main.rs](examples/main.rs) for an example of how to use the librar
         - [`assets/NotoSerifJP-Medium.otf`](assets/NotoSerifJP-Medium.otf)
         - [`assets/NotoSerifJP-Regular.otf`](assets/NotoSerifJP-Regular.otf)
         - [`assets/NotoSerifJP-SemiBold.otf`](assets/NotoSerifJP-SemiBold.otf)
-
+    - https://github.com/iaolo/iA-Fonts/blob/f32c04c3058a75d7ce28919ce70fe8800817491b/iA%20Writer%20Duo/LICENSE.md
+        - [`assets/iAWriterDuoS-Bold.ttf`](assets/iAWriterDuoS-Bold.ttf)
+        - [`assets/iAWriterDuoS-BoldItalic.ttf`](assets/iAWriterDuoS-BoldItalic.ttf)
+        - [`assets/iAWriterDuoS-Italic.ttf`](assets/iAWriterDuoS-Italic.ttf)
+        - [`assets/iAWriterDuoS-Regular.ttf`](assets/iAWriterDuoS-Regular.ttf)
