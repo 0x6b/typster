@@ -1,0 +1,37 @@
+[package]
+name = "typster"
+description = "Library for compiling typst documents."
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "typster"
+path = "src/lib.rs"
+
+[dependencies]
+typst = { git = "https://github.com/typst/typst", version = "0.8.0" }
+typst-library = { git = "https://github.com/typst/typst", version = "0.8.0" }
+chrono = { version = "0.4.24", default-features = false, features = ["clock", "std"] }
+comemo = "0.3"
+ecow = "0.2"
+dirs = "5"
+flate2 = "1"
+filetime = "0.2"
+inferno = "0.11.15"
+memmap2 = "0.7"
+notify = "6"
+open = "5"
+pathdiff = "0.2"
+same-file = "1"
+serde = "1.0.184"
+serde_json = "1"
+serde_yaml = "0.9"
+siphasher = "0.3"
+tar = "0.4"
+tempfile = "3.7.0"
+ureq = "2"
+rustls = "0.21"
+env_proxy = "0.4"
+walkdir = "2"
+xz2 = { version = "0.1", optional = true }
+zip = { version = "0.6", optional = true }
