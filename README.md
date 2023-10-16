@@ -14,11 +14,17 @@ Naive Rust library for compiling [typst](https://typst.app/) documents.
 
 ## Usage
 
-```console
-$ cargo run --example main --features embed_additional_fonts
+```toml
+# Cargo.toml
+[dependencies]
+typster = { git = "https://github.com/0x6b/typster", version = "0.3.1", features = ["embed_additional_fonts"] }
 ```
 
 See [examples/main.rs](examples/main.rs) for an example of how to use the library.
+
+```console
+$ cargo run --example main --features embed_additional_fonts
+```
 
 ## License
 
