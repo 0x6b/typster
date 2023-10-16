@@ -92,26 +92,36 @@ impl FontSearcher {
         add!("DejaVuSansMono-Bold.ttf");
         add!("DejaVuSansMono-Oblique.ttf");
         add!("DejaVuSansMono-BoldOblique.ttf");
-        add!("NotoSansJP-Black.ttf");
-        add!("NotoSansJP-Bold.ttf");
-        add!("NotoSansJP-ExtraBold.ttf");
-        add!("NotoSansJP-ExtraLight.ttf");
-        add!("NotoSansJP-Light.ttf");
-        add!("NotoSansJP-Medium.ttf");
-        add!("NotoSansJP-Regular.ttf");
-        add!("NotoSansJP-SemiBold.ttf");
-        add!("NotoSansJP-Thin.ttf");
-        add!("NotoSerifJP-Black.otf");
-        add!("NotoSerifJP-Bold.otf");
-        add!("NotoSerifJP-ExtraLight.otf");
-        add!("NotoSerifJP-Light.otf");
-        add!("NotoSerifJP-Medium.otf");
-        add!("NotoSerifJP-Regular.otf");
-        add!("NotoSerifJP-SemiBold.otf");
-        add!("iAWriterDuoS-Bold.ttf");
-        add!("iAWriterDuoS-BoldItalic.ttf");
-        add!("iAWriterDuoS-Italic.ttf");
-        add!("iAWriterDuoS-Regular.ttf");
+
+        #[cfg(feature = "embed_noto_sans_jp")]
+        {
+            add!("NotoSansJP-Black.ttf");
+            add!("NotoSansJP-Bold.ttf");
+            add!("NotoSansJP-ExtraBold.ttf");
+            add!("NotoSansJP-ExtraLight.ttf");
+            add!("NotoSansJP-Light.ttf");
+            add!("NotoSansJP-Medium.ttf");
+            add!("NotoSansJP-Regular.ttf");
+            add!("NotoSansJP-SemiBold.ttf");
+            add!("NotoSansJP-Thin.ttf");
+        }
+        #[cfg(feature = "embed_noto_serif_jp")]
+        {
+            add!("NotoSerifJP-Black.otf");
+            add!("NotoSerifJP-Bold.otf");
+            add!("NotoSerifJP-ExtraLight.otf");
+            add!("NotoSerifJP-Light.otf");
+            add!("NotoSerifJP-Medium.otf");
+            add!("NotoSerifJP-Regular.otf");
+            add!("NotoSerifJP-SemiBold.otf");
+        }
+        #[cfg(feature = "embed_ia_writer_duo")]
+        {
+            add!("iAWriterDuoS-Bold.ttf");
+            add!("iAWriterDuoS-BoldItalic.ttf");
+            add!("iAWriterDuoS-Italic.ttf");
+            add!("iAWriterDuoS-Regular.ttf");
+        }
     }
 
     /// Search for fonts in the linux system font directories.
