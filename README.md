@@ -1,10 +1,11 @@
 # typster
 
-Naive Rust library for compiling [typst](https://typst.app/) documents.
+Naive Rust library for compiling and formatting [typst](https://typst.app/) documents.
 
 ## Features
 
 - Limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli).
+- Wrapper of [typstfmt](https://github.com/astrale-sharp/typstfmt).
 - Support PDF (default) and PNG output. Output format can be determined by file extension.
 - Have features to embed additional fonts in the binary for easier deployment. Note that the typst-cli [defaults](https://github.com/typst/typst/blob/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli/src/fonts.rs#L101-L115) are always embedded.
     - `embed_noto_sans_jp`: [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)
@@ -20,10 +21,20 @@ Naive Rust library for compiling [typst](https://typst.app/) documents.
 typster = { git = "https://github.com/0x6b/typster", version = "0.3.1", features = ["embed_additional_fonts"] }
 ```
 
-See [examples/main.rs](examples/main.rs) for an example of how to use the library.
+### Compiling a document
+
+See [`examples/compile.rs`](examples/compile.rs).
 
 ```console
-$ cargo run --example main --features embed_additional_fonts
+$ cargo run --example compile --features embed_additional_fonts
+```
+
+### Formatting a document
+
+See [`examples/format.rs`](examples/format.rs).
+
+```console
+$ cargo run --example format
 ```
 
 ## License
