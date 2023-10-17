@@ -14,11 +14,6 @@ fn main() {
             .join("sample.typ"),
         config: None,
     };
-    println!(
-        "{}",
-        match typster::format(&params) {
-            Ok(s) => s,
-            Err(why) => why.to_string(),
-        }
-    );
+
+    println!("{}", typster::format(&params).map_or_else(|why| why.to_string(), |s| s));
 }
