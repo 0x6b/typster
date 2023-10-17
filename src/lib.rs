@@ -5,6 +5,6 @@ mod format;
 mod package;
 mod world;
 
-use std::time::Duration;
+pub use compile::{compile, CompileParams};
 
 pub use format::{format, FormatParams};
