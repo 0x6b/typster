@@ -11,7 +11,6 @@ fn main() {
             .join("examples")
             .join("sample.pdf"),
         font_paths: vec![],
-        root: None,
         ppi: None,
     };
     match typster::compile(&params) {
