@@ -17,16 +17,13 @@ pub struct CompileParams {
     /// Adds additional directories to search for fonts.
     pub font_paths: Vec<PathBuf>,
 
-    /// Configures the project root (for absolute paths).
-    pub root: Option<PathBuf>,
-
     /// The PPI (pixels per inch) to use for PNG export. None means 144.
     pub ppi: Option<f32>,
 }
 
 /// Compiles an input file into a supported output format
 pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn std::error::Error>> {
-    let world = SystemWorld::new(&params.input, &params.root, &params.font_paths)?;
+    let world = SystemWorld::new(&params.input, &params.font_paths)?;
     let start = std::time::Instant::now();
 
     // Ensure that the main file is present.

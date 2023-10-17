@@ -48,22 +48,14 @@ pub struct SystemWorld {
 
 impl SystemWorld {
     /// Create a new system world.
-    pub fn new(
-        input: &Path,
-        root: &Option<PathBuf>,
-        font_paths: &[PathBuf],
-    ) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn new(input: &Path, font_paths: &[PathBuf]) -> Result<Self, Box<dyn std::error::Error>> {
         let mut searcher = FontSearcher::new();
         searcher.search(font_paths);
 
         // Resolve the system-global input path.
         let input = input.canonicalize()?;
 
-        // Resolve the system-global root directory.
-        let root = {
-            let path = root.as_deref().or_else(|| input.parent()).unwrap_or(Path::new("."));
-            path.canonicalize()?
-        };
+        let root = input.parent().unwrap_or(Path::new(".")).canonicalize()?;
 
         // Resolve the virtual path of the main file within the project root.
         let main_path = VirtualPath::within_root(&input, &root)
