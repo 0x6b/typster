@@ -1,8 +1,15 @@
 [package]
 name = "typster"
-description = "Library for compiling typst documents."
+description = "Library for compiling and formatting typst documents."
 version = "0.4.0"
 edition = "2021"
+authors = ["kaoru <k@warpnine.io>"]
+license = "MIT"
+homepage = "https://github.com/0x6b/typster"
+repository = "https://github.com/0x6b/typster"
+readme = "README.md"
+categories = ["text-processing"]
+keywords = ["text", "typst", "markup", "formatter"]
 
 [lib]
 name = "typster"
