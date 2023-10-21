@@ -1,6 +1,6 @@
 # typster
 
-Naive Rust library for compiling and formatting [typst](https://typst.app/) documents.
+Naive Rust Library which provides a way to compile and format [Typst](https://typst.app/) documents, and update PDF metadata.
 
 ## Features
 
@@ -12,13 +12,22 @@ Naive Rust library for compiling and formatting [typst](https://typst.app/) docu
     - `embed_noto_serif_jp`: [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
     - `embed_ia_writer_duo`: [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)
     - `embed_additional_fonts`: all of the above
+- Support updating PDF metadata. Currently only following metadata can be updated:
+    - Title
+    - Author
+    - Application, or Content Creator
+    - Subject a.k.a. Description
+    - Copyright status
+    - Copyright notice
+    - Keywords
+    - Language
 
 ## Usage
 
 ```toml
 # Cargo.toml
 [dependencies]
-typster = { git = "https://github.com/0x6b/typster", version = "0.3.1", features = ["embed_additional_fonts"] }
+typster = { git = "https://github.com/0x6b/typster", version = "0.6.0", features = ["embed_additional_fonts"] }
 ```
 
 ### Compiling a document
@@ -35,6 +44,14 @@ See [`examples/format.rs`](examples/format.rs).
 
 ```console
 $ cargo run --example format
+```
+
+### Updating PDF metadata
+
+See [`examples/update_metadata.rs`](examples/update_metadata.rs).
+
+```console
+$ cargo run --example update_metadata
 ```
 
 ## License
