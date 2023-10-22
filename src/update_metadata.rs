@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use lopdf::{Dictionary, Document, Object};
-use xmp_toolkit::{xmp_ns, OpenFileOptions, XmpFile, XmpMeta, XmpValue};
+use xmp_toolkit::{xmp_ns, OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue};
 
 /// PDF, dublin core, and xmp metadata for a document.
 #[derive(Debug, Clone)]
@@ -82,25 +82,10 @@ pub fn update_metadata(
         &XmpValue::from(metadata.copyright_status),
     )?;
     xmp.set_property(xmp_ns::DC, "rights", &XmpValue::from(metadata.copyright_notice))?;
-
-    // WORKAROUND:
-    //
-    // xmp.append_array_item(), or xmp.set_array_item always fails with following error:
-    //     XmpError {
-    //        error_type: BadSerialize, debug_message: "Can't fit into specified packet size"
-    //     }
-    //
-    // So just concatenate keywords and set as a single property.
-    //
-    // metadata.keywords.into_iter().for_each(|keyword| {
-    //     xmp.append_array_item(
-    //         xmp_ns::DC,
-    //         &XmpValue::from("subject").set_is_ordered(true),
-    //         &XmpValue::from(keyword),
-    //     )
-    //     .unwrap();
-    // });
-    xmp.set_property(xmp_ns::DC, "subject", &XmpValue::from(metadata.keywords.join(", ")))?;
+    let mut now = XmpDateTime::current()?;
+    now.time = None;
+    xmp.set_property_date(xmp_ns::XMP, "CreateDate", &XmpValue::from(now.clone()))?;
+    xmp.set_property_date(xmp_ns::XMP, "ModifyDate", &XmpValue::from(now))?;
 
     // check if xmp can be updated
     if !f.can_put_xmp(&xmp) {
@@ -119,6 +104,11 @@ pub fn update_metadata(
     dict.set("Author", Object::string_literal(metadata.author.clone()));
     dict.set("Producer", Object::string_literal(metadata.application.clone()));
     dict.set("Creator", Object::string_literal(metadata.author));
+    let now = chrono::Local::now().format("%Y%m%d").to_string();
+    dict.set("CreationDate", Object::string_literal(now.clone()));
+    dict.set("ModDate", Object::string_literal(now));
+    dict.set("Keywords", Object::string_literal(metadata.keywords.join(", ")));
+
     let t = doc.add_object(Object::Dictionary(dict));
 
     doc.trailer.set("Info", t);

@@ -7,16 +7,20 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
 1. Implements thin wrapper of [typstfmt](https://github.com/astrale-sharp/typstfmt) to format a document.
 2. Implements limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli) to produce a PDF document.
 3. Implements PDF metadata updater with support of following metadata:
-    
-    | Metadata         | In Acrobat Reader         | In Apple Preview             |
-    |------------------|---------------------------|------------------------------|
-    | Title            | Title                     | Title                        |
-    | Author           | Author                    | Author _and_ Content creator |
-    | Application      | Application               | PDF Producer                 |
-    | Subject          | Subject _and_ Description | Subject                      |
-    | Copyright status | Copyright Status          | (None)                       |
-    | Copyright notice | Copyright Notice          | Yes                          |
-    | Keywords         | Keywords                  | (None)                       |
+
+   | Metadata          | In Acrobat Reader         | In Apple Preview             |
+   |-------------------|---------------------------|------------------------------|
+   | Title             | Title                     | Title                        |
+   | Author            | Author                    | Author _and_ Content creator |
+   | Application       | Application               | PDF Producer                 |
+   | Subject           | Subject _and_ Description | Subject                      |
+   | Copyright status  | Copyright Status          | (None)                       |
+   | Copyright notice  | Copyright Notice          | Yes                          |
+   | Keywords          | Keywords                  | Keywords                     |
+   | Creation date     | Created                   | Creation date                |
+   | Modification date | Modified                  | Modification date            |
+
+Note that both creation and modification date are set automatically to the current date _without time information_ (for some privacy reasons, or my liking).
 
 ## Crate features
 
@@ -66,7 +70,7 @@ $ cargo run --example update_metadata
 - Fonts in the [assets/](assets) directory are licensed under its own license.
 
   | Fonts                        | License                                                                                                                 |
-      |------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+            |------------------------------|-------------------------------------------------------------------------------------------------------------------------|
   | `assets/cmunrm.ttf`          | [LICENSE](https://www.fontsquirrel.com/fonts/computer-modern)                                                           |
   | `assets/DejaVuSansMono*.ttf` | [LICENSE](https://github.com/dejavu-fonts/dejavu-fonts/blob/9b5d1b2ffeec20c7b46aa89c0223d783c02762cf/LICENSE)           |
   | `assets/LinLibertine_*.ttf`  | [LICENSE](https://linuxlibertine.sourceforge.net/Libertine-EN.html#licence)                                             |
