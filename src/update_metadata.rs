@@ -103,7 +103,7 @@ pub fn update_metadata(
     dict.set("Subject", Object::string_literal(metadata.subject));
     dict.set("Author", Object::string_literal(metadata.author.clone()));
     dict.set("Producer", Object::string_literal(metadata.application.clone()));
-    dict.set("Creator", Object::string_literal(metadata.author));
+    dict.set("Creator", Object::string_literal(metadata.application));
     let now = chrono::Local::now().format("%Y%m%d").to_string();
     dict.set("CreationDate", Object::string_literal(now.clone()));
     dict.set("ModDate", Object::string_literal(now));
