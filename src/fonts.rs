@@ -6,7 +6,7 @@ use std::{
 };
 
 use memmap2::Mmap;
-use typst::font::{Font, FontBook, FontInfo};
+use typst::font::{Font, FontBook, FontInfo, FontStyle};
 use walkdir::WalkDir;
 
 /// Searches for fonts.
@@ -192,4 +192,55 @@ impl FontSearcher {
             }
         }
     }
+}
+
+/// Information about a font. Simply a wrapper around `typst::font::book::FontInfo`.
+#[derive(Debug)]
+pub struct FontInformation {
+    /// The name of the font.
+    pub name: String,
+    /// The variants of the font.
+    pub variants: Vec<FontVariant>,
+}
+
+/// Information about a font variant. Simply a wrapper around `typst::font::FontVariant`.
+#[derive(Debug)]
+pub struct FontVariant {
+    /// The style of the font (normal / italic / oblique).
+    pub style: FontStyle,
+    /// How heavy the font is (100 - 900).
+    pub weight: String,
+    /// How condensed or expanded the font is (0.5 - 2.0).
+    pub stretch: String,
+}
+
+impl From<&FontInfo> for FontVariant {
+    fn from(info: &FontInfo) -> Self {
+        Self {
+            style: info.variant.style,
+            weight: format!("{:?}", info.variant.weight),
+            stretch: format!("{:?}", info.variant.stretch),
+        }
+    }
+}
+
+pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
+    let mut searcher = FontSearcher::new();
+    searcher.search(font_paths);
+    searcher
+        .book
+        .families()
+        .map(|(name, infos)| {
+            let mut variants = infos.map(FontVariant::from).collect::<Vec<FontVariant>>();
+
+            variants.sort_by(|a, b| {
+                a.style
+                    .cmp(&b.style)
+                    .then(a.weight.cmp(&b.weight))
+                    .then(a.stretch.cmp(&b.stretch))
+            });
+
+            FontInformation { name: name.to_string(), variants }
+        })
+        .collect::<_>()
 }
