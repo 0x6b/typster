@@ -13,17 +13,17 @@ pub struct PdfMetadata {
 
     /// Author of the document.
     /// - Acrobat Reader: Author
-    /// - Apple Preview: Author
+    /// - Apple Preview: Author and Content creator
     pub author: String,
 
     /// Application.
     /// - Acrobat Reader: Application
-    /// - Apple Preview: Content creator
+    /// - Apple Preview: PDF Producer
     pub application: String,
 
     /// Subject of the document.
     /// - Acrobat Reader: Subject _and_ Description
-    /// - Apple Preview: (None)
+    /// - Apple Preview: Subject
     pub subject: String,
 
     /// Copyright status. `true` means `Marked`.
@@ -32,7 +32,7 @@ pub struct PdfMetadata {
     pub copyright_status: bool,
 
     /// Copyright notice.
-    /// - Acrobat Reader: Copyright notice
+    /// - Acrobat Reader: Copyright Notice
     /// - Apple Preview: (None)
     pub copyright_notice: String,
 
@@ -75,7 +75,7 @@ pub fn update_metadata(
     xmp.set_property(xmp_ns::DC, "title", &XmpValue::from(metadata.title.clone()))?;
     xmp.set_property(xmp_ns::DC, "creator", &XmpValue::from(metadata.author.clone()))?;
     xmp.set_property(xmp_ns::XMP, "CreatorTool", &XmpValue::from(metadata.application.clone()))?;
-    xmp.set_property(xmp_ns::DC, "description", &XmpValue::from(metadata.subject))?;
+    xmp.set_property(xmp_ns::DC, "description", &XmpValue::from(metadata.subject.clone()))?;
     xmp.set_property_bool(
         xmp_ns::XMP_RIGHTS,
         "Marked",
@@ -115,8 +115,10 @@ pub fn update_metadata(
 
     let mut dict = Dictionary::new();
     dict.set("Title", Object::string_literal(metadata.title));
-    dict.set("Author", Object::string_literal(metadata.author));
-    dict.set("Creator", Object::string_literal(metadata.application));
+    dict.set("Subject", Object::string_literal(metadata.subject));
+    dict.set("Author", Object::string_literal(metadata.author.clone()));
+    dict.set("Producer", Object::string_literal(metadata.application.clone()));
+    dict.set("Creator", Object::string_literal(metadata.author));
     let t = doc.add_object(Object::Dictionary(dict));
 
     doc.trailer.set("Info", t);
