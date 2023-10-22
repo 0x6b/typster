@@ -39,11 +39,18 @@ xmp_toolkit = "1.5.0"
 
 [features]
 # Enable these features to embed fonts into the binary.
+## assets/cmunrm.ttf
+embed_cmu_roman = []
+## assets/iAWriterDuoS-*
+embed_ia_writer_duo = []
 ## assets/NotoSansJP-*
 embed_noto_sans_jp = []
 ## assets/NotoSerifJP-*
 embed_noto_serif_jp = []
-## assets/iAWriterDuoS-*
-embed_ia_writer_duo = []
 ## all of the above
-embed_additional_fonts = ["embed_noto_sans_jp", "embed_noto_serif_jp", "embed_ia_writer_duo"]
+embed_additional_fonts = [
+    "embed_cmu_roman",
+    "embed_ia_writer_duo",
+    "embed_noto_sans_jp",
+    "embed_noto_serif_jp",
+]
