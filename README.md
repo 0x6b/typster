@@ -8,17 +8,17 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
 2. Implements limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli) to produce a PDF document.
 3. Implements PDF metadata updater with support of following metadata:
 
-   | Metadata          | In Acrobat Reader         | In Apple Preview             |
-   |-------------------|---------------------------|------------------------------|
-   | Title             | Title                     | Title                        |
-   | Author            | Author                    | Author _and_ Content creator |
-   | Application       | Application               | PDF Producer                 |
-   | Subject           | Subject _and_ Description | Subject                      |
-   | Copyright status  | Copyright Status          | (None)                       |
-   | Copyright notice  | Copyright Notice          | Yes                          |
-   | Keywords          | Keywords                  | Keywords                     |
-   | Creation date     | Created                   | Creation date                |
-   | Modification date | Modified                  | Modification date            |
+   | Metadata          | In Acrobat Reader         | In Apple Preview                   |
+   |-------------------|---------------------------|------------------------------------|
+   | Title             | Title                     | Title                              |
+   | Author            | Author                    | Author                             |
+   | Application       | Application               | PDF Producer _and_ Content creator |
+   | Subject           | Subject _and_ Description | Subject                            |
+   | Copyright status  | Copyright Status          | (None)                             |
+   | Copyright notice  | Copyright Notice          | Yes                                |
+   | Keywords          | Keywords                  | Keywords                           |
+   | Creation date     | Created                   | Creation date                      |
+   | Modification date | Modified                  | Modification date                  |
 
 Note that both creation and modification date are set automatically to the current date _without time information_ (for some privacy reasons, or my liking).
 

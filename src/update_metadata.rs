@@ -73,7 +73,6 @@ pub fn update_metadata(
     let metadata = metadata.clone();
 
     xmp.set_property(xmp_ns::DC, "title", &XmpValue::from(metadata.title.clone()))?;
-    xmp.set_property(xmp_ns::DC, "creator", &XmpValue::from(metadata.application.clone()))?;
     xmp.set_property(xmp_ns::XMP, "CreatorTool", &XmpValue::from(metadata.application.clone()))?;
     xmp.set_property(xmp_ns::DC, "description", &XmpValue::from(metadata.subject.clone()))?;
     xmp.set_property_bool(
