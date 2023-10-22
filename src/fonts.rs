@@ -93,6 +93,17 @@ impl FontSearcher {
         add!("DejaVuSansMono-Oblique.ttf");
         add!("DejaVuSansMono-BoldOblique.ttf");
 
+        #[cfg(feature = "embed_cmu_roman")]
+        {
+            add!("cmunrm.ttf");
+        }
+        #[cfg(feature = "embed_ia_writer_duo")]
+        {
+            add!("iAWriterDuoS-Bold.ttf");
+            add!("iAWriterDuoS-BoldItalic.ttf");
+            add!("iAWriterDuoS-Italic.ttf");
+            add!("iAWriterDuoS-Regular.ttf");
+        }
         #[cfg(feature = "embed_noto_sans_jp")]
         {
             add!("NotoSansJP-Black.ttf");
@@ -114,13 +125,6 @@ impl FontSearcher {
             add!("NotoSerifJP-Medium.otf");
             add!("NotoSerifJP-Regular.otf");
             add!("NotoSerifJP-SemiBold.otf");
-        }
-        #[cfg(feature = "embed_ia_writer_duo")]
-        {
-            add!("iAWriterDuoS-Bold.ttf");
-            add!("iAWriterDuoS-BoldItalic.ttf");
-            add!("iAWriterDuoS-Italic.ttf");
-            add!("iAWriterDuoS-Regular.ttf");
         }
     }
 
