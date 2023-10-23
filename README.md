@@ -70,7 +70,7 @@ $ cargo run --example update_metadata
 - Fonts in the [assets/](assets) directory are licensed under its own license.
 
   | Fonts                        | License                                                                                                                 |
-            |------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+  |------------------------------|-------------------------------------------------------------------------------------------------------------------------|
   | `assets/cmunrm.ttf`          | [LICENSE](https://www.fontsquirrel.com/fonts/computer-modern)                                                           |
   | `assets/DejaVuSansMono*.ttf` | [LICENSE](https://github.com/dejavu-fonts/dejavu-fonts/blob/9b5d1b2ffeec20c7b46aa89c0223d783c02762cf/LICENSE)           |
   | `assets/LinLibertine_*.ttf`  | [LICENSE](https://linuxlibertine.sourceforge.net/Libertine-EN.html#licence)                                             |
