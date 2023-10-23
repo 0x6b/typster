@@ -78,3 +78,9 @@ $ cargo run --example update_metadata
   | `assets/NotoSansJP-*.ttf`    | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Sans+JP/about)                                                    |
   | `assets/NotoSerifJP-*.otf`   | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Serif+JP/about)                                                   |
   | `assets/iAWriterDuoS-*.ttf`  | [LICENSE](https://github.com/iaolo/iA-Fonts/blob/f32c04c3058a75d7ce28919ce70fe8800817491b/iA%20Writer%20Duo/LICENSE.md) |
+
+## References
+
+- [typst/typst](https://github.com/typst/typst/)
+- [astrale-sharp/typstfmt](https://github.com/astrale-sharp/typstfmt)
+- [Extensible Metadata Platform (XMP) Specification: Part 1, Data Model, Serialization, and Core Properties](https://github.com/adobe/XMP-Toolkit-SDK/blob/main/docs/XMPSpecificationPart1.pdf), April, 2012
