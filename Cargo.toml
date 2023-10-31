@@ -27,8 +27,8 @@ memmap2 = "0.7"
 same-file = "1"
 siphasher = "0.3"
 tar = "0.4"
-typst = { git = "https://github.com/typst/typst", version = "0.8.0" }
-typst-library = { git = "https://github.com/typst/typst", version = "0.8.0" }
+typst = { git = "https://github.com/typst/typst", version = "0.9.0" }
+typst-library = { git = "https://github.com/typst/typst", version = "0.9.0" }
 typstfmt_lib = { git = "https://github.com/astrale-sharp/typstfmt/", version = "0.2.5" }
 ureq = "2"
 walkdir = "2"
