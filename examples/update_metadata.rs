@@ -1,8 +1,13 @@
+use std::collections::HashMap;
 use std::path::PathBuf;
 
 use typster::PdfMetadata;
 
 fn main() {
+    let mut custom_properties = HashMap::new();
+    custom_properties.insert("robots".to_string(), "noindex".to_string());
+    custom_properties.insert("custom".to_string(), "properties".to_string());
+
     let metadata = PdfMetadata {
         title: "Title (typster)".to_string(),
         author: "Author (typster)".to_string(),
@@ -12,6 +17,7 @@ fn main() {
         copyright_notice: "Copyright notice (typster)".to_string(),
         keywords: vec!["typster".to_string(), "rust".to_string(), "pdf".to_string()],
         language: "en".to_string(),
+        custom_properties,
     };
 
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
