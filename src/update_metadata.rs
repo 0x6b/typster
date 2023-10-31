@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::{collections::HashMap, path::Path};
 
 use lopdf::{Dictionary, Document, Object};
 use xmp_toolkit::{xmp_ns, OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue};
@@ -44,6 +44,9 @@ pub struct PdfMetadata {
 
     /// Language (RFC 3066)
     pub language: String,
+
+    /// Custom properties.
+    pub custom_properties: HashMap<String, String>,
 }
 
 impl Default for PdfMetadata {
@@ -57,6 +60,7 @@ impl Default for PdfMetadata {
             copyright_notice: "© 2023 Author. All rights reserved.".to_string(),
             keywords: vec![],
             language: "en".to_string(),
+            custom_properties: HashMap::new(),
         }
     }
 }
@@ -107,7 +111,10 @@ pub fn update_metadata(
     dict.set("CreationDate", Object::string_literal(now.clone()));
     dict.set("ModDate", Object::string_literal(now));
     dict.set("Keywords", Object::string_literal(metadata.keywords.join(", ")));
-
+    metadata
+        .custom_properties
+        .into_iter()
+        .for_each(|(k, v)| dict.set(k, Object::string_literal(v)));
     let t = doc.add_object(Object::Dictionary(dict));
 
     doc.trailer.set("Info", t);
