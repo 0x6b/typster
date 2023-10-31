@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.13.0"
+version = "0.14.0"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -53,3 +53,8 @@ embed_additional_fonts = [
     "embed_noto_sans_jp",
     "embed_noto_serif_jp",
 ]
+
+[build-dependencies]
+toml = "0.8.6"
+serde = { version = "1.0.190", features = ["derive"] }
+
