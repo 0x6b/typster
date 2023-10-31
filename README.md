@@ -50,7 +50,7 @@ The crate provides the following features to embed additional fonts in the binar
 ```toml
 # Cargo.toml
 [dependencies]
-typster = { git = "https://github.com/0x6b/typster", version = "0.7.0", features = ["embed_additional_fonts"] }
+typster = { git = "https://github.com/0x6b/typster", tag = "v0.12.0", features = ["embed_additional_fonts"] }
 ```
 
 ### Compiling a document
