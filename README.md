@@ -21,7 +21,19 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
    | Modification date | Modified                       | Modification date                  |
    | Custom properties | Custom Properties              | (None)                             |
 
-Note that both creation and modification date are set automatically to the current date _without time information_ (for some privacy reasons, or my preference.)
+Note that:
+
+- All metadata will be overwritten, not merged.
+- Both creation and modification date are set automatically to the current date _without time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+
+You can specify some of them with Typst. As of Typst [v0.9.0](https://github.com/typst/typst/releases/tag/v0.9.0), the following metadata is supported:
+
+- Title
+- Author
+- Keywords
+- Date
+
+See [Document Function – Typst Documentation](https://typst.app/docs/reference/meta/document/#parameters-keywords) for details.
 
 ## Crate features
 
