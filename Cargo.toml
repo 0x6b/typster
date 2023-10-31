@@ -53,3 +53,8 @@ embed_additional_fonts = [
     "embed_noto_sans_jp",
     "embed_noto_serif_jp",
 ]
+
+[build-dependencies]
+toml = "0.8.6"
+serde = { version = "1.0.190", features = ["derive"] }
+
