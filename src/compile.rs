@@ -1,6 +1,9 @@
-use std::time::Duration;
-use std::{fs, path::Path, path::PathBuf};
-use typst::{doc::Document, eval::Tracer, geom::Color, World};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+    time::Duration,
+};
+use typst::{doc::Document, eval::Tracer, export, geom::Color, World};
 
 use crate::world::SystemWorld;
 
@@ -72,7 +75,7 @@ fn export_image(
         } else {
             params.output.as_path()
         };
-        let pixmap = typst::export::render(frame, params.ppi.unwrap_or(144.0) / 72.0, Color::WHITE);
+        let pixmap = export::render(frame, params.ppi.unwrap_or(144.0) / 72.0, Color::WHITE);
         pixmap.save_png(path)?;
     }
 
@@ -84,7 +87,6 @@ fn export_pdf(
     document: &Document,
     params: &CompileParams,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let buffer = typst::export::pdf(document);
-    fs::write(&params.output, buffer)?;
+    fs::write(&params.output, export::pdf(document, Some(&params.input.to_string_lossy()), None))?;
     Ok(())
 }
