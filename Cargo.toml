@@ -23,7 +23,7 @@ ecow = "0.2"
 env_proxy = "0.4"
 filetime = "0.2"
 flate2 = "1"
-memmap2 = "0.7"
+fontdb = "0.15.0"
 same-file = "1"
 siphasher = "0.3"
 tar = "0.4"
@@ -31,7 +31,6 @@ typst = { git = "https://github.com/typst/typst", version = "0.9.0" }
 typst-library = { git = "https://github.com/typst/typst", version = "0.9.0" }
 typstfmt_lib = { git = "https://github.com/astrale-sharp/typstfmt/", version = "0.2.5" }
 ureq = "2"
-walkdir = "2"
 
 # PDF metadata management
 lopdf = "0.31.0"
