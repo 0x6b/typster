@@ -5,7 +5,7 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
 ## Features
 
 1. Implements thin wrapper of [typstfmt](https://github.com/astrale-sharp/typstfmt) to format a document.
-2. Implements a limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli) to produce a PDF document.
+2. Implements a limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli) [v0.9.0](https://github.com/typst/typst/releases/tag/v0.9.0) to produce a PDF document.
 3. Implements PDF metadata updater with support for the following:
 
    | Metadata          | In Acrobat Reader              | In Apple Preview                   |
@@ -37,7 +37,7 @@ See [Document Function – Typst Documentation](https://typst.app/docs/reference
 
 ## Crate features
 
-The crate provides the following features to embed additional fonts in the binary for easier deployment. Note that the typst-cli [defaults](https://github.com/typst/typst/blob/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli/src/fonts.rs#L101-L115) are always embedded.
+The crate provides the following features to embed additional fonts in the binary for easier deployment. Note that the typst-cli [defaults](https://github.com/typst/typst/blob/0.9/crates/typst-cli/src/fonts.rs#L126-L140) are always embedded.
 
 - `embed_cmu_roman`: [Computer Modern Roman](https://www.fontsquirrel.com/fonts/computer-modern)
 - `embed_ia_writer_duo`: [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)
