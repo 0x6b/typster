@@ -9,28 +9,28 @@ homepage = "https://github.com/0x6b/typster"
 repository = "https://github.com/0x6b/typster"
 readme = "README.md"
 categories = ["text-processing"]
-keywords = ["text", "typst", "markup", "formatter"]
+keywords = ["text", "typst", "formatter", "pdf", "metadata"]
 
 [lib]
 name = "typster"
 path = "src/lib.rs"
 
 [dependencies]
-chrono = { version = "0.4.24", default-features = false, features = ["clock", "std"] }
-comemo = "0.3"
-dirs = "5"
-ecow = "0.2"
-env_proxy = "0.4"
-filetime = "0.2"
-flate2 = "1"
-fontdb = "0.15.0"
-same-file = "1"
-siphasher = "0.3"
-tar = "0.4"
+chrono = { version = "0.4.31", default-features = false, features = ["clock", "std"] }
+comemo = "0.3.0"
+dirs = "5.0.1"
+ecow = "0.2.0"
+env_proxy = "0.4.1"
+filetime = "0.2.22"
+flate2 = "1.0.28"
+fontdb = "0.16.0"
+same-file = "1.0.6"
+siphasher = "1.0.0"
+tar = "0.4.40"
 typst = { git = "https://github.com/typst/typst", tag = "v0.9.0" }
 typst-library = { git = "https://github.com/typst/typst", tag = "v0.9.0" }
 typstfmt_lib = { git = "https://github.com/astrale-sharp/typstfmt/", tag = "0.2.6" }
-ureq = "2"
+ureq = "2.8.0"
 
 # PDF metadata management
 lopdf = "0.31.0"
@@ -57,4 +57,3 @@ embed_additional_fonts = [
 [build-dependencies]
 toml = "0.8.6"
 serde = { version = "1.0.190", features = ["derive"] }
-
