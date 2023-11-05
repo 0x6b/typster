@@ -1,4 +1,8 @@
-use std::{cell::OnceCell, fs, path::PathBuf};
+use std::{
+    cell::OnceCell,
+    fs,
+    path::{Path, PathBuf},
+};
 
 use fontdb::{Database, Source};
 use typst::font::{Font, FontBook, FontInfo, FontStyle};
@@ -198,4 +202,42 @@ pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
             FontInformation { name: name.to_string(), variants }
         })
         .collect::<_>()
+}
+
+pub fn export_fonts(out_path: &Path) {
+    fs::create_dir_all(out_path).unwrap();
+    let mut searcher = FontSearcher::new();
+    searcher.search(&[]);
+    searcher.fonts.iter().filter_map(|slot| slot.get()).for_each(|font| {
+        println!("Exporting font: {:?} {:?}", font.info().family, font.info().variant.weight);
+        fs::write(
+            out_path.join(format!(
+                "{}-{}-{}.ttf",
+                font.info().family.replace(' ', "_"),
+                {
+                    let weight = font.info().variant.weight.to_number().to_string();
+                    match weight.as_str() {
+                        "100" => "Thin".to_string(),
+                        "200" => "Extralight".to_string(),
+                        "300" => "Light".to_string(),
+                        "400" => "Regular".to_string(),
+                        "450" => "Book".to_string(), // NewCMMath-Book.otf
+                        "500" => "Medium".to_string(),
+                        "600" => "Semibold".to_string(),
+                        "700" => "Bold".to_string(),
+                        "800" => "Extrabold".to_string(),
+                        "900" => "Black".to_string(),
+                        _ => weight.to_string(),
+                    }
+                },
+                match font.info().variant.style {
+                    FontStyle::Normal => "Regular",
+                    FontStyle::Italic => "Italic",
+                    FontStyle::Oblique => "Oblique",
+                }
+            )),
+            font.data(),
+        )
+        .unwrap();
+    });
 }
