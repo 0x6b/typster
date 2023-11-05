@@ -204,12 +204,11 @@ pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
         .collect::<_>()
 }
 
-pub fn export_fonts(out_path: &Path) {
+pub fn export_fonts(font_paths: &[PathBuf], out_path: &Path) {
     fs::create_dir_all(out_path).unwrap();
     let mut searcher = FontSearcher::new();
-    searcher.search(&[]);
+    searcher.search(font_paths);
     searcher.fonts.iter().filter_map(|slot| slot.get()).for_each(|font| {
-        println!("Exporting font: {:?} {:?}", font.info().family, font.info().variant.weight);
         fs::write(
             out_path.join(format!(
                 "{}-{}-{}.ttf",
