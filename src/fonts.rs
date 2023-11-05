@@ -1,3 +1,4 @@
+use std::error::Error;
 use std::{
     cell::OnceCell,
     fs,
@@ -204,8 +205,8 @@ pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
         .collect::<_>()
 }
 
-pub fn export_fonts(font_paths: &[PathBuf], out_path: &Path) {
-    fs::create_dir_all(out_path).unwrap();
+pub fn export_fonts(font_paths: &[PathBuf], out_path: &Path) -> Result<(), Box<dyn Error>> {
+    fs::create_dir_all(out_path)?;
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);
     searcher.fonts.iter().filter_map(|slot| slot.get()).for_each(|font| {
@@ -239,4 +240,5 @@ pub fn export_fonts(font_paths: &[PathBuf], out_path: &Path) {
         )
         .unwrap();
     });
+    Ok(())
 }
