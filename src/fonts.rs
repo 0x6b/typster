@@ -58,7 +58,7 @@ impl FontSearcher {
         }
 
         // System fonts have second priority.
-        db.load_system_fonts();
+        // db.load_system_fonts();
 
         for face in db.faces() {
             let path = match &face.source {

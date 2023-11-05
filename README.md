@@ -45,6 +45,9 @@ The crate provides the following features to embed additional fonts in the binar
 - `embed_noto_serif_jp`: [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
 - `embed_additional_fonts`: all of the above
 
+> [!Warning]
+> The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via `CompileParams.font_paths`.
+
 ## Usage
 
 ```toml
