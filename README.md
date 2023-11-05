@@ -21,10 +21,9 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
    | Modification date | Modified                       | Modification date                  |
    | Custom properties | Custom Properties              | (None)                             |
 
-Note that:
-
-- All metadata will be overwritten, not merged.
-- Both creation and modification date are set automatically to the current date _without time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+> [!Note]
+> - All metadata will be overwritten, not merged.
+> - Both creation and modification date are set automatically to the current date _without time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
 You can specify some of them with Typst. As of Typst [v0.9.0](https://github.com/typst/typst/releases/tag/v0.9.0), the following metadata is supported:
 
@@ -44,6 +43,9 @@ The crate provides the following features to embed additional fonts in the binar
 - `embed_noto_sans_jp`: [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)
 - `embed_noto_serif_jp`: [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
 - `embed_additional_fonts`: all of the above
+
+> [!Warning]
+> The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via `CompileParams.font_paths`.
 
 ## Usage
 
