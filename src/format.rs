@@ -11,6 +11,15 @@ pub struct FormatParams {
     pub config: Option<PathBuf>,
 }
 
+/// Format a Typst file.
+///
+/// # Arguments
+///
+/// - `params` - FormatParams struct.
+///
+/// # Returns
+///
+/// String containing the formatted Typst file.
 pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
     Ok(typstfmt_lib::format(
         &fs::read_to_string(&params.input)?,

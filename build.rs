@@ -39,13 +39,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     // ```
     //
     // See https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-crates
-    write!(f, "pub fn typst_version() -> &'static str {{ \"{}\" }}", package.dependencies.typst.tag)
-        .map_err(|e| {
-            format!(
-                "Couldn't write version to {}: {}",
-                Path::new(&var("OUT_DIR").unwrap()).join("version.rs").display(),
-                e
-            )
-            .into()
-        })
+    write!(
+        f,
+        r#"pub fn typst_version() -> &'static str {{ "{}" }}"#,
+        package.dependencies.typst.tag
+    )
+    .map_err(|e| {
+        format!(
+            "Couldn't write version to {}: {}",
+            Path::new(&var("OUT_DIR").unwrap()).join("version.rs").display(),
+            e
+        )
+        .into()
+    })
 }
