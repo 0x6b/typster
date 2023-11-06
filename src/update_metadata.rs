@@ -46,6 +46,8 @@ pub struct PdfMetadata {
     pub language: String,
 
     /// Custom properties.
+    /// - Acrobat Reader: Custom properties
+    /// - Apple Preview: (None)
     pub custom_properties: HashMap<String, String>,
 }
 
@@ -65,6 +67,12 @@ impl Default for PdfMetadata {
     }
 }
 
+/// Update the metadata of a PDF file.
+///
+/// # Arguments
+///
+/// - `path` - Path to the PDF file.
+/// - `metadata` - Metadata to set.
 pub fn update_metadata(
     path: &Path,
     metadata: &PdfMetadata,

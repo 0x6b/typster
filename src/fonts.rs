@@ -184,6 +184,15 @@ impl From<&FontInfo> for FontVariant {
     }
 }
 
+/// List all fonts available for the library.
+///
+/// # Arguments
+///
+/// - `font_paths` - Paths to additional font directories.
+///
+/// # Returns
+///
+/// A list of FontInformation structs.
 pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);
@@ -205,6 +214,13 @@ pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
         .collect::<_>()
 }
 
+/// Export all fonts available for the library. This is sometime useful for debugging, or for
+/// running `typst watch` without having to install fonts separately.
+///
+/// # Arguments
+///
+/// - `font_paths` - Paths to additional font directories.
+/// - `out_path` - Path to output directory.
 pub fn export_fonts(font_paths: &[PathBuf], out_path: &Path) -> Result<(), Box<dyn Error>> {
     fs::create_dir_all(out_path)?;
     let mut searcher = FontSearcher::new();

@@ -25,6 +25,14 @@ pub struct CompileParams {
 }
 
 /// Compiles an input file into a supported output format
+///
+/// # Arguments
+///
+/// - `params` - CompileParams struct.
+///
+/// # Returns
+///
+/// Result containing the core::time::Duration of the compilation.
 pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn std::error::Error>> {
     let world = SystemWorld::new(&params.input, &params.font_paths)?;
     let start = std::time::Instant::now();
