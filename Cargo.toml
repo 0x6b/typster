@@ -46,12 +46,15 @@ embed_ia_writer_duo = []
 embed_noto_sans_jp = []
 ## assets/NotoSerifJP-*
 embed_noto_serif_jp = []
+## assets/recursive-static-OTFs.otc
+embed_recursive = []
 ## all of the above
 embed_additional_fonts = [
     "embed_cmu_roman",
     "embed_ia_writer_duo",
     "embed_noto_sans_jp",
     "embed_noto_serif_jp",
+    "embed_recursive",
 ]
 
 [build-dependencies]

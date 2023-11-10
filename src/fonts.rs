@@ -159,6 +159,10 @@ impl FontSearcher {
             add!("NotoSerifJP-Regular.otf");
             add!("NotoSerifJP-SemiBold.otf");
         }
+        #[cfg(feature = "embed_recursive")]
+        {
+            add!("recursive-static-OTFs.otc");
+        }
     }
 }
 

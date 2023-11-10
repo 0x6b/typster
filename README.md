@@ -42,6 +42,7 @@ The crate provides the following features to embed additional fonts in the binar
 - `embed_ia_writer_duo`: [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)
 - `embed_noto_sans_jp`: [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)
 - `embed_noto_serif_jp`: [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
+- `embed_recursive`: [Recursive Sans & Mono](https://github.com/arrowtype/recursive/)
 - `embed_additional_fonts`: all of the above
 
 > [!Warning]
@@ -84,15 +85,16 @@ $ cargo run --example update_metadata
 - The crate itself is licensed under the Apache License version 2.0, as same as [typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
 - Fonts in the [assets/](assets) directory are licensed under its own license.
 
-  | Fonts                        | License                                                                                                                 |
-    |------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-  | `assets/cmunrm.ttf`          | [LICENSE](https://www.fontsquirrel.com/fonts/computer-modern)                                                           |
-  | `assets/DejaVuSansMono*.ttf` | [LICENSE](https://github.com/dejavu-fonts/dejavu-fonts/blob/9b5d1b2ffeec20c7b46aa89c0223d783c02762cf/LICENSE)           |
-  | `assets/LinLibertine_*.ttf`  | [LICENSE](https://linuxlibertine.sourceforge.net/Libertine-EN.html#licence)                                             |
-  | `assets/NewCM*.otf`          | [LICENSE](https://ctan.org/tex-archive/fonts/newcomputermodern)                                                         |
-  | `assets/NotoSansJP-*.ttf`    | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Sans+JP/about)                                                    |
-  | `assets/NotoSerifJP-*.otf`   | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Serif+JP/about)                                                   |
-  | `assets/iAWriterDuoS-*.ttf`  | [LICENSE](https://github.com/iaolo/iA-Fonts/blob/f32c04c3058a75d7ce28919ce70fe8800817491b/iA%20Writer%20Duo/LICENSE.md) |
+  | Fonts                              | License                                                                                                                 |
+  |------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+  | `assets/cmunrm.ttf`                | [LICENSE](https://www.fontsquirrel.com/fonts/computer-modern)                                                           |
+  | `assets/DejaVuSansMono*.ttf`       | [LICENSE](https://github.com/dejavu-fonts/dejavu-fonts/blob/9b5d1b2ffeec20c7b46aa89c0223d783c02762cf/LICENSE)           |
+  | `assets/LinLibertine_*.ttf`        | [LICENSE](https://linuxlibertine.sourceforge.net/Libertine-EN.html#licence)                                             |
+  | `assets/NewCM*.otf`                | [LICENSE](https://ctan.org/tex-archive/fonts/newcomputermodern)                                                         |
+  | `assets/NotoSansJP-*.ttf`          | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Sans+JP/about)                                                    |
+  | `assets/NotoSerifJP-*.otf`         | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Serif+JP/about)                                                   |
+  | `assets/iAWriterDuoS-*.ttf`        | [LICENSE](https://github.com/iaolo/iA-Fonts/blob/f32c04c3058a75d7ce28919ce70fe8800817491b/iA%20Writer%20Duo/LICENSE.md) |
+  | `assets/recursive-static-OTFs.otc` | [LICENSE](https://github.com/arrowtype/recursive/blob/a6821a9e15b05dea641365a8956bb1f9bd574583/OFL.txt)                 |
 
 ## References
 
