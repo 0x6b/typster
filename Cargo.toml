@@ -10,6 +10,7 @@ repository = "https://github.com/0x6b/typster"
 readme = "README.md"
 categories = ["text-processing"]
 keywords = ["text", "typst", "formatter", "pdf", "metadata"]
+rust-version = "1.67.0"
 
 [lib]
 name = "typster"
