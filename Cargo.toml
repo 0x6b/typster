@@ -60,5 +60,5 @@ embed_additional_fonts = [
 ]
 
 [build-dependencies]
-toml = "0.8.6"
+toml = "0.8.8"
 serde = { version = "1.0.190", features = ["derive"] }
