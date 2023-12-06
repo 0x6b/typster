@@ -10,7 +10,7 @@ fn main() {
         output: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .join("examples")
             .join("sample.pdf"),
-        font_paths: vec![],
+        font_paths: vec!["assets".into()],
         ppi: None,
     };
     match typster::compile(&params) {

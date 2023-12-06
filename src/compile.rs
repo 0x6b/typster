@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
     time::Duration,
 };
-use typst::{doc::Document, eval::Tracer, export, geom::Color, World};
+use typst::{eval::Tracer, model::Document, visualize::Color, World};
 
 use crate::world::SystemWorld;
 
@@ -83,7 +83,7 @@ fn export_image(
         } else {
             params.output.as_path()
         };
-        let pixmap = export::render(frame, params.ppi.unwrap_or(144.0) / 72.0, Color::WHITE);
+        let pixmap = typst_render::render(frame, params.ppi.unwrap_or(144.0) / 72.0, Color::WHITE);
         pixmap.save_png(path)?;
     }
 
@@ -95,6 +95,9 @@ fn export_pdf(
     document: &Document,
     params: &CompileParams,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    fs::write(&params.output, export::pdf(document, Some(&params.input.to_string_lossy()), None))?;
+    fs::write(
+        &params.output,
+        typst_pdf::pdf(document, Some(&params.input.to_string_lossy()), None),
+    )?;
     Ok(())
 }

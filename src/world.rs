@@ -12,12 +12,12 @@ use comemo::Prehashed;
 use filetime::FileTime;
 use same_file::Handle;
 use siphasher::sip128::{Hasher128, SipHasher13};
+use typst::foundations::{Bytes, Datetime};
+use typst::text::{Font, FontBook};
 use typst::{
     diag::{FileError, FileResult},
-    eval::{Bytes, Datetime, Library},
-    font::{Font, FontBook},
     syntax::{FileId, Source, VirtualPath},
-    World,
+    Library, World,
 };
 
 use crate::fonts::{FontSearcher, FontSlot};
@@ -64,7 +64,7 @@ impl SystemWorld {
         Ok(Self {
             root,
             main: FileId::new(None, main_path),
-            library: Prehashed::new(typst_library::build()),
+            library: Prehashed::new(Library::build()),
             book: Prehashed::new(searcher.book),
             fonts: searcher.fonts,
             hashes: RefCell::default(),
@@ -105,7 +105,7 @@ impl World for SystemWorld {
     }
 
     fn today(&self, offset: Option<i64>) -> Option<Datetime> {
-        let now = self.now.get_or_init(chrono::Local::now);
+        let now = self.now.get_or_init(Local::now);
 
         let naive = match offset {
             None => now.naive_local(),
