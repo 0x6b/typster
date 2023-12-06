@@ -1,12 +1,15 @@
-use std::error::Error;
 use std::{
     cell::OnceCell,
+    error::Error,
     fs,
     path::{Path, PathBuf},
 };
 
 use fontdb::{Database, Source};
-use typst::font::{Font, FontBook, FontInfo, FontStyle};
+use typst::{
+    foundations::Bytes,
+    text::{Font, FontBook, FontInfo, FontStyle},
+};
 
 /// Searches for fonts.
 pub struct FontSearcher {
@@ -93,7 +96,7 @@ impl FontSearcher {
     /// Add fonts that are embedded in the binary.
     fn add_embedded(&mut self) {
         let mut process = |bytes: &'static [u8]| {
-            let buffer = typst::eval::Bytes::from_static(bytes);
+            let buffer = Bytes::from_static(bytes);
             for (i, font) in Font::iter(buffer).enumerate() {
                 self.book.push(font.info().clone());
                 self.fonts.push(FontSlot {
