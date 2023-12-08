@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.17.0"
+version = "0.18.0"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -48,6 +48,8 @@ embed_ia_writer_duo = []
 embed_noto_sans_jp = []
 ## assets/NotoSerifJP-*
 embed_noto_serif_jp = []
+## assets/SourceCodePro-*
+embed_source_code_pro = []
 ## assets/recursive-static-OTFs.otc
 embed_recursive = []
 ## all of the above
@@ -56,6 +58,7 @@ embed_additional_fonts = [
     "embed_ia_writer_duo",
     "embed_noto_sans_jp",
     "embed_noto_serif_jp",
+    "embed_source_code_pro",
     "embed_recursive",
 ]
 
