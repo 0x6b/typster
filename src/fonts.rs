@@ -166,6 +166,25 @@ impl FontSearcher {
         {
             add!("recursive-static-OTFs.otc");
         }
+        #[cfg(feature = "embed_source_code_pro")]
+        {
+            add!("SourceCodePro-Black.ttf");
+            add!("SourceCodePro-BlackItalic.ttf");
+            add!("SourceCodePro-Bold.ttf");
+            add!("SourceCodePro-BoldItalic.ttf");
+            add!("SourceCodePro-ExtraBold.ttf");
+            add!("SourceCodePro-ExtraBoldItalic.ttf");
+            add!("SourceCodePro-ExtraLight.ttf");
+            add!("SourceCodePro-ExtraLightItalic.ttf");
+            add!("SourceCodePro-Italic.ttf");
+            add!("SourceCodePro-Light.ttf");
+            add!("SourceCodePro-LightItalic.ttf");
+            add!("SourceCodePro-Medium.ttf");
+            add!("SourceCodePro-MediumItalic.ttf");
+            add!("SourceCodePro-Regular.ttf");
+            add!("SourceCodePro-SemiBold.ttf");
+            add!("SourceCodePro-SemiBoldItalic.ttf");
+        }
     }
 }
 
