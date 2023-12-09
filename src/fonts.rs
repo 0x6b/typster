@@ -154,13 +154,13 @@ impl FontSearcher {
         }
         #[cfg(feature = "embed_noto_serif_jp")]
         {
-            add!("NotoSerifJP-Black.otf");
-            add!("NotoSerifJP-Bold.otf");
-            add!("NotoSerifJP-ExtraLight.otf");
-            add!("NotoSerifJP-Light.otf");
-            add!("NotoSerifJP-Medium.otf");
-            add!("NotoSerifJP-Regular.otf");
-            add!("NotoSerifJP-SemiBold.otf");
+            add!("NotoSerifJP-Black.ttf");
+            add!("NotoSerifJP-Bold.ttf");
+            add!("NotoSerifJP-ExtraLight.ttf");
+            add!("NotoSerifJP-Light.ttf");
+            add!("NotoSerifJP-Medium.ttf");
+            add!("NotoSerifJP-Regular.ttf");
+            add!("NotoSerifJP-SemiBold.ttf");
         }
         #[cfg(feature = "embed_recursive")]
         {
