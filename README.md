@@ -81,6 +81,14 @@ See [`examples/update_metadata.rs`](examples/update_metadata.rs).
 $ cargo run --example update_metadata
 ```
 
+### Setting PDF permission
+
+See [`examples/set_permission.rs`](examples/set_permission.rs).
+
+```console
+$ cargo run --example set_permission
+```
+
 ## License
 
 - The crate itself is licensed under the Apache License version 2.0, as same as [typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
