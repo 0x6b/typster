@@ -1,8 +1,8 @@
-use std::path::PathBuf;
+use std::{error::Error, path::PathBuf};
 
 use typster::PermissionParams;
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     typster::set_permission(
         PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .join("examples")
@@ -14,5 +14,5 @@ fn main() {
             owner_password: "owner".to_string(),
             ..Default::default()
         },
-    );
+    )
 }

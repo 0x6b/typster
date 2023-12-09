@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{error::Error, path::PathBuf};
 
 use qpdf::{EncryptionParams, EncryptionParamsR2};
 
@@ -51,11 +51,15 @@ impl Default for PermissionParams {
     }
 }
 
-pub fn set_permission(input: PathBuf, output: PathBuf, params: &PermissionParams) {
+pub fn set_permission(
+    input: PathBuf,
+    output: PathBuf,
+    params: &PermissionParams,
+) -> Result<(), Box<dyn Error>> {
     qpdf::QPdf::read(input)
         .unwrap()
         .writer()
         .encryption_params(params.into())
         .write(output)
-        .unwrap();
+        .map_err(|e| e.into())
 }
