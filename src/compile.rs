@@ -8,7 +8,7 @@ use typst::{eval::Tracer, model::Document, visualize::Color, World};
 use crate::world::SystemWorld;
 
 /// Parameters for a compilation.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct CompileParams {
     /// Path to input Typst file.
     pub input: PathBuf,

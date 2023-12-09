@@ -3,6 +3,7 @@ use std::{fs, path::PathBuf};
 use typstfmt_lib::Config;
 
 /// Parameters for a formatting operation.
+#[derive(Debug, Clone, Default)]
 pub struct FormatParams {
     /// Path to input Typst file.
     pub input: PathBuf,
