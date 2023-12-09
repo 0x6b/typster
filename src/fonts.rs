@@ -247,40 +247,58 @@ pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
 ///
 /// - `font_paths` - Paths to additional font directories.
 /// - `out_path` - Path to output directory.
-pub fn export_fonts(font_paths: &[PathBuf], out_path: &Path) -> Result<(), Box<dyn Error>> {
+///
+/// # Returns
+///
+/// A list of paths to the exported fonts.
+pub fn export_fonts(
+    font_paths: &[PathBuf],
+    out_path: &Path,
+) -> Result<Vec<PathBuf>, Box<dyn Error>> {
     fs::create_dir_all(out_path)?;
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);
-    searcher.fonts.iter().filter_map(|slot| slot.get()).for_each(|font| {
-        fs::write(
-            out_path.join(format!(
-                "{}-{}-{}.ttf",
-                font.info().family.replace(' ', "_"),
-                {
-                    let weight = font.info().variant.weight.to_number().to_string();
-                    match weight.as_str() {
-                        "100" => "Thin".to_string(),
-                        "200" => "Extralight".to_string(),
-                        "300" => "Light".to_string(),
-                        "400" => "Regular".to_string(),
-                        "450" => "Book".to_string(), // NewCMMath-Book.otf
-                        "500" => "Medium".to_string(),
-                        "600" => "Semibold".to_string(),
-                        "700" => "Bold".to_string(),
-                        "800" => "Extrabold".to_string(),
-                        "900" => "Black".to_string(),
-                        _ => weight.to_string(),
+
+    let fonts = searcher
+        .fonts
+        .iter()
+        .filter_map(|slot| slot.get())
+        .map(|font| {
+            (
+                out_path.join(format!(
+                    "{}-{}-{}.ttf",
+                    font.info().family.replace(' ', "_"),
+                    {
+                        let weight = font.info().variant.weight.to_number().to_string();
+                        match weight.as_str() {
+                            "100" => "Thin".to_string(),
+                            "200" => "Extralight".to_string(),
+                            "300" => "Light".to_string(),
+                            "400" => "Regular".to_string(),
+                            "450" => "Book".to_string(), // NewCMMath-Book.otf
+                            "500" => "Medium".to_string(),
+                            "600" => "Semibold".to_string(),
+                            "700" => "Bold".to_string(),
+                            "800" => "Extrabold".to_string(),
+                            "900" => "Black".to_string(),
+                            _ => weight.to_string(),
+                        }
+                    },
+                    match font.info().variant.style {
+                        FontStyle::Normal => "Regular",
+                        FontStyle::Italic => "Italic",
+                        FontStyle::Oblique => "Oblique",
                     }
-                },
-                match font.info().variant.style {
-                    FontStyle::Normal => "Regular",
-                    FontStyle::Italic => "Italic",
-                    FontStyle::Oblique => "Oblique",
-                }
-            )),
-            font.data(),
-        )
-        .unwrap();
+                )),
+                font,
+            )
+        })
+        .collect::<Vec<(PathBuf, Font)>>();
+
+    fonts.iter().for_each(|(filename, font)| {
+        fs::write(filename, font.data()).unwrap();
     });
-    Ok(())
+
+    let exported = fonts.into_iter().map(|(filename, _)| filename).collect::<Vec<_>>();
+    Ok(exported)
 }
