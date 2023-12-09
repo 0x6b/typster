@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.20.0"
+version = "0.21.0"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -37,6 +37,9 @@ ureq = "2.8.0"
 # PDF metadata management
 lopdf = "0.31.0"
 xmp_toolkit = "1.6.0"
+
+# PDF permission setting
+qpdf = "0.1.7"
 
 [features]
 # Enable these features to embed fonts into the binary.

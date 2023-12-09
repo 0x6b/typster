@@ -54,7 +54,7 @@ The crate provides the following features to embed additional fonts in the binar
 ```toml
 # Cargo.toml
 [dependencies]
-typster = { git = "https://github.com/0x6b/typster", tag = "v0.12.0", features = ["embed_additional_fonts"] }
+typster = { git = "https://github.com/0x6b/typster", tag = "v0.21.0", features = ["embed_additional_fonts"] }
 ```
 
 ### Compiling a document
@@ -79,6 +79,14 @@ See [`examples/update_metadata.rs`](examples/update_metadata.rs).
 
 ```console
 $ cargo run --example update_metadata
+```
+
+### Setting PDF permission
+
+See [`examples/set_permission.rs`](examples/set_permission.rs).
+
+```console
+$ cargo run --example set_permission
 ```
 
 ## License
