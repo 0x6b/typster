@@ -6,7 +6,18 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
 
 1. Implements thin wrapper of [typstfmt](https://github.com/astrale-sharp/typstfmt) to format a document.
 2. Implements a limited subset of [typst-cli](https://github.com/typst/typst/tree/a59666369b946c3a8b62db363659cbfca35f0a26/crates/typst-cli) [v0.9.0](https://github.com/typst/typst/releases/tag/v0.9.0) to produce a PDF document.
-3. Implements PDF metadata updater with support for the following:
+3. Implements PDF permission update with support for the following:
+   - user password, which is required to open the document. Leave empty to allow anyone to open.
+   - owner password, which is required to change permissions. Leave empty to allow anyone to change.
+   - content copying for accessibility.
+   - page extraction.
+   - document assembly.
+   - commenting and form filling.
+   - form field fill-in or signing.
+   - other modifications.
+   - printing (high, low, or disallow).
+   - encrypt metadata.
+4. Implements PDF metadata updater with support for the following:
 
    | Metadata          | In Acrobat Reader              | In Apple Preview                   |
    |-------------------|--------------------------------|------------------------------------|
@@ -73,20 +84,20 @@ See [`examples/format.rs`](examples/format.rs).
 $ cargo run --example format
 ```
 
-### Updating PDF metadata
-
-See [`examples/update_metadata.rs`](examples/update_metadata.rs).
-
-```console
-$ cargo run --example update_metadata
-```
-
 ### Setting PDF permission
 
 See [`examples/set_permission.rs`](examples/set_permission.rs).
 
 ```console
 $ cargo run --example set_permission
+```
+
+### Updating PDF metadata
+
+See [`examples/update_metadata.rs`](examples/update_metadata.rs).
+
+```console
+$ cargo run --example update_metadata
 ```
 
 ## License
