@@ -13,12 +13,12 @@ pub struct PdfMetadata {
 
     /// Author of the document.
     /// - Acrobat Reader: Author
-    /// - Apple Preview: Author and Content creator
+    /// - Apple Preview: Author
     pub author: String,
 
     /// Application.
     /// - Acrobat Reader: Application
-    /// - Apple Preview: PDF Producer
+    /// - Apple Preview: PDF Producer _and_ Content creator
     pub application: String,
 
     /// Subject of the document.
