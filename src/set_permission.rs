@@ -50,6 +50,16 @@ pub enum PrintPermission {
     None,
 }
 
+impl Display for PrintPermission {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PrintPermission::Full => write!(f, "full"),
+            PrintPermission::Low => write!(f, "low"),
+            PrintPermission::None => write!(f, "none"),
+        }
+    }
+}
+
 impl From<&PrintPermission> for qpdf::writer::PrintPermission {
     fn from(permission: &PrintPermission) -> qpdf::writer::PrintPermission {
         match permission {
