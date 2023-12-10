@@ -1,9 +1,10 @@
 use std::{error::Error, path::PathBuf};
 
 use qpdf::{EncryptionParams, EncryptionParamsR6};
+use serde::{Deserialize, Serialize};
 
 /// Parameters for permission.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PermissionParams {
     /// User password, which is required to open the document. Leave empty to allow anyone to open.
     pub user_password: String,
@@ -37,7 +38,7 @@ pub struct PermissionParams {
     pub encrypt_metadata: bool,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum PrintPermission {
     /// Allow printing in high resolution.
     Full,

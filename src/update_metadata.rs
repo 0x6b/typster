@@ -1,10 +1,11 @@
 use std::{collections::HashMap, path::Path};
 
 use lopdf::{Dictionary, Document, Object};
+use serde::{Deserialize, Serialize};
 use xmp_toolkit::{xmp_ns, OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue};
 
 /// PDF, dublin core, and xmp metadata for a document.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PdfMetadata {
     /// Title of the document.
     /// - Acrobat Reader: Title
