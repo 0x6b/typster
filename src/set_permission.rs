@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use std::{error::Error, path::PathBuf};
 
 use qpdf::{EncryptionParams, EncryptionParamsR6};
@@ -39,6 +40,7 @@ pub struct PermissionParams {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum PrintPermission {
     /// Allow printing in high resolution.
     Full,
