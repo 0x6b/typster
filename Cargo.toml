@@ -41,6 +41,9 @@ xmp_toolkit = "1.6.0"
 # PDF permission setting
 qpdf = "0.1.7"
 
+# Ser/de support
+serde = { version = "1.0.193", features = ["derive"] }
+
 [features]
 # Enable these features to embed fonts into the binary.
 ## assets/cmunrm.ttf
