@@ -22,6 +22,7 @@ use std::{error::Error, net::SocketAddr, path::PathBuf, sync::Arc};
 pub struct SharedState {
     pub port: u16,
     pub address: String,
+    pub input: PathBuf,
     pub output: PathBuf,
     pub changed: Notify,
 }
@@ -50,7 +51,13 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
         Err(why) => eprintln!("{why}"),
     }
 
-    let state = Arc::new(SharedState { port, address, output, changed: Notify::new() });
+    let state = Arc::new(SharedState {
+        port,
+        address,
+        input: input.clone(),
+        output,
+        changed: Notify::new(),
+    });
 
     let router = Router::new()
         .route("/", get(root))
@@ -108,6 +115,7 @@ pub async fn root(State(state): State<Arc<SharedState>>) -> Html<String> {
     include_str!("../assets/index.html")
         .replace("{addr}", &state.address)
         .replace("{port}", &state.port.to_string())
+        .replace("{input}", &state.input.display().to_string())
         .into()
 }
 
