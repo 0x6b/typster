@@ -69,7 +69,22 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
     let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| match res {
         Ok(event) => {
             if let Modify(Data(DataChange::Content)) = event.kind {
-                if event.paths.iter().any(|p| p.extension().unwrap() == "pdf") {
+                let changed = !event
+                    .paths
+                    .iter()
+                    .filter_map(|p| p.extension())
+                    .map(|e| e.to_string_lossy().to_lowercase().to_string())
+                    .filter(|e| {
+                        e == "typ"
+                            || e == "png"
+                            || e == "jpg"
+                            || e == "jpeg"
+                            || e == "gif"
+                            || e == "svg"
+                    })
+                    .collect::<Vec<_>>()
+                    .is_empty();
+                if !changed {
                     return;
                 }
                 print!("Change detected. Recompiling...");
