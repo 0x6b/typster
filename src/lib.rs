@@ -6,6 +6,7 @@ mod package;
 mod set_permission;
 mod update_metadata;
 mod version;
+pub mod watch;
 mod world;
 
 pub use compile::{compile, CompileParams};
