@@ -69,6 +69,9 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
     let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| match res {
         Ok(event) => {
             if let Modify(Data(DataChange::Content)) = event.kind {
+                if event.paths.iter().any(|p| p.extension().unwrap() == "pdf") {
+                    return;
+                }
                 print!("Change detected. Recompiling...");
                 match crate::compile(&params) {
                     Ok(duration) => println!("compilation succeeded in {duration:?}"),
@@ -80,7 +83,7 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
         Err(e) => println!("watch error: {:?}", e),
     })?;
 
-    watcher.watch(&input, RecursiveMode::NonRecursive)?;
+    watcher.watch(input.parent().unwrap(), RecursiveMode::Recursive)?;
     axum::serve(listener, router).await?;
 
     Ok(())
