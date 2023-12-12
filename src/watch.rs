@@ -26,7 +26,7 @@ pub struct SharedState {
     pub changed: Notify,
 }
 
-pub async fn start_server(params: &CompileParams, open: bool) -> Result<(), Box<dyn Error>> {
+pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Error>> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
     let address = listener.local_addr()?.ip().to_string();

@@ -6,7 +6,7 @@ mod package;
 mod set_permission;
 mod update_metadata;
 mod version;
-pub mod watch;
+mod watch;
 mod world;
 
 pub use compile::{compile, CompileParams};
@@ -15,3 +15,4 @@ pub use format::{format, FormatParams};
 pub use set_permission::{set_permission, PermissionParams};
 pub use update_metadata::{update_metadata, PdfMetadata};
 pub use version::typst_version;
+pub use watch::watch;
