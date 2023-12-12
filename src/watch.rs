@@ -26,6 +26,13 @@ pub struct SharedState {
     pub changed: Notify,
 }
 
+/// Starts a web server that serves the output PDF file, while watching for changes in the input
+/// Typst file and recompiles when a change is detected.
+///
+/// # Arguments
+///
+/// - `params` - CompileParams struct.
+/// - `open` - Whether to open the output PDF file in the default browser.
 pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Error>> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
