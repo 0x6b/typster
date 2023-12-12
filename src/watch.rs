@@ -26,7 +26,7 @@ pub struct SharedState {
     pub changed: Notify,
 }
 
-pub async fn start_server(params: &CompileParams) -> Result<(), Box<dyn Error>> {
+pub async fn start_server(params: &CompileParams, open: bool) -> Result<(), Box<dyn Error>> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
     let address = listener.local_addr()?.ip().to_string();
@@ -51,6 +51,13 @@ pub async fn start_server(params: &CompileParams) -> Result<(), Box<dyn Error>> 
         .route("/listen", get(listen))
         .with_state(Arc::clone(&state));
     println!("Listening on {}:{}", state.address, state.port);
+
+    if open {
+        match open::that_detached(format!("http://{}:{}", state.address, state.port)) {
+            Ok(_) => println!("Opened in default browser"),
+            Err(why) => eprintln!("{why}"),
+        }
+    }
 
     let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| match res {
         Ok(event) => {
