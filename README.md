@@ -66,7 +66,7 @@ The crate provides the following features to embed additional fonts in the binar
 ```toml
 # Cargo.toml
 [dependencies]
-typster = { git = "https://github.com/0x6b/typster", tag = "v0.22.0", features = ["embed_additional_fonts"] }
+typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = ["full"] }
 ```
 
 ### Compiling a document
@@ -74,7 +74,7 @@ typster = { git = "https://github.com/0x6b/typster", tag = "v0.22.0", features =
 See [`examples/compile.rs`](examples/compile.rs).
 
 ```console
-$ cargo run --example compile --features embed_additional_fonts
+$ cargo run --example compile --features compile,embed_additional_fonts
 ```
 
 ### Formatting a document
@@ -82,7 +82,7 @@ $ cargo run --example compile --features embed_additional_fonts
 See [`examples/format.rs`](examples/format.rs).
 
 ```console
-$ cargo run --example format
+$ cargo run --example format --features format
 ```
 
 ### Setting PDF permission
@@ -90,7 +90,7 @@ $ cargo run --example format
 See [`examples/set_permission.rs`](examples/set_permission.rs).
 
 ```console
-$ cargo run --example set_permission
+$ cargo run --example set_permission --features pdf_permission
 ```
 
 ### Updating PDF metadata
@@ -98,7 +98,7 @@ $ cargo run --example set_permission
 See [`examples/update_metadata.rs`](examples/update_metadata.rs).
 
 ```console
-$ cargo run --example update_metadata
+$ cargo run --example update_metadata --features pdf_metadata
 ```
 
 ### Watching changes for hot reloading
@@ -106,7 +106,7 @@ $ cargo run --example update_metadata
 See [`examples/watch.rs`](examples/watch.rs).
 
 ```console
-$ cargo run --example watch
+$ cargo run --example watch --features watch
 ```
 
 ## License
