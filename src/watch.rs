@@ -15,9 +15,11 @@ use notify::{
     EventKind::Modify,
     RecursiveMode, Watcher,
 };
-use tokio::{fs, net::TcpListener, sync::Notify};
+use tokio::{fs, net::TcpListener, select, sync::Notify};
 
-use std::{error::Error, net::SocketAddr, path::PathBuf, sync::Arc};
+use std::{
+    error::Error, fs::remove_file, future::IntoFuture, net::SocketAddr, path::PathBuf, sync::Arc,
+};
 
 pub struct SharedState {
     pub port: u16,
@@ -25,6 +27,7 @@ pub struct SharedState {
     pub input: PathBuf,
     pub output: PathBuf,
     pub changed: Notify,
+    pub shutdown: Notify,
 }
 
 // list of supported extensions
@@ -63,7 +66,10 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
         input: input.clone(),
         output,
         changed: Notify::new(),
+        shutdown: Notify::new(),
     });
+    let state_handler = Arc::clone(&state);
+    let state_selector = Arc::clone(&state);
 
     let router = Router::new()
         .route("/", get(root))
@@ -78,6 +84,17 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
             Err(why) => eprintln!("{why}"),
         }
     }
+
+    tokio::spawn(async move {
+        println!("Press Ctrl+C to exit");
+        async {
+            tokio::signal::ctrl_c()
+                .await
+                .expect("Failed to register handler for Ctrl+C");
+        }
+        .await;
+        state_handler.shutdown.notify_waiters();
+    });
 
     let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| match res {
         Ok(event) => {
@@ -103,10 +120,19 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
         }
         Err(e) => println!("watch error: {:?}", e),
     })?;
-
     watcher.watch(input.parent().unwrap(), RecursiveMode::Recursive)?;
-    axum::serve(listener, router).await?;
+    let server = axum::serve(listener, router).into_future();
 
+    select! {
+        _ = server => {}
+        _ = state_selector.shutdown.notified() => {
+            println!("\nShutting down...");
+            watcher.unwatch(input.parent().unwrap())?;
+            remove_file(&state_selector.output)?;
+        }
+    }
+
+    println!("Bye!");
     Ok(())
 }
 
