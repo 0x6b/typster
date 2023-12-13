@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.25.1"
+version = "0.26.0"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -44,6 +44,14 @@ qpdf = "0.1.7"
 # Ser/de support
 serde = { version = "1.0.193", features = ["derive"] }
 
+# Watch server
+axum = { version = "0.7.2", features = ["ws"] }
+tokio = { version = "1.35.0", features = ["rt-multi-thread", "net", "fs"] }
+notify = "6.1.1"
+
+# Open in browser
+open = "5.0.1"
+
 [features]
 # Enable these features to embed fonts into the binary.
 ## assets/cmunrm.ttf
@@ -71,3 +79,6 @@ embed_additional_fonts = [
 [build-dependencies]
 toml = "0.8.8"
 serde = { version = "1.0.193", features = ["derive"] }
+
+[dev-dependencies]
+tokio = { version = "1.35.0", features = ["net"] }
