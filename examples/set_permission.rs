@@ -1,6 +1,6 @@
 use std::{error::Error, path::PathBuf};
 
-use typster::PermissionParams;
+use typster::{PermissionParams, PrintPermission};
 
 fn main() -> Result<(), Box<dyn Error>> {
     typster::set_permission(
@@ -12,6 +12,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .join("sample-protected.pdf"),
         &PermissionParams {
             owner_password: "owner".to_string(),
+            allow_print: PrintPermission::None,
             ..Default::default()
         },
     )
