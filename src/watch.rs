@@ -27,6 +27,12 @@ pub struct SharedState {
     pub changed: Notify,
 }
 
+// list of supported extensions
+const EXTENSIONS: [&str; 16] = [
+    "typ", "png", "jpg", "jpeg", "gif", "svg", "cbor", "csv", "json", "txt", "html", "htm", "toml",
+    "xml", "yml", "yaml",
+];
+
 /// Starts a web server that serves the output PDF file, while watching for changes in the input
 /// Typst file and recompiles when a change is detected.
 ///
@@ -80,15 +86,8 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
                     .paths
                     .iter()
                     .filter_map(|p| p.extension())
-                    .map(|e| e.to_string_lossy().to_lowercase().to_string())
-                    .filter(|e| {
-                        e == "typ"
-                            || e == "png"
-                            || e == "jpg"
-                            || e == "jpeg"
-                            || e == "gif"
-                            || e == "svg"
-                    })
+                    .map(|e| e.to_string_lossy().to_lowercase())
+                    .filter(|e| EXTENSIONS.contains(&e.as_str()))
                     .collect::<Vec<_>>()
                     .is_empty();
                 if !changed {

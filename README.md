@@ -93,7 +93,7 @@ $ cargo run --example set_permission --features pdf_permission
 
 ### `watch`
 
-You'll be able to preview your Typst document live. Changes for `.typ`, `.png`, `.jpg`, `.jpeg`, `.gif`, and `.svg` files in the same directory will be watched, recursively. This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
+You'll be able to preview your Typst document live. Changes for files with extension is `typ`, `png`, `jpg`, `jpeg`, `gif`, `svg`, `cbor`, `csv`, `json`, `txt`, `html`, `htm`, `toml`, `xml`, `yml`, and `yaml` files in the same directory will be watched, recursively. This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
 
 See [`examples/watch.rs`](examples/watch.rs).
 
