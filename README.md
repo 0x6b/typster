@@ -123,20 +123,20 @@ You can embed additional fonts in the binary for easier deployment.
 
 ## License
 
-- The crate itself is licensed under the Apache License version 2.0, as same as [typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
+- The crate itself is licensed under the Apache License version 2.0, as same as [Typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
 - Fonts in the [assets/](assets) directory are licensed under its own license.
 
-  | Fonts                              | License                                                                                                                 |
-  |------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-  | `assets/cmunrm.ttf`                | [LICENSE](https://www.fontsquirrel.com/fonts/computer-modern)                                                           |
-  | `assets/DejaVuSansMono*.ttf`       | [LICENSE](https://github.com/dejavu-fonts/dejavu-fonts/blob/9b5d1b2ffeec20c7b46aa89c0223d783c02762cf/LICENSE)           |
-  | `assets/iAWriterDuoS-*.ttf`        | [LICENSE](https://github.com/iaolo/iA-Fonts/blob/f32c04c3058a75d7ce28919ce70fe8800817491b/iA%20Writer%20Duo/LICENSE.md) |
-  | `assets/LinLibertine_*.ttf`        | [LICENSE](https://linuxlibertine.sourceforge.net/Libertine-EN.html#licence)                                             |
-  | `assets/NewCM*.otf`                | [LICENSE](https://ctan.org/tex-archive/fonts/newcomputermodern)                                                         |
-  | `assets/NotoSansJP-*.ttf`          | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Sans+JP/about)                                                    |
-  | `assets/NotoSerifJP-*.otf`         | [LICENSE](https://fonts.google.com/noto/specimen/Noto+Serif+JP/about)                                                   |
-  | `assets/recursive-static-OTFs.otc` | [LICENSE](https://github.com/arrowtype/recursive/blob/a6821a9e15b05dea641365a8956bb1f9bd574583/OFL.txt)                 |
-  | `assets/SourceCodePro-*.ttf`       | [LICENSE](https://fonts.google.com/specimen/Source+Code+Pro/about)                                                      |
+  | Fonts                              | License                                                          |
+  |------------------------------------|------------------------------------------------------------------|
+  | `assets/cmunrm.ttf`                | [LICENSE](assets/fonts/ComputerModern/SIL Open Font License.txt) |
+  | `assets/DejaVuSansMono*.ttf`       | [LICENSE](assets/fonts/DejaVu/LICENSE)                           |
+  | `assets/iAWriterDuoS-*.ttf`        | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                   |
+  | `assets/LinLibertine_*.ttf`        | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)               |
+  | `assets/NewCM*.otf`                | [LICENSE](assets/fonts/NewComputerModern/GUST-FONT-LICENSE.txt)  |
+  | `assets/NotoSansJP-*.ttf`          | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                       |
+  | `assets/NotoSerifJP-*.otf`         | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                      |
+  | `assets/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                        |
+  | `assets/SourceCodePro-*.ttf`       | [LICENSE](assets/fonts/SourceCodePro/OFL.txt)                    |
 
 ## References
 

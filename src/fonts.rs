@@ -109,81 +109,81 @@ impl FontSearcher {
 
         macro_rules! add {
             ($filename:literal) => {
-                process(include_bytes!(concat!("../assets/", $filename)));
+                process(include_bytes!(concat!("../assets/fonts/", $filename)));
             };
         }
 
         // Embed default fonts.
-        add!("LinLibertine_R.ttf");
-        add!("LinLibertine_RB.ttf");
-        add!("LinLibertine_RBI.ttf");
-        add!("LinLibertine_RI.ttf");
-        add!("NewCMMath-Book.otf");
-        add!("NewCMMath-Regular.otf");
-        add!("NewCM10-Regular.otf");
-        add!("NewCM10-Bold.otf");
-        add!("NewCM10-Italic.otf");
-        add!("NewCM10-BoldItalic.otf");
-        add!("DejaVuSansMono.ttf");
-        add!("DejaVuSansMono-Bold.ttf");
-        add!("DejaVuSansMono-Oblique.ttf");
-        add!("DejaVuSansMono-BoldOblique.ttf");
+        add!("LinuxLibertine/LinLibertine_R.ttf");
+        add!("LinuxLibertine/LinLibertine_RB.ttf");
+        add!("LinuxLibertine/LinLibertine_RBI.ttf");
+        add!("LinuxLibertine/LinLibertine_RI.ttf");
+        add!("NewComputerModern/NewCMMath-Book.otf");
+        add!("NewComputerModern/NewCMMath-Regular.otf");
+        add!("NewComputerModern/NewCM10-Regular.otf");
+        add!("NewComputerModern/NewCM10-Bold.otf");
+        add!("NewComputerModern/NewCM10-Italic.otf");
+        add!("NewComputerModern/NewCM10-BoldItalic.otf");
+        add!("DejaVu/DejaVuSansMono.ttf");
+        add!("DejaVu/DejaVuSansMono-Bold.ttf");
+        add!("DejaVu/DejaVuSansMono-Oblique.ttf");
+        add!("DejaVu/DejaVuSansMono-BoldOblique.ttf");
 
         #[cfg(feature = "embed_cmu_roman")]
         {
-            add!("cmunrm.ttf");
+            add!("ComputerModern/cmunrm.ttf");
         }
         #[cfg(feature = "embed_ia_writer_duo")]
         {
-            add!("iAWriterDuoS-Bold.ttf");
-            add!("iAWriterDuoS-BoldItalic.ttf");
-            add!("iAWriterDuoS-Italic.ttf");
-            add!("iAWriterDuoS-Regular.ttf");
+            add!("iAWriterDuo/iAWriterDuoS-Bold.ttf");
+            add!("iAWriterDuo/iAWriterDuoS-BoldItalic.ttf");
+            add!("iAWriterDuo/iAWriterDuoS-Italic.ttf");
+            add!("iAWriterDuo/iAWriterDuoS-Regular.ttf");
         }
         #[cfg(feature = "embed_noto_sans_jp")]
         {
-            add!("NotoSansJP-Black.ttf");
-            add!("NotoSansJP-Bold.ttf");
-            add!("NotoSansJP-ExtraBold.ttf");
-            add!("NotoSansJP-ExtraLight.ttf");
-            add!("NotoSansJP-Light.ttf");
-            add!("NotoSansJP-Medium.ttf");
-            add!("NotoSansJP-Regular.ttf");
-            add!("NotoSansJP-SemiBold.ttf");
-            add!("NotoSansJP-Thin.ttf");
+            add!("NotoSansJP/NotoSansJP-Black.ttf");
+            add!("NotoSansJP/NotoSansJP-Bold.ttf");
+            add!("NotoSansJP/NotoSansJP-ExtraBold.ttf");
+            add!("NotoSansJP/NotoSansJP-ExtraLight.ttf");
+            add!("NotoSansJP/NotoSansJP-Light.ttf");
+            add!("NotoSansJP/NotoSansJP-Medium.ttf");
+            add!("NotoSansJP/NotoSansJP-Regular.ttf");
+            add!("NotoSansJP/NotoSansJP-SemiBold.ttf");
+            add!("NotoSansJP/NotoSansJP-Thin.ttf");
         }
         #[cfg(feature = "embed_noto_serif_jp")]
         {
-            add!("NotoSerifJP-Black.ttf");
-            add!("NotoSerifJP-Bold.ttf");
-            add!("NotoSerifJP-ExtraLight.ttf");
-            add!("NotoSerifJP-Light.ttf");
-            add!("NotoSerifJP-Medium.ttf");
-            add!("NotoSerifJP-Regular.ttf");
-            add!("NotoSerifJP-SemiBold.ttf");
+            add!("NotoSerifJP/NotoSerifJP-Black.ttf");
+            add!("NotoSerifJP/NotoSerifJP-Bold.ttf");
+            add!("NotoSerifJP/NotoSerifJP-ExtraLight.ttf");
+            add!("NotoSerifJP/NotoSerifJP-Light.ttf");
+            add!("NotoSerifJP/NotoSerifJP-Medium.ttf");
+            add!("NotoSerifJP/NotoSerifJP-Regular.ttf");
+            add!("NotoSerifJP/NotoSerifJP-SemiBold.ttf");
         }
         #[cfg(feature = "embed_recursive")]
         {
-            add!("recursive-static-OTFs.otc");
+            add!("Recursive/recursive-static-OTFs.otc");
         }
         #[cfg(feature = "embed_source_code_pro")]
         {
-            add!("SourceCodePro-Black.ttf");
-            add!("SourceCodePro-BlackItalic.ttf");
-            add!("SourceCodePro-Bold.ttf");
-            add!("SourceCodePro-BoldItalic.ttf");
-            add!("SourceCodePro-ExtraBold.ttf");
-            add!("SourceCodePro-ExtraBoldItalic.ttf");
-            add!("SourceCodePro-ExtraLight.ttf");
-            add!("SourceCodePro-ExtraLightItalic.ttf");
-            add!("SourceCodePro-Italic.ttf");
-            add!("SourceCodePro-Light.ttf");
-            add!("SourceCodePro-LightItalic.ttf");
-            add!("SourceCodePro-Medium.ttf");
-            add!("SourceCodePro-MediumItalic.ttf");
-            add!("SourceCodePro-Regular.ttf");
-            add!("SourceCodePro-SemiBold.ttf");
-            add!("SourceCodePro-SemiBoldItalic.ttf");
+            add!("SourceCodePro/SourceCodePro-Black.ttf");
+            add!("SourceCodePro/SourceCodePro-BlackItalic.ttf");
+            add!("SourceCodePro/SourceCodePro-Bold.ttf");
+            add!("SourceCodePro/SourceCodePro-BoldItalic.ttf");
+            add!("SourceCodePro/SourceCodePro-ExtraBold.ttf");
+            add!("SourceCodePro/SourceCodePro-ExtraBoldItalic.ttf");
+            add!("SourceCodePro/SourceCodePro-ExtraLight.ttf");
+            add!("SourceCodePro/SourceCodePro-ExtraLightItalic.ttf");
+            add!("SourceCodePro/SourceCodePro-Italic.ttf");
+            add!("SourceCodePro/SourceCodePro-Light.ttf");
+            add!("SourceCodePro/SourceCodePro-LightItalic.ttf");
+            add!("SourceCodePro/SourceCodePro-Medium.ttf");
+            add!("SourceCodePro/SourceCodePro-MediumItalic.ttf");
+            add!("SourceCodePro/SourceCodePro-Regular.ttf");
+            add!("SourceCodePro/SourceCodePro-SemiBold.ttf");
+            add!("SourceCodePro/SourceCodePro-SemiBoldItalic.ttf");
         }
     }
 }
