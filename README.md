@@ -21,7 +21,7 @@ You can compile a Typst document to a PDF or a PNG file; a limited subset of [ty
 See [`examples/compile.rs`](examples/compile.rs).
 
 ```console
-$ cargo run --example compile --features compile,embed_additional_fonts
+$ cargo run --example compile --features embed_additional_fonts
 ```
 
 ### `format`
@@ -105,7 +105,7 @@ This feature also enables `compile` feature.
 
 ### Embedding fonts
 
-You can embed additional fonts in the binary for easier deployment.
+You can embed additional fonts in the binary for easier deployment. Each feature also enables `compile` feature.
 
 - `embed_cmu_roman`: [Computer Modern Roman](https://www.fontsquirrel.com/fonts/computer-modern)
 - `embed_ia_writer_duo`: [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)

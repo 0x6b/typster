@@ -61,26 +61,26 @@ tokio = { version = "1.35.0", features = ["net"] }
 
 [features]
 # Enable these features to embed fonts into the binary.
-## assets/cmunrm.ttf
-embed_cmu_roman = []
-## assets/iAWriterDuoS-*
-embed_ia_writer_duo = []
-## assets/NotoSansJP-*
-embed_noto_sans_jp = []
-## assets/NotoSerifJP-*
-embed_noto_serif_jp = []
-## assets/SourceCodePro-*
-embed_source_code_pro = []
-## assets/recursive-static-OTFs.otc
-embed_recursive = []
+## assets/fonts/ComputerModern/cmunrm.ttf
+embed_cmu_roman = ["compile"]
+## assets/fonts/iAWriterDuo/iAWriterDuoS-*
+embed_ia_writer_duo = ["compile"]
+## assets/fonts/NotoSansJP/NotoSansJP-*
+embed_noto_sans_jp = ["compile"]
+## assets/fonts/NotoSerifJP/NotoSerifJP-*
+embed_noto_serif_jp = ["compile"]
+## assets/fonts/Recursive/recursive-static-OTFs.otc
+embed_recursive = ["compile"]
+## assets/fonts/SourceCodePro/SourceCodePro-*
+embed_source_code_pro = ["compile"]
 ## all of the above
 embed_additional_fonts = [
     "embed_cmu_roman",
     "embed_ia_writer_duo",
     "embed_noto_sans_jp",
     "embed_noto_serif_jp",
-    "embed_source_code_pro",
     "embed_recursive",
+    "embed_source_code_pro",
 ]
 
 # Enable these features to select capabilities.
