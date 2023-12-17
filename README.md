@@ -103,7 +103,7 @@ $ cargo run --example watch --features watch
 
 This feature also enables `compile` feature.
 
-### Embedding fonts
+### Embedding Fonts
 
 You can embed additional fonts in the binary for easier deployment. Each feature also enables `compile` feature.
 
