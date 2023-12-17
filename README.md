@@ -5,10 +5,11 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
 ## Usage
 
 ```toml
-# Cargo.toml
-[dependencies]
 typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = ["full"] }
 ```
+
+> [!Note]
+> Since the Typst related crates on [crates.io](https://crates.io) are just a placeholders, I cannot publish this crate there as well, since [no one can publish a crate that depends on git repositories](https://github.com/rust-lang/cargo/issues/6738#issuecomment-472224210).
 
 ## Crate Features
 
