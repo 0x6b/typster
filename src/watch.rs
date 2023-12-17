@@ -32,8 +32,8 @@ pub struct SharedState {
 
 // list of supported extensions
 const EXTENSIONS: [&str; 16] = [
-    "typ", "png", "jpg", "jpeg", "gif", "svg", "cbor", "csv", "json", "txt", "html", "htm", "toml",
-    "xml", "yml", "yaml",
+    "cbor", "csv", "gif", "htm", "html", "jpeg", "jpg", "json", "png", "svg", "toml", "txt", "typ",
+    "xml", "yaml", "yml",
 ];
 
 /// Starts a web server that serves the output PDF file, while watching for changes in the input
