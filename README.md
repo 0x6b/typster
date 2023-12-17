@@ -129,7 +129,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 
   | Fonts                                              | License                                                          |
   |----------------------------------------------------|------------------------------------------------------------------|
-  | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL Open Font License.txt) |
+  | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
   | `assets/fonts/DejaVu/DejaVuSansMono*.ttf`          | [LICENSE](assets/fonts/DejaVu/LICENSE)                           |
   | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                   |
   | `assets/fonts/LinuxLibertine/LinLibertine_*.ttf`   | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)               |
