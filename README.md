@@ -5,20 +5,21 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
 ## Usage
 
 ```toml
-# Cargo.toml
-[dependencies]
 typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = ["full"] }
 ```
 
+> [!Note]
+> Since the Typst related crates on [crates.io](https://crates.io) are just a placeholders, I cannot publish this crate there as well, since [no one can publish a crate that depends on git repositories](https://github.com/rust-lang/cargo/issues/6738#issuecomment-472224210).
+
 ## Crate Features
 
-Specify `full` to enable all of the following features. Note that embedding fonts will produce a large binary.
+Specify `full` to enable all the following features. Note that embedding fonts will produce a large binary.
 
 ### `compile`
 
 You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.10.0/crates/typst-cli) [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0).
 
-See [`examples/compile.rs`](examples/compile.rs).
+See [`examples/compile.rs`](examples/compile.rs) for usage.
 
 ```console
 $ cargo run --example compile --features embed_additional_fonts
@@ -28,7 +29,7 @@ $ cargo run --example compile --features embed_additional_fonts
 
 You can format a Typst document; a thin wrapper of [typstfmt](https://github.com/astrale-sharp/typstfmt).
 
-See [`examples/format.rs`](examples/format.rs).
+See [`examples/format.rs`](examples/format.rs) for usage.
 
 ```console
 $ cargo run --example format --features format
@@ -64,7 +65,7 @@ You can specify some of them with Typst. As of Typst [v0.10.0](https://github.co
 
 See [Document Function – Typst Documentation](https://typst.app/docs/reference/meta/document/#parameters-keywords) for details.
 
-See [`examples/update_metadata.rs`](examples/update_metadata.rs).
+See [`examples/update_metadata.rs`](examples/update_metadata.rs) for usage.
 
 ```console
 $ cargo run --example update_metadata --features pdf_metadata
@@ -85,7 +86,7 @@ You can set PDF permission update. Following PDF 1.7 permissions are supported:
 - printing (high, low, or disallow).
 - encrypt metadata.
 
-See [`examples/set_permission.rs`](examples/set_permission.rs).
+See [`examples/set_permission.rs`](examples/set_permission.rs) for usage.
 
 ```console
 $ cargo run --example set_permission --features pdf_permission
@@ -95,7 +96,7 @@ $ cargo run --example set_permission --features pdf_permission
 
 You'll be able to preview your Typst document live. Changes for `typ` file, along with files with extension `cbor`, `csv`, `gif`, `htm`, `html`, `jpeg`, `jpg`, `json`, `png`, `svg`, `toml`, `txt`, `xml`, `yaml`, and `yml` in the same directory, recursively, will be watched. This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
 
-See [`examples/watch.rs`](examples/watch.rs).
+See [`examples/watch.rs`](examples/watch.rs) for usage.
 
 ```console
 $ cargo run --example watch --features watch
@@ -103,7 +104,7 @@ $ cargo run --example watch --features watch
 
 This feature also enables `compile` feature.
 
-### Embedding fonts
+### Embedding Fonts
 
 You can embed additional fonts in the binary for easier deployment. Each feature also enables `compile` feature.
 
@@ -119,28 +120,32 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 > typst-cli [defaults](https://github.com/typst/typst/blob/0.10/crates/typst-cli/src/fonts.rs#L126-L140) are always embedded.
 
 > [!Warning]
-> The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via `CompileParams.font_paths`.
+> The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
 
 ## License
 
 - The crate itself is licensed under the Apache License version 2.0, as same as [Typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
-- Fonts in the [assets/](assets) directory are licensed under its own license.
+- Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
-  | Fonts                              | License                                                          |
-  |------------------------------------|------------------------------------------------------------------|
-  | `assets/cmunrm.ttf`                | [LICENSE](assets/fonts/ComputerModern/SIL Open Font License.txt) |
-  | `assets/DejaVuSansMono*.ttf`       | [LICENSE](assets/fonts/DejaVu/LICENSE)                           |
-  | `assets/iAWriterDuoS-*.ttf`        | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                   |
-  | `assets/LinLibertine_*.ttf`        | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)               |
-  | `assets/NewCM*.otf`                | [LICENSE](assets/fonts/NewComputerModern/GUST-FONT-LICENSE.txt)  |
-  | `assets/NotoSansJP-*.ttf`          | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                       |
-  | `assets/NotoSerifJP-*.otf`         | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                      |
-  | `assets/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                        |
-  | `assets/SourceCodePro-*.ttf`       | [LICENSE](assets/fonts/SourceCodePro/OFL.txt)                    |
+  | Fonts                                              | License                                                          |
+  |----------------------------------------------------|------------------------------------------------------------------|
+  | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL Open Font License.txt) |
+  | `assets/fonts/DejaVu/DejaVuSansMono*.ttf`          | [LICENSE](assets/fonts/DejaVu/LICENSE)                           |
+  | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                   |
+  | `assets/fonts/LinuxLibertine/LinLibertine_*.ttf`   | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)               |
+  | `assets/fonts/NewComputerModern/NewCM*.otf`        | [LICENSE](assets/fonts/NewComputerModern/GUST-FONT-LICENSE.txt)  |
+  | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                       |
+  | `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`       | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                      |
+  | `assets/fonts/Recursive/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                        |
+  | `assets/fonts/SourceCodePro/SourceCodePro-*.ttf`   | [LICENSE](assets/fonts/SourceCodePro/OFL.txt)                    |
 
-## References
+## Acknowledgements
 
 - [typst/typst](https://github.com/typst/typst/)
 - [astrale-sharp/typstfmt](https://github.com/astrale-sharp/typstfmt)
 - [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/)
+- All the fonts authors and contributors
+
+## Reference
+
 - [Extensible Metadata Platform (XMP) Specification: Part 1, Data Model, Serialization, and Core Properties](https://github.com/adobe/XMP-Toolkit-SDK/blob/main/docs/XMPSpecificationPart1.pdf), April, 2012
