@@ -18,7 +18,7 @@ Specify `full` to enable all of the following features. Note that embedding font
 
 You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.10.0/crates/typst-cli) [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0).
 
-See [`examples/compile.rs`](examples/compile.rs).
+See [`examples/compile.rs`](examples/compile.rs) for usage.
 
 ```console
 $ cargo run --example compile --features embed_additional_fonts
@@ -28,7 +28,7 @@ $ cargo run --example compile --features embed_additional_fonts
 
 You can format a Typst document; a thin wrapper of [typstfmt](https://github.com/astrale-sharp/typstfmt).
 
-See [`examples/format.rs`](examples/format.rs).
+See [`examples/format.rs`](examples/format.rs) for usage.
 
 ```console
 $ cargo run --example format --features format
@@ -64,7 +64,7 @@ You can specify some of them with Typst. As of Typst [v0.10.0](https://github.co
 
 See [Document Function – Typst Documentation](https://typst.app/docs/reference/meta/document/#parameters-keywords) for details.
 
-See [`examples/update_metadata.rs`](examples/update_metadata.rs).
+See [`examples/update_metadata.rs`](examples/update_metadata.rs) for usage.
 
 ```console
 $ cargo run --example update_metadata --features pdf_metadata
@@ -85,7 +85,7 @@ You can set PDF permission update. Following PDF 1.7 permissions are supported:
 - printing (high, low, or disallow).
 - encrypt metadata.
 
-See [`examples/set_permission.rs`](examples/set_permission.rs).
+See [`examples/set_permission.rs`](examples/set_permission.rs) for usage.
 
 ```console
 $ cargo run --example set_permission --features pdf_permission
@@ -95,7 +95,7 @@ $ cargo run --example set_permission --features pdf_permission
 
 You'll be able to preview your Typst document live. Changes for `typ` file, along with files with extension `cbor`, `csv`, `gif`, `htm`, `html`, `jpeg`, `jpg`, `json`, `png`, `svg`, `toml`, `txt`, `xml`, `yaml`, and `yml` in the same directory, recursively, will be watched. This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
 
-See [`examples/watch.rs`](examples/watch.rs).
+See [`examples/watch.rs`](examples/watch.rs) for usage.
 
 ```console
 $ cargo run --example watch --features watch
