@@ -138,9 +138,13 @@ You can embed additional fonts in the binary for easier deployment. Each feature
   | `assets/fonts/Recursive/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                        |
   | `assets/fonts/SourceCodePro/SourceCodePro-*.ttf`   | [LICENSE](assets/fonts/SourceCodePro/OFL.txt)                    |
 
-## References
+## Acknowledgements
 
 - [typst/typst](https://github.com/typst/typst/)
 - [astrale-sharp/typstfmt](https://github.com/astrale-sharp/typstfmt)
 - [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/)
+- All the fonts authors and contributors
+
+## Reference
+
 - [Extensible Metadata Platform (XMP) Specification: Part 1, Data Model, Serialization, and Core Properties](https://github.com/adobe/XMP-Toolkit-SDK/blob/main/docs/XMPSpecificationPart1.pdf), April, 2012
