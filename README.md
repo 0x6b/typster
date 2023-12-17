@@ -12,7 +12,7 @@ typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = 
 
 ## Crate Features
 
-Specify `full` to enable all of the following features. Note that embedding fonts will produce a large binary.
+Specify `full` to enable all the following features. Note that embedding fonts will produce a large binary.
 
 ### `compile`
 
