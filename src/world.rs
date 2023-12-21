@@ -12,16 +12,18 @@ use comemo::Prehashed;
 use filetime::FileTime;
 use same_file::Handle;
 use siphasher::sip128::{Hasher128, SipHasher13};
-use typst::foundations::{Bytes, Datetime};
-use typst::text::{Font, FontBook};
 use typst::{
     diag::{FileError, FileResult},
+    foundations::{Bytes, Datetime},
     syntax::{FileId, Source, VirtualPath},
+    text::{Font, FontBook},
     Library, World,
 };
 
-use crate::fonts::{FontSearcher, FontSlot};
-use crate::package::prepare_package;
+use crate::{
+    fonts::{FontSearcher, FontSlot},
+    package::prepare_package,
+};
 
 /// A world that provides access to the operating system.
 pub struct SystemWorld {

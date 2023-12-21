@@ -3,6 +3,7 @@ use std::{
     path::{Path, PathBuf},
     time::Duration,
 };
+
 use typst::{eval::Tracer, model::Document, visualize::Color, World};
 
 use crate::world::SystemWorld;

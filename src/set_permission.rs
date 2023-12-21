@@ -1,5 +1,4 @@
-use std::fmt::Display;
-use std::{error::Error, path::PathBuf};
+use std::{error::Error, fmt::Display, path::PathBuf};
 
 use qpdf::{EncryptionParams, EncryptionParamsR6};
 use serde::{Deserialize, Serialize};
