@@ -1,5 +1,4 @@
-use std::path::PathBuf;
-use std::str::FromStr;
+use std::{path::PathBuf, str::FromStr};
 
 fn main() {
     typster::export_fonts(&Vec::new(), &PathBuf::from_str("fonts").unwrap())

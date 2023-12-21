@@ -1,4 +1,3 @@
-use serde::Deserialize;
 use std::{
     env::var,
     error::Error,
@@ -6,6 +5,8 @@ use std::{
     io::{Read, Write},
     path::Path,
 };
+
+use serde::Deserialize;
 
 #[derive(Deserialize)]
 struct Package {

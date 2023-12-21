@@ -1,7 +1,9 @@
-use ecow::eco_format;
-use std::fs;
-use std::path::{Path, PathBuf};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
+use ecow::eco_format;
 use typst::{
     diag::{PackageError, PackageResult},
     syntax::PackageSpec,

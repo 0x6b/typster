@@ -1,4 +1,7 @@
-use crate::CompileParams;
+use std::{
+    error::Error, fs::remove_file, future::IntoFuture, net::SocketAddr, path::PathBuf, sync::Arc,
+};
+
 use axum::{
     body::Body,
     extract::{
@@ -17,9 +20,7 @@ use notify::{
 };
 use tokio::{fs, net::TcpListener, select, sync::Notify};
 
-use std::{
-    error::Error, fs::remove_file, future::IntoFuture, net::SocketAddr, path::PathBuf, sync::Arc,
-};
+use crate::CompileParams;
 
 pub struct SharedState {
     pub port: u16,

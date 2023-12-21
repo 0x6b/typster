@@ -7,6 +7,7 @@ use std::{
     io::{self, ErrorKind, Read, Stderr, Write},
     time::{Duration, Instant},
 };
+
 use ureq::Response;
 
 /// Keep track of this many download speed samples.
