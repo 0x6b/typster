@@ -22,7 +22,7 @@ comemo = { version = "0.3.1", optional = true }
 dirs = { version = "5.0.1", optional = true }
 ecow = { version = "0.2.0", optional = true }
 env_proxy = { version = "0.4.1", optional = true }
-filetime = { version = "0.2.22", optional = true }
+filetime = { version = "0.2.23", optional = true }
 flate2 = { version = "1.0.28", optional = true }
 fontdb = { version = "0.16.0", optional = true }
 same-file = { version = "1.0.6", optional = true }
@@ -32,7 +32,7 @@ typst = { git = "https://github.com/typst/typst", tag = "v0.10.0", optional = tr
 typst-pdf = { git = "https://github.com/typst/typst", tag = "v0.10.0", optional = true }
 typst-render = { git = "https://github.com/typst/typst", tag = "v0.10.0", optional = true }
 typstfmt_lib = { git = "https://github.com/astrale-sharp/typstfmt/", tag = "0.2.6", optional = true }
-ureq = { version = "2.8.0", optional = true }
+ureq = { version = "2.9.1", optional = true }
 
 # PDF metadata management
 lopdf = { version = "0.31.0", optional = true }
@@ -46,7 +46,7 @@ serde = { version = "1.0.193", features = ["derive"] }
 
 # Watch server
 axum = { version = "0.7.2", features = ["ws"], optional = true }
-tokio = { version = "1.35.0", features = ["rt-multi-thread", "net", "fs", "signal", "macros"], optional = true }
+tokio = { version = "1.35.1", features = ["rt-multi-thread", "net", "fs", "signal", "macros"], optional = true }
 notify = { version = "6.1.1", optional = true }
 
 # Open in browser
@@ -57,7 +57,7 @@ toml = "0.8.8"
 serde = { version = "1.0.193", features = ["derive"] }
 
 [dev-dependencies]
-tokio = { version = "1.35.0", features = ["net"] }
+tokio = { version = "1.35.1", features = ["net"] }
 
 [features]
 full = [
