@@ -240,8 +240,7 @@ pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
         .collect::<_>()
 }
 
-/// Export all fonts available for the library. This is sometime useful for debugging, or for
-/// running `typst watch` without having to install fonts separately.
+/// Export all fonts available for the library. This is sometime useful for debugging.
 ///
 /// # Arguments
 ///

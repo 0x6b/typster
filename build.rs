@@ -9,8 +9,14 @@ use std::{
 use serde::Deserialize;
 
 #[derive(Deserialize)]
-struct Package {
+struct ProjectMetadata {
+    package: Package,
     dependencies: Dependencies,
+}
+
+#[derive(Deserialize)]
+struct Package {
+    version: String,
 }
 
 #[derive(Deserialize)]
@@ -30,7 +36,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut toml_string = String::new();
     file.read_to_string(&mut toml_string)?;
 
-    let package: Package = toml::from_str(&toml_string)?;
+    let metadata: ProjectMetadata = toml::from_str(&toml_string)?;
 
     // Write the version string to a file so it can be included in the binary.
     // This is used by the `version` function in `src/version.rs`. Equivalent to:
@@ -42,8 +48,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     // See https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-crates
     write!(
         f,
-        r#"pub fn typst_version() -> &'static str {{ "{}" }}"#,
-        package.dependencies.typst.tag
+        r#"pub fn version() -> &'static str {{ "{}" }}
+pub fn typst_version() -> &'static str {{ "{}" }}
+"#,
+        metadata.package.version,
+        metadata.dependencies.typst.tag.trim_start_matches('v'),
     )
     .map_err(|e| {
         format!(
