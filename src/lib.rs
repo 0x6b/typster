@@ -8,7 +8,7 @@ pub use format::{format, FormatParams};
 pub use set_permission::{set_permission, PermissionParams, PrintPermission};
 #[cfg(feature = "pdf_metadata")]
 pub use update_metadata::{update_metadata, PdfMetadata};
-pub use version::typst_version;
+pub use version::{typst_version, version};
 #[cfg(feature = "watch")]
 pub use watch::watch;
 
