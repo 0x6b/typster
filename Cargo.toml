@@ -60,6 +60,22 @@ serde = { version = "1.0.193", features = ["derive"] }
 tokio = { version = "1.35.0", features = ["net"] }
 
 [features]
+full = [
+    "compile",
+    "format",
+    "pdf_permission",
+    "pdf_metadata",
+    "watch",
+    "embed_additional_fonts",
+]
+
+# Enable these features to select capabilities.
+compile = ["dep:chrono", "dep:comemo", "dep:dirs", "dep:ecow", "dep:env_proxy", "dep:filetime", "dep:flate2", "dep:fontdb", "dep:same-file", "dep:siphasher", "dep:tar", "dep:typst", "dep:typst-pdf", "dep:typst-render", "dep:ureq"]
+format = ["dep:typstfmt_lib"]
+pdf_metadata = ["dep:chrono", "dep:lopdf", "dep:xmp_toolkit"]
+pdf_permission = ["dep:qpdf"]
+watch = ["compile", "dep:axum", "dep:notify", "dep:tokio", "dep:open"]
+
 # Enable these features to embed fonts into the binary.
 ## assets/fonts/ComputerModern/cmunrm.ttf
 embed_cmu_roman = ["compile"]
@@ -81,19 +97,4 @@ embed_additional_fonts = [
     "embed_noto_serif_jp",
     "embed_recursive",
     "embed_source_code_pro",
-]
-
-# Enable these features to select capabilities.
-compile = ["dep:chrono", "dep:comemo", "dep:dirs", "dep:ecow", "dep:env_proxy", "dep:filetime", "dep:flate2", "dep:fontdb", "dep:same-file", "dep:siphasher", "dep:tar", "dep:typst", "dep:typst-pdf", "dep:typst-render", "dep:ureq"]
-format = ["dep:typstfmt_lib"]
-pdf_metadata = ["dep:chrono", "dep:lopdf", "dep:xmp_toolkit"]
-pdf_permission = ["dep:qpdf"]
-watch = ["compile", "dep:axum", "dep:notify", "dep:tokio", "dep:open"]
-full = [
-    "compile",
-    "format",
-    "pdf_permission",
-    "pdf_metadata",
-    "watch",
-    "embed_additional_fonts",
 ]
