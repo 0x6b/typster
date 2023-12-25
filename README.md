@@ -127,17 +127,17 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - The crate itself is licensed under the Apache License version 2.0, as same as [Typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
-  | Fonts                                              | License                                                          |
-  |----------------------------------------------------|------------------------------------------------------------------|
+  | Fonts                                              | License                                                                |
+  |----------------------------------------------------|------------------------------------------------------------------------|
   | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
-  | `assets/fonts/DejaVu/DejaVuSansMono*.ttf`          | [LICENSE](assets/fonts/DejaVu/LICENSE)                           |
-  | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                   |
-  | `assets/fonts/LinuxLibertine/LinLibertine_*.ttf`   | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)               |
-  | `assets/fonts/NewComputerModern/NewCM*.otf`        | [LICENSE](assets/fonts/NewComputerModern/GUST-FONT-LICENSE.txt)  |
-  | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                       |
-  | `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`       | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                      |
-  | `assets/fonts/Recursive/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                        |
-  | `assets/fonts/SourceCodePro/SourceCodePro-*.ttf`   | [LICENSE](assets/fonts/SourceCodePro/OFL.txt)                    |
+  | `assets/fonts/DejaVu/DejaVuSansMono*.ttf`          | [LICENSE](assets/fonts/DejaVu/LICENSE)                                 |
+  | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
+  | `assets/fonts/LinuxLibertine/LinLibertine_*.ttf`   | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)                     |
+  | `assets/fonts/NewComputerModern/NewCM*.otf`        | [LICENSE](assets/fonts/NewComputerModern/GUST-FONT-LICENSE.txt)        |
+  | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |
+  | `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`       | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                            |
+  | `assets/fonts/Recursive/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                              |
+  | `assets/fonts/SourceCodePro/SourceCodePro-*.ttf`   | [LICENSE](assets/fonts/SourceCodePro/OFL.txt)                          |
 
 ## Acknowledgements
 
