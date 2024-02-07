@@ -125,3 +125,50 @@ pub fn set_permission(
         .write(output)
         .map_err(|e| e.into())
 }
+
+#[cfg(test)]
+mod tests {
+    use std::{fs::remove_file, path::PathBuf};
+
+    use super::*;
+    use crate::{compile, CompileParams};
+
+    #[test]
+    fn test_set_permission() -> Result<(), Box<dyn Error>> {
+        let output = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("examples")
+            .join("sample-test-set-permission.pdf");
+        let output_protected = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("examples")
+            .join("sample-test-set-permission-protected.pdf");
+        let params = CompileParams {
+            input: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+                .join("examples")
+                .join("sample.typ"),
+            output: output.clone(),
+            font_paths: vec![],
+            ppi: None,
+        };
+        assert!(compile(&params).is_ok());
+
+        assert!(set_permission(
+            output.clone(),
+            output_protected.clone(),
+            &PermissionParams {
+                owner_password: "owner".to_string(),
+                allow_print: PrintPermission::None,
+                ..Default::default()
+            },
+        )
+        .is_ok());
+        assert!(&output_protected.exists());
+        assert!(output_protected.metadata()?.len() > 0);
+
+        // since set_permission embeds time, we can't compare the file hash
+
+        remove_file(&output)?;
+        remove_file(&output_protected)?;
+
+        Ok(())
+    }
+}
