@@ -122,6 +122,14 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 > [!Warning]
 > The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
 
+## Testing
+
+Naive tests are available. You can run them with:
+
+```console
+$ cargo test --features full
+```
+
 ## License
 
 - The crate itself is licensed under the Apache License version 2.0, as same as [Typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
