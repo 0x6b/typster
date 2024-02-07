@@ -131,3 +131,53 @@ pub fn update_metadata(
 
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use std::{collections::HashMap, fs::remove_file, path::PathBuf};
+
+    use crate::{compile, update_metadata, CompileParams, PdfMetadata};
+
+    #[test]
+    fn test_update_metadata() -> Result<(), Box<dyn std::error::Error>> {
+        let output = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("examples")
+            .join("sample-test-update-metadata.pdf");
+        let params = CompileParams {
+            input: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+                .join("examples")
+                .join("sample.typ"),
+            output: output.clone(),
+            font_paths: vec![],
+            ppi: None,
+        };
+        assert!(compile(&params).is_ok());
+
+        let mut custom_properties = HashMap::new();
+        custom_properties.insert("robots".to_string(), "noindex".to_string());
+        custom_properties.insert("custom".to_string(), "properties".to_string());
+
+        let metadata = PdfMetadata {
+            title: "Title (typster)".to_string(),
+            author: "Author (typster)".to_string(),
+            application: "Application (typster)".to_string(),
+            subject: "Subject (typster)".to_string(),
+            copyright_status: true,
+            copyright_notice: "Copyright notice (typster)".to_string(),
+            keywords: vec!["typster".to_string(), "rust".to_string(), "pdf".to_string()],
+            language: "en".to_string(),
+            custom_properties,
+        };
+
+        assert!(update_metadata(&output, &metadata).is_ok());
+        assert!(&output.exists());
+        assert!(output.metadata()?.len() > 0);
+
+        // since update_metadata seems to change the file content in random ways, we can't compare
+        // hashes
+
+        remove_file(&output)?;
+
+        Ok(())
+    }
+}
