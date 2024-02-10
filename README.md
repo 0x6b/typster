@@ -130,6 +130,8 @@ Naive tests are available. You can run them with:
 $ cargo test --features full
 ```
 
+Note that you have to install `exiftool` to run all tests.
+
 ## License
 
 - The crate itself is licensed under the Apache License version 2.0, as same as [Typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.

@@ -134,7 +134,7 @@ pub fn update_metadata(
 
 #[cfg(test)]
 mod tests {
-    use std::{collections::HashMap, fs::remove_file, path::PathBuf};
+    use std::{collections::HashMap, fs::remove_file, path::PathBuf, process::Command};
 
     use crate::{compile, update_metadata, CompileParams, PdfMetadata};
 
@@ -173,8 +173,33 @@ mod tests {
         assert!(&output.exists());
         assert!(output.metadata()?.len() > 0);
 
-        // since update_metadata seems to change the file content in random ways, we can't compare
-        // hashes
+        let out = String::from_utf8(Command::new("exiftool").arg(&output).output()?.stdout)?;
+        let props = out
+            .split('\n')
+            .map(|line| line.split(':'))
+            .filter_map(|mut line| {
+                let key = line.next().unwrap_or_default().trim();
+                let value = line.next().unwrap_or_default().trim();
+                if !key.is_empty() {
+                    Some((key, value))
+                } else {
+                    None
+                }
+            })
+            .collect::<HashMap<_, _>>();
+
+        assert_eq!(props.get("Title"), Some(&"Title (typster)"));
+        assert_eq!(props.get("Author"), Some(&"Author (typster)"));
+        assert_eq!(props.get("Creator"), Some(&"Application (typster)"));
+        assert_eq!(props.get("Producer"), Some(&"Application (typster)"));
+        assert_eq!(props.get("Creator Tool"), Some(&"Application (typster)"));
+        assert_eq!(props.get("Subject"), Some(&"Subject (typster)"));
+        assert_eq!(props.get("Marked"), Some(&"True"));
+        assert_eq!(props.get("Rights"), Some(&"Copyright notice (typster)"));
+        assert_eq!(props.get("Keywords"), Some(&"typster, rust, pdf"));
+        assert_eq!(props.get("Language"), Some(&"en"));
+        assert_eq!(props.get("Robots"), Some(&"noindex"));
+        assert_eq!(props.get("Custom"), Some(&"properties"));
 
         remove_file(&output)?;
 
