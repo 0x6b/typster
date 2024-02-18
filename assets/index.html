@@ -5,17 +5,38 @@
     <script>
         let connected = false;
 
-        function tryConnect() {
-            console.log('[typster] - Trying to connect to the server')
-            const ws = new WebSocket("ws://{addr}:{port}/listen");
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('target').focus();
+        });
+
+        let path = new URL(location);
+        path.protocol = 'ws:';
+        path.pathname = '/listen';
+
+        let ws = null;
+
+        function updatePdf() {
+            const pdf = document.getElementById("target")
+            if (pdf) {
+                pdf.src += '';
+                pdf.focus();
+            }
+        }
+
+        function ensureConnection() {
+            if (connected) return;
+
+            ws = new WebSocket(path.toString());
+
             ws.addEventListener('open', (_) => {
                 console.log('[typster] - Connected to the server')
                 connected = true;
+                updatePdf();
             });
 
-            ws.addEventListener('message', (e) => {
+            ws.addEventListener('message', (_) => {
                 console.log('[typster] - Updating pdf')
-                document.getElementById("target").src += '';
+                updatePdf();
             });
 
             ws.addEventListener('close', (_) => {
@@ -23,13 +44,17 @@
                 connected = false;
             });
 
-            setTimeout(() => {
-                if (connected) return;
-                tryConnect()
-            })
+            ws.addEventListener('error', (_) => {
+                console.log('[typster] - Connection error')
+                connected = false;
+            });
         }
 
-        tryConnect();
+        ensureConnection();
+
+        setInterval(function () {
+            ensureConnection()
+        }, 1000);
     </script>
 
     <style>
