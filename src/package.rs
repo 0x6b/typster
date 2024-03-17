@@ -6,7 +6,7 @@ use std::{
 use ecow::eco_format;
 use typst::{
     diag::{PackageError, PackageResult},
-    syntax::PackageSpec,
+    syntax::package::PackageSpec,
 };
 
 use crate::download::download;
@@ -24,14 +24,16 @@ pub fn prepare_package(spec: &PackageSpec) -> PackageResult<PathBuf> {
 
     if let Some(cache_dir) = dirs::cache_dir() {
         let dir = cache_dir.join(&subdir);
-
-        // Download from network if it doesn't exist yet.
-        if spec.namespace == "preview" && !dir.exists() {
-            download_package(spec, &dir)?;
-        }
-
         if dir.exists() {
             return Ok(dir);
+        }
+
+        // Download from network if it doesn't exist yet.
+        if spec.namespace == "preview" {
+            download_package(spec, &dir)?;
+            if dir.exists() {
+                return Ok(dir);
+            }
         }
     }
 
