@@ -26,7 +26,7 @@ struct Dependencies {
 
 #[derive(Deserialize)]
 pub struct Typst {
-    pub tag: String,
+    pub version: String,
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -52,7 +52,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 pub fn typst_version() -> &'static str {{ "{}" }}
 "#,
         metadata.package.version,
-        metadata.dependencies.typst.tag.trim_start_matches('v'),
+        metadata.dependencies.typst.version.trim_start_matches('v'),
     )
     .map_err(|e| {
         format!(
