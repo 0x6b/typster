@@ -4,7 +4,7 @@ use std::{
     time::Duration,
 };
 
-use typst::{eval::Tracer, model::Document, visualize::Color, World};
+use typst::{eval::Tracer, foundations::Smart, model::Document, visualize::Color, World};
 
 use crate::world::SystemWorld;
 
@@ -13,6 +13,9 @@ use crate::world::SystemWorld;
 pub struct CompileParams {
     /// Path to input Typst file.
     pub input: PathBuf,
+
+    /// Inputs map
+    pub inputs: Vec<(String, String)>,
 
     /// Path to output file (PDF, PNG). Output format is determined by extension, and only PNG and
     /// PDF are supported.
@@ -35,7 +38,8 @@ pub struct CompileParams {
 ///
 /// Result containing the core::time::Duration of the compilation.
 pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn std::error::Error>> {
-    let world = SystemWorld::new(&params.input, &params.font_paths)?;
+    let world = SystemWorld::new(&params.input, &params.font_paths, params.inputs.clone())
+        .map_err(|err| err.to_string())?;
     let start = std::time::Instant::now();
 
     // Ensure that the main file is present.
@@ -77,14 +81,15 @@ fn export_image(
     let width = 1 + document.pages.len().checked_ilog10().unwrap_or(0) as usize;
     let mut storage;
 
-    for (i, frame) in document.pages.iter().enumerate() {
+    for (i, page) in document.pages.iter().enumerate() {
         let path = if numbered {
             storage = string.replace("{n}", &format!("{:0width$}", i + 1));
             Path::new(&storage)
         } else {
             params.output.as_path()
         };
-        let pixmap = typst_render::render(frame, params.ppi.unwrap_or(144.0) / 72.0, Color::WHITE);
+        let pixmap =
+            typst_render::render(&page.frame, params.ppi.unwrap_or(144.0) / 72.0, Color::WHITE);
         pixmap.save_png(path)?;
     }
 
@@ -96,9 +101,6 @@ fn export_pdf(
     document: &Document,
     params: &CompileParams,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    fs::write(
-        &params.output,
-        typst_pdf::pdf(document, Some(&params.input.to_string_lossy()), None),
-    )?;
+    fs::write(&params.output, typst_pdf::pdf(document, Smart::Auto, None))?;
     Ok(())
 }
