@@ -64,7 +64,7 @@ You can specify some of them with Typst. As of Typst [v0.10.0](https://github.co
 - Keywords
 - Date
 
-See [Document Function – Typst Documentation](https://typst.app/docs/reference/meta/document/#parameters-keywords) for details.
+See [Document Function – Typst Documentation](https://typst.app/docs/reference/model/document/) for details.
 
 See [`examples/update_metadata.rs`](examples/update_metadata.rs) for usage.
 
