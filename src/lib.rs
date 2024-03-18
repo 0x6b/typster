@@ -1,7 +1,7 @@
 #[cfg(feature = "compile")]
 pub use compile::{compile, CompileParams};
 #[cfg(feature = "compile")]
-pub use fonts::{export_fonts, list_fonts, FontInformation, FontVariant};
+pub use fonts::{list_fonts, FontInformation, FontVariant};
 #[cfg(feature = "format")]
 pub use format::{format, FormatParams};
 #[cfg(feature = "pdf_permission")]
@@ -70,7 +70,7 @@ pub mod tests {
             "f9f09e14e1a9906ca327649b94c7958e304f6e66bc1a378abe77c179f3c49cf0"
         );
 
-        // remove_file(&output)?;
+        remove_file(&output)?;
 
         Ok(())
     }
@@ -97,7 +97,7 @@ pub mod tests {
             "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10"
         );
 
-        // remove_file(&output)?;
+        remove_file(&output)?;
 
         Ok(())
     }
