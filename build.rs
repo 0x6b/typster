@@ -1,12 +1,13 @@
 use std::{
     env::var,
     error::Error,
-    fs::File,
-    io::{Read, Write},
+    fs::{read_to_string, File},
+    io::Write,
     path::Path,
 };
 
 use serde::Deserialize;
+use toml::from_str;
 
 #[derive(Deserialize)]
 struct ProjectMetadata {
@@ -16,7 +17,8 @@ struct ProjectMetadata {
 
 #[derive(Deserialize)]
 struct Package {
-    version: String,
+    #[serde(rename = "version")]
+    typster_version: String,
 }
 
 #[derive(Deserialize)]
@@ -26,39 +28,31 @@ struct Dependencies {
 
 #[derive(Deserialize)]
 pub struct Typst {
-    pub version: String,
+    #[serde(rename = "version")]
+    pub typst_version: String,
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut f = File::create(Path::new(&var("OUT_DIR")?).join("version.rs"))?;
+    let ProjectMetadata {
+        package: Package { typster_version },
+        dependencies: Dependencies { typst: Typst { typst_version } },
+    } = from_str(&read_to_string("Cargo.toml")?)?;
 
-    let mut file = File::open("Cargo.toml")?;
-    let mut toml_string = String::new();
-    file.read_to_string(&mut toml_string)?;
-
-    let metadata: ProjectMetadata = toml::from_str(&toml_string)?;
-
-    // Write the version string to a file so it can be included in the binary.
-    // This is used by the `version` function in `src/version.rs`. Equivalent to:
-    //
-    // ```rust
-    // pub fn typst_version() -> &'static str { "..." }
-    // ```
+    // Write the version related functions to a file, which is used in `src/version.rs`, so that it
+    // can be included in the binary.
     //
     // See https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-crates
     write!(
         f,
-        r#"pub fn version() -> &'static str {{ "{}" }}
-pub fn typst_version() -> &'static str {{ "{}" }}
+        r#"pub fn version() -> &'static str {{ "{typster_version}" }}
+pub fn typst_version() -> &'static str {{ "{typst_version}" }}
 "#,
-        metadata.package.version,
-        metadata.dependencies.typst.version.trim_start_matches('v'),
     )
     .map_err(|e| {
         format!(
-            "Couldn't write version to {}: {}",
+            "Couldn't write version to {}: {e}",
             Path::new(&var("OUT_DIR").unwrap()).join("version.rs").display(),
-            e
         )
         .into()
     })
