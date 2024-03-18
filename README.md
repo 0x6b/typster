@@ -9,7 +9,7 @@ typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = 
 ```
 
 > [!Note]
-> Since the Typst related crates on [crates.io](https://crates.io) are just a placeholders, I cannot publish this crate there as well, since [no one can publish a crate that depends on git repositories](https://github.com/rust-lang/cargo/issues/6738#issuecomment-472224210).
+> Since the version of [typstfmt](https://crates.io/crates/typstfmt) on crates.io is not the latest, I'm unable to publish this crate there as well, because [no one can publish a crate that depends on git repositories](https://github.com/rust-lang/cargo/issues/6738#issuecomment-472224210).
 
 ## Crate Features
 
@@ -17,7 +17,7 @@ Specify `full` to enable all the following features. Note that embedding fonts w
 
 ### `compile`
 
-You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.10.0/crates/typst-cli) [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0).
+You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.11.0/crates/typst-cli) [v0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0).
 
 See [`examples/compile.rs`](examples/compile.rs) for usage.
 
@@ -40,7 +40,7 @@ $ cargo run --example format --features format
 You can update PDF metadata. Following metadata is supported:
 
 | Metadata          | In Acrobat Reader              | In Apple Preview                   |
-|-------------------|--------------------------------|------------------------------------|
+| ----------------- | ------------------------------ | ---------------------------------- |
 | Title             | Title                          | Title                              |
 | Author            | Author                         | Author                             |
 | Application       | Application _and_ PDF Producer | PDF Producer _and_ Content creator |
@@ -53,6 +53,7 @@ You can update PDF metadata. Following metadata is supported:
 | Custom properties | Custom Properties              | (None)                             |
 
 > [!Note]
+>
 > - All metadata will be overwritten, not merged.
 > - Both creation and modification date are set automatically to the current date _without time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
@@ -63,7 +64,7 @@ You can specify some of them with Typst. As of Typst [v0.10.0](https://github.co
 - Keywords
 - Date
 
-See [Document Function – Typst Documentation](https://typst.app/docs/reference/meta/document/#parameters-keywords) for details.
+See [Document Function – Typst Documentation](https://typst.app/docs/reference/model/document/) for details.
 
 See [`examples/update_metadata.rs`](examples/update_metadata.rs) for usage.
 
@@ -117,7 +118,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_additional_fonts`: all of the above
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst/blob/0.10/crates/typst-cli/src/fonts.rs#L126-L140) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80) are always embedded.
 
 > [!Warning]
 > The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
@@ -127,7 +128,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 Naive tests are available. You can run them with:
 
 ```console
-$ cargo test --features full
+$ cargo test --all-features
 ```
 
 Note that you have to install `exiftool` to run all tests.
@@ -138,12 +139,9 @@ Note that you have to install `exiftool` to run all tests.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
   | Fonts                                              | License                                                                |
-  |----------------------------------------------------|------------------------------------------------------------------------|
+  | -------------------------------------------------- | ---------------------------------------------------------------------- |
   | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
-  | `assets/fonts/DejaVu/DejaVuSansMono*.ttf`          | [LICENSE](assets/fonts/DejaVu/LICENSE)                                 |
   | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
-  | `assets/fonts/LinuxLibertine/LinLibertine_*.ttf`   | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)                     |
-  | `assets/fonts/NewComputerModern/NewCM*.otf`        | [LICENSE](assets/fonts/NewComputerModern/GUST-FONT-LICENSE.txt)        |
   | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |
   | `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`       | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                            |
   | `assets/fonts/Recursive/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                              |

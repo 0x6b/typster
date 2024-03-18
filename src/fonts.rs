@@ -1,15 +1,7 @@
-use std::{
-    cell::OnceCell,
-    error::Error,
-    fs,
-    path::{Path, PathBuf},
-};
+use std::{fs, path::PathBuf, sync::OnceLock};
 
 use fontdb::{Database, Source};
-use typst::{
-    foundations::Bytes,
-    text::{Font, FontBook, FontInfo, FontStyle},
-};
+use typst::text::{Font, FontBook, FontInfo, FontStyle};
 
 /// Searches for fonts.
 pub struct FontSearcher {
@@ -27,7 +19,7 @@ pub struct FontSlot {
     /// to a collection.
     index: u32,
     /// The lazily loaded font.
-    font: OnceCell<Option<Font>>,
+    font: OnceLock<Option<Font>>,
 }
 
 /// Information about a font variant. Simply a wrapper around `typst::font::FontVariant`.
@@ -41,6 +33,16 @@ pub struct FontVariant {
     pub stretch: String,
 }
 
+impl From<&FontInfo> for FontVariant {
+    fn from(info: &FontInfo) -> Self {
+        Self {
+            style: info.variant.style,
+            weight: format!("{:?}", info.variant.weight),
+            stretch: format!("{:?}", info.variant.stretch),
+        }
+    }
+}
+
 /// Information about a font. Simply a wrapper around `typst::font::book::FontInfo`.
 #[derive(Debug)]
 pub struct FontInformation {
@@ -48,6 +50,18 @@ pub struct FontInformation {
     pub name: String,
     /// The variants of the font.
     pub variants: Vec<FontVariant>,
+}
+
+impl FontSlot {
+    /// Get the font for this slot.
+    pub fn get(&self) -> Option<Font> {
+        self.font
+            .get_or_init(|| {
+                let data = fs::read(&self.path).ok()?.into();
+                Font::new(data, self.index)
+            })
+            .clone()
+    }
 }
 
 impl FontSearcher {
@@ -64,9 +78,6 @@ impl FontSearcher {
         for path in font_paths {
             db.load_fonts_dir(path);
         }
-
-        // System fonts have second priority.
-        // db.load_system_fonts();
 
         for face in db.faces() {
             let path = match &face.source {
@@ -85,7 +96,7 @@ impl FontSearcher {
                 self.fonts.push(FontSlot {
                     path: path.clone(),
                     index: face.index,
-                    font: OnceCell::new(),
+                    font: OnceLock::new(),
                 });
             }
         }
@@ -96,38 +107,27 @@ impl FontSearcher {
     /// Add fonts that are embedded in the binary.
     fn add_embedded(&mut self) {
         let mut process = |bytes: &'static [u8]| {
-            let buffer = Bytes::from_static(bytes);
+            let buffer = typst::foundations::Bytes::from_static(bytes);
             for (i, font) in Font::iter(buffer).enumerate() {
                 self.book.push(font.info().clone());
                 self.fonts.push(FontSlot {
                     path: PathBuf::new(),
                     index: i as u32,
-                    font: OnceCell::from(Some(font)),
+                    font: OnceLock::from(Some(font)),
                 });
             }
         };
+
+        // Always embed the typst default fonts.
+        for data in typst_assets::fonts() {
+            process(data);
+        }
 
         macro_rules! add {
             ($filename:literal) => {
                 process(include_bytes!(concat!("../assets/fonts/", $filename)));
             };
         }
-
-        // Embed default fonts.
-        add!("LinuxLibertine/LinLibertine_R.ttf");
-        add!("LinuxLibertine/LinLibertine_RB.ttf");
-        add!("LinuxLibertine/LinLibertine_RBI.ttf");
-        add!("LinuxLibertine/LinLibertine_RI.ttf");
-        add!("NewComputerModern/NewCMMath-Book.otf");
-        add!("NewComputerModern/NewCMMath-Regular.otf");
-        add!("NewComputerModern/NewCM10-Regular.otf");
-        add!("NewComputerModern/NewCM10-Bold.otf");
-        add!("NewComputerModern/NewCM10-Italic.otf");
-        add!("NewComputerModern/NewCM10-BoldItalic.otf");
-        add!("DejaVu/DejaVuSansMono.ttf");
-        add!("DejaVu/DejaVuSansMono-Bold.ttf");
-        add!("DejaVu/DejaVuSansMono-Oblique.ttf");
-        add!("DejaVu/DejaVuSansMono-BoldOblique.ttf");
 
         #[cfg(feature = "embed_cmu_roman")]
         {
@@ -188,28 +188,6 @@ impl FontSearcher {
     }
 }
 
-impl FontSlot {
-    /// Get the font for this slot.
-    pub fn get(&self) -> Option<Font> {
-        self.font
-            .get_or_init(|| {
-                let data = fs::read(&self.path).ok()?.into();
-                Font::new(data, self.index)
-            })
-            .clone()
-    }
-}
-
-impl From<&FontInfo> for FontVariant {
-    fn from(info: &FontInfo) -> Self {
-        Self {
-            style: info.variant.style,
-            weight: format!("{:?}", info.variant.weight),
-            stretch: format!("{:?}", info.variant.stretch),
-        }
-    }
-}
-
 /// List all fonts available for the library.
 ///
 /// # Arguments
@@ -238,66 +216,4 @@ pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
             FontInformation { name: name.to_string(), variants }
         })
         .collect::<_>()
-}
-
-/// Export all fonts available for the library. This is sometime useful for debugging.
-///
-/// # Arguments
-///
-/// - `font_paths` - Paths to additional font directories.
-/// - `out_path` - Path to output directory.
-///
-/// # Returns
-///
-/// A list of paths to the exported fonts.
-pub fn export_fonts(
-    font_paths: &[PathBuf],
-    out_path: &Path,
-) -> Result<Vec<PathBuf>, Box<dyn Error>> {
-    fs::create_dir_all(out_path)?;
-    let mut searcher = FontSearcher::new();
-    searcher.search(font_paths);
-
-    let fonts = searcher
-        .fonts
-        .iter()
-        .filter_map(|slot| slot.get())
-        .map(|font| {
-            (
-                out_path.join(format!(
-                    "{}-{}-{}.ttf",
-                    font.info().family.replace(' ', "_"),
-                    {
-                        let weight = font.info().variant.weight.to_number().to_string();
-                        match weight.as_str() {
-                            "100" => "Thin".to_string(),
-                            "200" => "Extralight".to_string(),
-                            "300" => "Light".to_string(),
-                            "400" => "Regular".to_string(),
-                            "450" => "Book".to_string(), // NewCMMath-Book.otf
-                            "500" => "Medium".to_string(),
-                            "600" => "Semibold".to_string(),
-                            "700" => "Bold".to_string(),
-                            "800" => "Extrabold".to_string(),
-                            "900" => "Black".to_string(),
-                            _ => weight.to_string(),
-                        }
-                    },
-                    match font.info().variant.style {
-                        FontStyle::Normal => "Regular",
-                        FontStyle::Italic => "Italic",
-                        FontStyle::Oblique => "Oblique",
-                    }
-                )),
-                font,
-            )
-        })
-        .collect::<Vec<(PathBuf, Font)>>();
-
-    fonts.iter().for_each(|(filename, font)| {
-        fs::write(filename, font.data()).unwrap();
-    });
-
-    let exported = fonts.into_iter().map(|(filename, _)| filename).collect::<Vec<_>>();
-    Ok(exported)
 }

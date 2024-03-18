@@ -1,7 +1,7 @@
 #[cfg(feature = "compile")]
 pub use compile::{compile, CompileParams};
 #[cfg(feature = "compile")]
-pub use fonts::{export_fonts, list_fonts, FontInformation, FontVariant};
+pub use fonts::{list_fonts, FontInformation, FontVariant};
 #[cfg(feature = "format")]
 pub use format::{format, FormatParams};
 #[cfg(feature = "pdf_permission")]
@@ -58,14 +58,16 @@ pub mod tests {
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
+            inputs: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
 
+        compile(&params)?;
         assert!(compile(&params).is_ok());
         assert!(&output.exists());
         assert_eq!(
             calculate_hash(&output)?,
-            "33008dcefe127e6ecae0e434dba4360a00b10e4534bb08f3fcfc916d48be1760"
+            "f9f09e14e1a9906ca327649b94c7958e304f6e66bc1a378abe77c179f3c49cf0"
         );
 
         remove_file(&output)?;
@@ -84,6 +86,7 @@ pub mod tests {
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
+            inputs: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
 
@@ -91,7 +94,7 @@ pub mod tests {
         assert!(&output.exists());
         assert_eq!(
             calculate_hash(&output)?,
-            "7ee50113c5316123da53248d19e0c0683ec86cef0593156552df2bb240bde5c0"
+            "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10"
         );
 
         remove_file(&output)?;
@@ -222,6 +225,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
+            inputs: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
         assert!(compile(&params).is_ok());
@@ -279,6 +283,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
+            inputs: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
         assert!(compile(&params).is_ok());
@@ -310,7 +315,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
 
     #[test]
     fn test_version() -> Result<(), Box<dyn Error>> {
-        assert_eq!(typst_version(), "0.10.0");
+        assert_eq!(typst_version(), "0.11.0");
         Ok(())
     }
 
