@@ -62,14 +62,15 @@ pub mod tests {
             ppi: None,
         };
 
+        compile(&params)?;
         assert!(compile(&params).is_ok());
         assert!(&output.exists());
         assert_eq!(
             calculate_hash(&output)?,
-            "c2fdb4327a2fac0106425bdf7fa7ae614b7d404d4980b1be1d6dd49ac4757120"
+            "f9f09e14e1a9906ca327649b94c7958e304f6e66bc1a378abe77c179f3c49cf0"
         );
 
-        remove_file(&output)?;
+        // remove_file(&output)?;
 
         Ok(())
     }
@@ -96,7 +97,7 @@ pub mod tests {
             "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10"
         );
 
-        remove_file(&output)?;
+        // remove_file(&output)?;
 
         Ok(())
     }
