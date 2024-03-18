@@ -41,7 +41,7 @@ lopdf = { version = "0.32.0", optional = true }
 xmp_toolkit = { version = "1.7.2", optional = true }
 
 # PDF permission setting
-qpdf = { version = "0.1.7", optional = true }
+qpdf = { version = "0.2.0", features = ["vendored"], optional = true }
 
 # Ser/de support
 serde = { version = "1.0.193", features = ["derive"] }
