@@ -9,7 +9,7 @@ typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = 
 ```
 
 > [!Note]
-> Since the Typst related crates on [crates.io](https://crates.io) are just a placeholders, I cannot publish this crate there as well, since [no one can publish a crate that depends on git repositories](https://github.com/rust-lang/cargo/issues/6738#issuecomment-472224210).
+> Since the version of [typstfmt](https://crates.io/crates/typstfmt) on crates.io is not the latest, I'm unable to publish this crate there as well, because [no one can publish a crate that depends on git repositories](https://github.com/rust-lang/cargo/issues/6738#issuecomment-472224210).
 
 ## Crate Features
 
@@ -17,7 +17,7 @@ Specify `full` to enable all the following features. Note that embedding fonts w
 
 ### `compile`
 
-You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.10.0/crates/typst-cli) [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0).
+You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.11.0/crates/typst-cli) [v0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0).
 
 See [`examples/compile.rs`](examples/compile.rs) for usage.
 
@@ -40,7 +40,7 @@ $ cargo run --example format --features format
 You can update PDF metadata. Following metadata is supported:
 
 | Metadata          | In Acrobat Reader              | In Apple Preview                   |
-|-------------------|--------------------------------|------------------------------------|
+| ----------------- | ------------------------------ | ---------------------------------- |
 | Title             | Title                          | Title                              |
 | Author            | Author                         | Author                             |
 | Application       | Application _and_ PDF Producer | PDF Producer _and_ Content creator |
@@ -53,11 +53,9 @@ You can update PDF metadata. Following metadata is supported:
 | Custom properties | Custom Properties              | (None)                             |
 
 > [!Note]
+>
 > - All metadata will be overwritten, not merged.
-> - Both creation and modification date are set automatically to the current date
-    _without
-    time
-    information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+> - Both creation and modification date are set automatically to the current date _without time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
 You can specify some of them with Typst. As of Typst [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0), the following metadata is supported:
 
@@ -130,7 +128,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 Naive tests are available. You can run them with:
 
 ```console
-$ cargo test --features full
+$ cargo test --all-features
 ```
 
 Note that you have to install `exiftool` to run all tests.
@@ -141,7 +139,7 @@ Note that you have to install `exiftool` to run all tests.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
   | Fonts                                              | License                                                                |
-          |----------------------------------------------------|------------------------------------------------------------------------|
+  | -------------------------------------------------- | ---------------------------------------------------------------------- |
   | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
   | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
   | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |
