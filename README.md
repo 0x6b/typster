@@ -54,7 +54,10 @@ You can update PDF metadata. Following metadata is supported:
 
 > [!Note]
 > - All metadata will be overwritten, not merged.
-> - Both creation and modification date are set automatically to the current date _without time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+> - Both creation and modification date are set automatically to the current date
+    _without
+    time
+    information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
 You can specify some of them with Typst. As of Typst [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0), the following metadata is supported:
 
@@ -117,7 +120,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_additional_fonts`: all of the above
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst/blob/0.10/crates/typst-cli/src/fonts.rs#L126-L140) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80) are always embedded.
 
 > [!Warning]
 > The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
@@ -138,12 +141,9 @@ Note that you have to install `exiftool` to run all tests.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
   | Fonts                                              | License                                                                |
-  |----------------------------------------------------|------------------------------------------------------------------------|
+          |----------------------------------------------------|------------------------------------------------------------------------|
   | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
-  | `assets/fonts/DejaVu/DejaVuSansMono*.ttf`          | [LICENSE](assets/fonts/DejaVu/LICENSE)                                 |
   | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
-  | `assets/fonts/LinuxLibertine/LinLibertine_*.ttf`   | [LICENSE](assets/fonts/LinuxLibertine/LICENCE.txt)                     |
-  | `assets/fonts/NewComputerModern/NewCM*.otf`        | [LICENSE](assets/fonts/NewComputerModern/GUST-FONT-LICENSE.txt)        |
   | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |
   | `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`       | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                            |
   | `assets/fonts/Recursive/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                              |
