@@ -6,12 +6,12 @@ use serde::{Deserialize, Serialize};
 /// Parameters for PDF permission.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PermissionParams {
-    /// User password, which is required to open the document. Leave empty to allow anyone to open.
-    pub user_password: String,
+    /// User password, which is required to open the document. Set to None to allow anyone to open.
+    pub user_password: Option<String>,
 
-    /// Owner password, which is required to change permissions. Leave empty to allow anyone to
+    /// Owner password, which is required to change permissions. Set to None to allow anyone to
     /// change.
-    pub owner_password: String,
+    pub owner_password: Option<String>,
 
     /// Allow content copying for accessibility.
     pub allow_accessibility: bool,
@@ -83,8 +83,8 @@ impl From<String> for PrintPermission {
 impl From<&PermissionParams> for EncryptionParams {
     fn from(params: &PermissionParams) -> EncryptionParams {
         EncryptionParams::R6(EncryptionParamsR6 {
-            user_password: params.user_password.clone(),
-            owner_password: params.owner_password.clone(),
+            user_password: params.user_password.clone().unwrap_or_default(),
+            owner_password: params.owner_password.clone().unwrap_or_default(),
             allow_accessibility: params.allow_accessibility,
             allow_extract: params.allow_extract,
             allow_assemble: params.allow_assemble,
@@ -100,8 +100,8 @@ impl From<&PermissionParams> for EncryptionParams {
 impl Default for PermissionParams {
     fn default() -> Self {
         Self {
-            user_password: "".to_string(),
-            owner_password: "".to_string(),
+            user_password: None,
+            owner_password: None,
             allow_accessibility: true,
             allow_extract: true,
             allow_assemble: false,

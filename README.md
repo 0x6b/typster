@@ -76,8 +76,8 @@ $ cargo run --example update_metadata --features pdf_metadata
 
 You can set PDF permission update. Following PDF 1.7 permissions are supported:
 
-- user password, which is required to open the document. Leave empty to allow anyone to open.
-- owner password, which is required to change permissions. Leave empty to allow anyone to change.
+- user password, which is required to open the document. Set to `None` to allow anyone to open.
+- owner password, which is required to change permissions. Set to `None` to allow anyone to change.
 - content copying for accessibility.
 - page extraction.
 - document assembly.

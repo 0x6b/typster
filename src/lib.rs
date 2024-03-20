@@ -295,7 +295,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
             output.clone(),
             output_protected.clone(),
             &PermissionParams {
-                owner_password: "owner".to_string(),
+                owner_password: Some("owner".to_string()),
                 allow_print: PrintPermission::None,
                 ..Default::default()
             },
