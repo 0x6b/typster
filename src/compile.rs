@@ -30,7 +30,7 @@ pub struct CompileParams {
 
 /// Compiles an input file into a supported output format.
 ///
-/// # Arguments
+/// # Argument
 ///
 /// - `params` - [`CompileParams`] struct.
 ///

@@ -170,7 +170,7 @@ use crate::CompileParams; // For documentation purposes.
 /// - The crate won't search system fonts to ensure the reproducibility. All fonts you need should
 ///   be explicitly added via [`CompileParams`].
 ///
-/// # Arguments
+/// # Argument
 ///
 /// - `font_paths` - Paths to additional font directories.
 ///
