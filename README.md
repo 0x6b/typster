@@ -57,7 +57,7 @@ You can update PDF metadata. Following metadata is supported:
     time
     information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
-You can specify some of them with Typst. As of Typst [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0), the following metadata is supported:
+You can specify some of them with Typst. As of Typst [v0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0), the following metadata is supported:
 
 - Title
 - Author
@@ -139,7 +139,7 @@ Note that you have to install `exiftool` to run all tests.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
   | Fonts                                              | License                                                                |
-      | -------------------------------------------------- | ---------------------------------------------------------------------- |
+        | -------------------------------------------------- | ---------------------------------------------------------------------- |
   | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
   | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
   | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |
