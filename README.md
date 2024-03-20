@@ -10,7 +10,9 @@ typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = 
 
 ## Crate Features
 
-Specify `full` to enable all the following features. Note that embedding fonts will produce a large binary.
+### `full`
+
+Specify `full` to enable all the following features.
 
 ### `compile`
 
@@ -50,7 +52,6 @@ You can update PDF metadata. Following metadata is supported:
 | Custom properties | Custom Properties              | (None)                             |
 
 > [!Note]
->
 > - All metadata will be overwritten, not merged.
 > - Both creation and modification date are set automatically to the current date
     _without_ time information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
@@ -119,7 +120,8 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 > typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80) are always embedded.
 
 > [!Warning]
-> The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
+> - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
+> - Embedding fonts will produce a large binary.
 
 ## Testing
 
@@ -134,20 +136,14 @@ Note that you have to install `exiftool` to run all tests.
 ## License
 
 - The crate itself is licensed under the Apache License version 2.0, as same as [Typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
-- Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
-    - `assets/fonts/ComputerModern/cmunrm.ttf`: [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt)
-    - `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`: [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)
-    - `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`: [LICENSE](assets/fonts/NotoSansJP/OFL.txt)
-    - `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`: [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)
-    - `assets/fonts/Recursive/recursive-static-OTFs.otc`: [LICENSE](assets/fonts/Recursive/OFL.txt)
-    - `assets/fonts/SourceCodePro/SourceCodePro-*.ttf`: [LICENSE](assets/fonts/SourceCodePro/OFL.txt)
+- Fonts under the [`assets/fonts`](assets/fonts) directory are licensed under its own license. See the [`assets/fonts/README.md`](assets/fonts/README.md) for details.
 
 ## Acknowledgements
 
 - [typst/typst](https://github.com/typst/typst/)
 - [Enter-tainer/typstyle](https://github.com/Enter-tainer/typstyle)
 - [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/)
-- All the fonts authors and contributors
+- All the font authors and contributors
 
 ## Reference
 
