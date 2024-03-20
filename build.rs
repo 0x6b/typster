@@ -46,9 +46,21 @@ fn main() -> Result<(), Box<dyn Error>> {
     write!(
         f,
         r#"/// Returns the version of the library.
+///
+/// # Example
+///
+/// ```rust
+/// println!("Typster version: {{}}", typster::version());
+/// ```
 pub fn version() -> &'static str {{ "{typster_version}" }}
 
 /// Returns the [Typst](https://typst.app/) version the library was compiled with.
+///
+/// # Example
+///
+/// ```rust
+/// println!("Typst version: {{}}", typster::typst_version());
+/// ```
 pub fn typst_version() -> &'static str {{ "{typst_version}" }}
 "#,
     )

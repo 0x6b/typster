@@ -177,6 +177,28 @@ use crate::CompileParams; // For documentation purposes.
 /// # Returns
 ///
 /// A [`Vec`] of [`FontInfo`] structs.
+///
+/// # Example
+///
+/// Following is an example of how to use the `list_fonts` function:
+///
+/// ```rust
+/// let params = typster::CompileParams {
+///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.typ"),
+///     output: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.pdf"),
+///     font_paths: vec![],
+///     dict: vec![("input".to_string(), "value".to_string())],
+///     ppi: None,
+/// };
+///
+/// typster::list_fonts(&params.font_paths)
+///     .iter()
+///     .for_each(|(family, _)| println!("{family}"));
+/// ```
 pub fn list_fonts(font_paths: &[PathBuf]) -> HashMap<String, Vec<FontInfo>> {
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);
