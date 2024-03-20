@@ -53,12 +53,7 @@ You can update PDF metadata. Following metadata is supported:
 >
 > - All metadata will be overwritten, not merged.
 > - Both creation and modification date are set automatically to the current date
-    >
-    _without
-    >
-    time
-    >
-    information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+    _without_ time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
 You can specify some of them with Typst. As of Typst [v0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0), the following metadata is supported:
 
