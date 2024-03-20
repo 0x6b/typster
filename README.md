@@ -53,8 +53,11 @@ You can update PDF metadata. Following metadata is supported:
 >
 > - All metadata will be overwritten, not merged.
 > - Both creation and modification date are set automatically to the current date
+    >
     _without
+    >
     time
+    >
     information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
 You can specify some of them with Typst. As of Typst [v0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0), the following metadata is supported:
@@ -137,15 +140,12 @@ Note that you have to install `exiftool` to run all tests.
 
 - The crate itself is licensed under the Apache License version 2.0, as same as [Typst](https://github.com/typst/typst/). See [LICENSE](LICENSE) for details.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
-
-  | Fonts                                              | License                                                                |
-        | -------------------------------------------------- | ---------------------------------------------------------------------- |
-  | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
-  | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
-  | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |
-  | `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`       | [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)                            |
-  | `assets/fonts/Recursive/recursive-static-OTFs.otc` | [LICENSE](assets/fonts/Recursive/OFL.txt)                              |
-  | `assets/fonts/SourceCodePro/SourceCodePro-*.ttf`   | [LICENSE](assets/fonts/SourceCodePro/OFL.txt)                          |
+    - `assets/fonts/ComputerModern/cmunrm.ttf`: [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt)
+    - `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`: [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)
+    - `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`: [LICENSE](assets/fonts/NotoSansJP/OFL.txt)
+    - `assets/fonts/NotoSerifJP/NotoSerifJP-*.otf`: [LICENSE](assets/fonts/NotoSerifJP/OFL.txt)
+    - `assets/fonts/Recursive/recursive-static-OTFs.otc`: [LICENSE](assets/fonts/Recursive/OFL.txt)
+    - `assets/fonts/SourceCodePro/SourceCodePro-*.ttf`: [LICENSE](assets/fonts/SourceCodePro/OFL.txt)
 
 ## Acknowledgements
 
