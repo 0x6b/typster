@@ -3,7 +3,7 @@ use std::{error::Error, fmt::Display, path::PathBuf};
 use qpdf::{EncryptionParams, EncryptionParamsR6};
 use serde::{Deserialize, Serialize};
 
-/// Parameters for permission.
+/// Parameters for PDF permission.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PermissionParams {
     /// User password, which is required to open the document. Leave empty to allow anyone to open.
@@ -38,7 +38,7 @@ pub struct PermissionParams {
     pub encrypt_metadata: bool,
 }
 
-/// PDF print permission.
+/// PDF print permission for [`PermissionParams`].
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum PrintPermission {
@@ -114,6 +114,13 @@ impl Default for PermissionParams {
     }
 }
 
+/// Sets permission for a PDF file. Note that in-place update is not possible.
+///
+/// # Arguments
+///
+/// - `input` - Path to the PDF file.
+/// - `output` - Path to the output PDF file.
+/// - `params` - [`PermissionParams`] to set.
 pub fn set_permission(
     input: PathBuf,
     output: PathBuf,

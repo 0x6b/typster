@@ -45,7 +45,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     // See https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-crates
     write!(
         f,
-        r#"pub fn version() -> &'static str {{ "{typster_version}" }}
+        r#"/// Returns the version of the library.
+pub fn version() -> &'static str {{ "{typster_version}" }}
+
+/// Returns the [Typst](https://typst.app/) version the library was compiled with.
 pub fn typst_version() -> &'static str {{ "{typst_version}" }}
 "#,
     )

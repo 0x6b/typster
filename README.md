@@ -1,6 +1,6 @@
 # typster
 
-Naive Rust Library which provides a way to work with [Typst](https://typst.app/) document and PDF file programmatically.
+A naive Rust library that provides a way to work with [Typst](https://typst.app/) document and PDF file programmatically.
 
 ## Usage
 
@@ -139,7 +139,7 @@ Note that you have to install `exiftool` to run all tests.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
   | Fonts                                              | License                                                                |
-    | -------------------------------------------------- | ---------------------------------------------------------------------- |
+      | -------------------------------------------------- | ---------------------------------------------------------------------- |
   | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
   | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
   | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |

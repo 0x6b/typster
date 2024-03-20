@@ -13,11 +13,11 @@ pub struct FormatParams {
     pub column: usize,
 }
 
-/// Format a Typst file.
+/// Formats a [Typst](https://typst.app/) file with [Enter-tainer/typstyle](https://github.com/Enter-tainer/typstyle/).
 ///
-/// # Arguments
+/// # Argument
 ///
-/// - `params` - FormatParams struct.
+/// - `params` - [`FormatParams`] struct.
 ///
 /// # Returns
 ///

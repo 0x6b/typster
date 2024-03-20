@@ -158,7 +158,7 @@ impl FontSearcher {
     }
 }
 
-/// List all fonts available for the library.
+/// Lists all fonts available for the library.
 ///
 /// # Arguments
 ///
@@ -166,7 +166,7 @@ impl FontSearcher {
 ///
 /// # Returns
 ///
-/// A list of FontInfo structs.
+/// A [`Vec`] of [`FontInfo`] structs.
 pub fn list_fonts(font_paths: &[PathBuf]) -> HashMap<String, Vec<FontInfo>> {
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);

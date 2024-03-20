@@ -1,3 +1,5 @@
+//! A naive Rust Library that provides a way to work with [Typst](https://typst.app/) document and PDF file programmatically.
+
 #[cfg(feature = "compile")]
 pub use compile::{compile, CompileParams};
 #[cfg(feature = "compile")]

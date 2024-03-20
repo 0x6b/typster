@@ -8,7 +8,7 @@ use typst::{eval::Tracer, foundations::Smart, model::Document, visualize::Color,
 
 use crate::world::SystemWorld;
 
-/// Parameters for Typst document compilation.
+/// Parameters for [Typst](https://typst.app/) document compilation.
 #[derive(Debug, Clone, Default)]
 pub struct CompileParams {
     /// Path to input Typst file.
@@ -28,15 +28,15 @@ pub struct CompileParams {
     pub ppi: Option<f32>,
 }
 
-/// Compiles an input file into a supported output format
+/// Compiles an input file into a supported output format.
 ///
 /// # Arguments
 ///
-/// - `params` - CompileParams struct.
+/// - `params` - [`CompileParams`] struct.
 ///
 /// # Returns
 ///
-/// Result containing the core::time::Duration of the compilation.
+/// Result containing the [`Duration`] of the compilation.
 pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn std::error::Error>> {
     let world = SystemWorld::new(&params.input, &params.font_paths, params.inputs.clone())
         .map_err(|err| err.to_string())?;
