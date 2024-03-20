@@ -38,6 +38,7 @@ pub struct PermissionParams {
     pub encrypt_metadata: bool,
 }
 
+/// PDF print permission.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum PrintPermission {
