@@ -74,7 +74,7 @@ impl Default for PdfMetadata {
 ///
 /// - All metadata will be overwritten, not merged.
 /// - Both creation and modification date are set automatically to the current date _without_ time
-///   information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+///   information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 ///
 /// # Arguments
 ///
