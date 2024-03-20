@@ -126,6 +126,10 @@ pub fn set_permission(
     output: PathBuf,
     params: &PermissionParams,
 ) -> Result<(), Box<dyn Error>> {
+    // Should be canonicalized before equality check, but output is not created yet.
+    if input == output {
+        return Err("in-place update is not possible".into());
+    }
     qpdf::QPdf::read(input)
         .unwrap()
         .writer()
