@@ -60,7 +60,7 @@ pub mod tests {
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
 
@@ -88,7 +88,7 @@ pub mod tests {
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
 
@@ -228,7 +228,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
         assert!(compile(&params).is_ok());
@@ -286,7 +286,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
         assert!(compile(&params).is_ok());

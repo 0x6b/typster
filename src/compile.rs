@@ -14,8 +14,8 @@ pub struct CompileParams {
     /// Path to input Typst file.
     pub input: PathBuf,
 
-    /// Inputs map
-    pub inputs: Vec<(String, String)>,
+    /// String key-value pairs visible through `sys.inputs` [dictionary](https://typst.app/docs/reference/foundations/dictionary/) in the `input` document.
+    pub dict: Vec<(String, String)>,
 
     /// Path to output file (PDF, PNG). Output format is determined by extension, and only PNG and
     /// PDF are supported.
@@ -38,7 +38,7 @@ pub struct CompileParams {
 ///
 /// Result containing the [`Duration`] of the compilation.
 pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn std::error::Error>> {
-    let world = SystemWorld::new(&params.input, &params.font_paths, params.inputs.clone())
+    let world = SystemWorld::new(&params.input, &params.font_paths, params.dict.clone())
         .map_err(|err| err.to_string())?;
     let start = std::time::Instant::now();
 
