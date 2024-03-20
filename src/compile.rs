@@ -11,7 +11,7 @@ use crate::world::SystemWorld;
 /// Parameters for [Typst](https://typst.app/) document compilation.
 #[derive(Debug, Clone, Default)]
 pub struct CompileParams {
-    /// Path to input Typst file.
+    /// Path to input [Typst](https://typst.app/) file.
     pub input: PathBuf,
 
     /// String key-value pairs visible through `sys.inputs` [dictionary](https://typst.app/docs/reference/foundations/dictionary/) in the `input` document.
@@ -24,7 +24,7 @@ pub struct CompileParams {
     /// Adds additional directories to search for fonts.
     pub font_paths: Vec<PathBuf>,
 
-    /// The PPI (pixels per inch) to use for PNG export. None means 144.
+    /// The PPI (pixels per inch) to use for PNG export. [`None`] means 144.
     pub ppi: Option<f32>,
 }
 
@@ -37,6 +37,34 @@ pub struct CompileParams {
 /// # Returns
 ///
 /// Result containing the [`Duration`] of the compilation.
+///
+/// # Example
+///
+/// Following is an example of how to use the `compile` function:
+///
+/// ```rust
+/// let params = typster::CompileParams {
+///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.typ"),
+///     output: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.pdf"),
+///     font_paths: vec!["assets".into()],
+///     dict: vec![("input".to_string(), "value".to_string())],
+///     ppi: None,
+/// };
+/// match typster::compile(&params) {
+///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
+///     Err(why) => eprintln!("{why}"),
+/// }
+/// ```
+///
+/// which is equivalent to running:
+///
+/// ```console
+/// $ typst compile examples/sample.typ examples/sample.pdf
+/// ```
 pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn std::error::Error>> {
     let world = SystemWorld::new(&params.input, &params.font_paths, params.dict.clone())
         .map_err(|err| err.to_string())?;

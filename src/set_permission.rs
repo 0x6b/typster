@@ -6,10 +6,11 @@ use serde::{Deserialize, Serialize};
 /// Parameters for PDF permission.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PermissionParams {
-    /// User password, which is required to open the document. Set to None to allow anyone to open.
+    /// User password, which is required to open the document. Set to [`None`] to allow anyone to
+    /// open.
     pub user_password: Option<String>,
 
-    /// Owner password, which is required to change permissions. Set to None to allow anyone to
+    /// Owner password, which is required to change permissions. Set to [`None`] to allow anyone to
     /// change.
     pub owner_password: Option<String>,
 
@@ -121,6 +122,44 @@ impl Default for PermissionParams {
 /// - `input` - Path to the PDF file.
 /// - `output` - Path to the output PDF file.
 /// - `params` - [`PermissionParams`] to set.
+///
+/// # Example
+///
+/// Following is an example of how to use the `set_permission` function:
+///
+/// ```rust
+/// let output = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.pdf");
+///
+/// // Compile a document first
+/// let params = typster::CompileParams {
+///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.typ"),
+///     output: output.clone(),
+///     font_paths: vec!["assets".into()],
+///     dict: vec![("input".to_string(), "value".to_string())],
+///     ppi: None,
+/// };
+/// match typster::compile(&params) {
+///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
+///     Err(why) => eprintln!("{why}"),
+/// }
+///
+/// // Then set permission
+/// typster::set_permission(
+///     output,
+///     std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample-protected.pdf"),
+///     &typster::PermissionParams {
+///         owner_password: Some("owner".to_string()),
+///         allow_print: typster::PrintPermission::None,
+///         ..Default::default()
+///     },
+/// ).unwrap();
+/// ```
 pub fn set_permission(
     input: PathBuf,
     output: PathBuf,

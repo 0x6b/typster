@@ -22,6 +22,22 @@ pub struct FormatParams {
 /// # Returns
 ///
 /// String containing the formatted Typst file.
+///
+/// # Example
+///
+/// Following is an example of how to use the `format` function:
+///
+/// ```rust
+/// let params = typster::FormatParams {
+///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.typ"),
+///     column: 80,
+/// };
+///
+/// println!("{}", typster::format(&params).map_or_else(|why| why.to_string(), |s| s));
+/// ```
+
 pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
     let root = parse(&read_to_string(&params.input)?);
     let disabled_nodes = get_no_format_nodes(root.clone());
