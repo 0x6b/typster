@@ -1,7 +1,7 @@
-use std::{fs, path::PathBuf, sync::OnceLock};
+use std::{collections::HashMap, fs, path::PathBuf, sync::OnceLock};
 
 use fontdb::{Database, Source};
-use typst::text::{Font, FontBook, FontInfo, FontStyle};
+use typst::text::{Font, FontBook, FontInfo};
 
 /// Searches for fonts.
 pub struct FontSearcher {
@@ -20,36 +20,6 @@ pub struct FontSlot {
     index: u32,
     /// The lazily loaded font.
     font: OnceLock<Option<Font>>,
-}
-
-/// Information about a font variant. Simply a wrapper around `typst::font::FontVariant`.
-#[derive(Debug)]
-pub struct FontVariant {
-    /// The style of the font (normal / italic / oblique).
-    pub style: FontStyle,
-    /// How heavy the font is (100 - 900).
-    pub weight: String,
-    /// How condensed or expanded the font is (0.5 - 2.0).
-    pub stretch: String,
-}
-
-impl From<&FontInfo> for FontVariant {
-    fn from(info: &FontInfo) -> Self {
-        Self {
-            style: info.variant.style,
-            weight: format!("{:?}", info.variant.weight),
-            stretch: format!("{:?}", info.variant.stretch),
-        }
-    }
-}
-
-/// Information about a font. Simply a wrapper around `typst::font::book::FontInfo`.
-#[derive(Debug)]
-pub struct FontInformation {
-    /// The name of the font.
-    pub name: String,
-    /// The variants of the font.
-    pub variants: Vec<FontVariant>,
 }
 
 impl FontSlot {
@@ -188,32 +158,53 @@ impl FontSearcher {
     }
 }
 
-/// List all fonts available for the library.
+#[allow(unused_imports)]
+use crate::CompileParams; // For documentation purposes.
+
+/// Lists all fonts available for the library.
 ///
-/// # Arguments
+/// Note that:
+///
+/// - typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80)
+///   are always embedded.
+/// - The crate won't search system fonts to ensure the reproducibility. All fonts you need should
+///   be explicitly added via [`CompileParams`].
+///
+/// # Argument
 ///
 /// - `font_paths` - Paths to additional font directories.
 ///
 /// # Returns
 ///
-/// A list of FontInformation structs.
-pub fn list_fonts(font_paths: &[PathBuf]) -> Vec<FontInformation> {
+/// A [`Vec`] of [`FontInfo`] structs.
+///
+/// # Example
+///
+/// Following is an example of how to use the `list_fonts` function:
+///
+/// ```rust
+/// let params = typster::CompileParams {
+///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.typ"),
+///     output: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.pdf"),
+///     font_paths: vec![],
+///     dict: vec![("input".to_string(), "value".to_string())],
+///     ppi: None,
+/// };
+///
+/// typster::list_fonts(&params.font_paths)
+///     .iter()
+///     .for_each(|(family, _)| println!("{family}"));
+/// ```
+pub fn list_fonts(font_paths: &[PathBuf]) -> HashMap<String, Vec<FontInfo>> {
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);
     searcher
         .book
         .families()
-        .map(|(name, infos)| {
-            let mut variants = infos.map(FontVariant::from).collect::<Vec<FontVariant>>();
-
-            variants.sort_by(|a, b| {
-                a.style
-                    .cmp(&b.style)
-                    .then(a.weight.cmp(&b.weight))
-                    .then(a.stretch.cmp(&b.stretch))
-            });
-
-            FontInformation { name: name.to_string(), variants }
-        })
-        .collect::<_>()
+        .map(|(family, infos)| (family.to_string(), infos.cloned().collect::<Vec<FontInfo>>()))
+        .collect::<HashMap<String, Vec<FontInfo>>>()
 }

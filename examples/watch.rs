@@ -12,7 +12,7 @@ fn main() {
             .join("examples")
             .join("sample.pdf"),
         font_paths: vec!["assets".into()],
-        inputs: vec![("input".to_string(), "value".to_string())],
+        dict: vec![("input".to_string(), "value".to_string())],
         ppi: None,
     };
 

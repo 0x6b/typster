@@ -4,7 +4,7 @@ use lopdf::{Dictionary, Document, Object};
 use serde::{Deserialize, Serialize};
 use xmp_toolkit::{xmp_ns, OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue};
 
-/// PDF, dublin core, and xmp metadata for a document.
+/// PDF, dublin core, and [Extensible Metadata Platform (XMP)](https://www.adobe.com/devnet/xmp.html) metadata for a PDF document. See also [Extensible Metadata Platform (XMP) Specification: Part 1, Data Model, Serialization, and Core Properties](https://github.com/adobe/XMP-Toolkit-SDK/blob/main/docs/XMPSpecificationPart1.pdf) for detail.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PdfMetadata {
     /// Title of the document.
@@ -68,12 +68,62 @@ impl Default for PdfMetadata {
     }
 }
 
-/// Update the metadata of a PDF file.
+/// Updates the metadata of a PDF file.
+///
+/// Note that:
+///
+/// - All metadata will be overwritten, not merged.
+/// - Both creation and modification date are set automatically to the current date _without_ time
+///   information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 ///
 /// # Arguments
 ///
 /// - `path` - Path to the PDF file.
-/// - `metadata` - Metadata to set.
+/// - `metadata` - [`PdfMetadata`] to set.
+///
+/// # Example
+///
+/// Following is an example of how to use the `update_metadata` function:
+///
+/// ```rust
+/// let output = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///     .join("examples")
+///     .join("sample.pdf");
+///
+/// // Compile a document first
+/// let params = typster::CompileParams {
+///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.typ"),
+///     output: output.clone(),
+///     font_paths: vec!["assets".into()],
+///     dict: vec![("input".to_string(), "value".to_string())],
+///     ppi: None,
+/// };
+/// match typster::compile(&params) {
+///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
+///     Err(why) => eprintln!("{why}"),
+/// }
+///
+/// // Then update metadata
+/// let mut custom_properties = std::collections::HashMap::new();
+/// custom_properties.insert("robots".to_string(), "noindex".to_string());
+/// custom_properties.insert("custom".to_string(), "properties".to_string());
+///
+/// let metadata = typster::PdfMetadata {
+///     title: "Title (typster)".to_string(),
+///     author: "Author (typster)".to_string(),
+///     application: "Application (typster)".to_string(),
+///     subject: "Subject (typster)".to_string(),
+///     copyright_status: true,
+///     copyright_notice: "Copyright notice (typster)".to_string(),
+///     keywords: vec!["typster".to_string(), "rust".to_string(), "pdf".to_string()],
+///     language: "en".to_string(),
+///     custom_properties,
+/// };
+///
+/// typster::update_metadata(&output, &metadata).unwrap();
+/// ```
 pub fn update_metadata(
     path: &Path,
     metadata: &PdfMetadata,

@@ -11,7 +11,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .join("examples")
             .join("sample-protected.pdf"),
         &PermissionParams {
-            owner_password: "owner".to_string(),
+            owner_password: Some("owner".to_string()),
             allow_print: PrintPermission::None,
             ..Default::default()
         },

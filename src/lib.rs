@@ -1,7 +1,9 @@
+//! A naive Rust Library that provides a way to work with [Typst](https://typst.app/) document and PDF file programmatically.
+
 #[cfg(feature = "compile")]
 pub use compile::{compile, CompileParams};
 #[cfg(feature = "compile")]
-pub use fonts::{list_fonts, FontInformation, FontVariant};
+pub use fonts::list_fonts;
 #[cfg(feature = "format")]
 pub use format::{format, FormatParams};
 #[cfg(feature = "pdf_permission")]
@@ -58,7 +60,7 @@ pub mod tests {
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
 
@@ -86,7 +88,7 @@ pub mod tests {
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
 
@@ -226,7 +228,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
         assert!(compile(&params).is_ok());
@@ -284,7 +286,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
                 .join("sample.typ"),
             output: output.clone(),
             font_paths: vec![],
-            inputs: vec![("input".to_string(), "value".to_string())],
+            dict: vec![("input".to_string(), "value".to_string())],
             ppi: None,
         };
         assert!(compile(&params).is_ok());
@@ -293,7 +295,7 @@ $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる�
             output.clone(),
             output_protected.clone(),
             &PermissionParams {
-                owner_password: "owner".to_string(),
+                owner_password: Some("owner".to_string()),
                 allow_print: PrintPermission::None,
                 ..Default::default()
             },

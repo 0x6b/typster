@@ -40,10 +40,40 @@ const EXTENSIONS: [&str; 16] = [
 /// Starts a web server that serves the output PDF file, while watching for changes in the input
 /// Typst file and recompiles when a change is detected.
 ///
+///Changes for `typ` file, along with files with extension `cbor`, `csv`, `gif`, `htm`, `html`,
+/// `jpeg`, `jpg`, `json`, `png`, `svg`, `toml`, `txt`, `xml`, `yaml`, and `yml` in the same
+/// directory, recursively, will be watched. This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
+///
 /// # Arguments
 ///
-/// - `params` - CompileParams struct.
-/// - `open` - Whether to open the output PDF file in the default browser.
+/// - `params` - [`CompileParams`] struct.
+/// - `open` - Whether to open the output PDF file with the default browser.
+///
+/// # Example
+///
+/// Following is an example of how to use the `watch` function:
+///
+///```no_run
+/// let rt = tokio::runtime::Runtime::new().unwrap();
+/// let params = typster::CompileParams {
+///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.typ"),
+///     output: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+///         .join("examples")
+///         .join("sample.pdf"),
+///     font_paths: vec!["assets".into()],
+///     dict: vec![("input".to_string(), "value".to_string())],
+///     ppi: None,
+/// };
+///
+/// rt.block_on(async {
+///     if let Err(error) = typster::watch(&params, true).await {
+///         eprintln!("Server error: {}", error)
+///     }
+/// });
+/// ```
+
 pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Error>> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
