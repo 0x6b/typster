@@ -158,7 +158,17 @@ impl FontSearcher {
     }
 }
 
+#[allow(unused_imports)]
+use crate::CompileParams; // For documentation purposes.
+
 /// Lists all fonts available for the library.
+///
+/// Note that:
+///
+/// - typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80)
+///   are always embedded.
+/// - The crate won't search system fonts to ensure the reproducibility. All fonts you need should
+///   be explicitly added via [`CompileParams`].
 ///
 /// # Arguments
 ///

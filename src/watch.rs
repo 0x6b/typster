@@ -38,10 +38,11 @@ const EXTENSIONS: [&str; 16] = [
 ];
 
 /// Starts a web server that serves the output PDF file, while watching for changes in the input
-/// Typst file and recompiles when a change is detected. Changes for `typ` file, along with files
-/// with extension `cbor`, `csv`, `gif`, `htm`, `html`, `jpeg`, `jpg`, `json`, `png`, `svg`, `toml`,
-/// `txt`, `xml`, `yaml`, and `yml` in the same directory, recursively, will be watched.
-/// This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
+/// Typst file and recompiles when a change is detected.
+///
+///Changes for `typ` file, along with files with extension `cbor`, `csv`, `gif`, `htm`, `html`,
+/// `jpeg`, `jpg`, `json`, `png`, `svg`, `toml`, `txt`, `xml`, `yaml`, and `yml` in the same
+/// directory, recursively, will be watched. This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
 ///
 /// # Arguments
 ///
