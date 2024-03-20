@@ -8,9 +8,6 @@ Naive Rust Library which provides a way to work with [Typst](https://typst.app/)
 typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = ["full"] }
 ```
 
-> [!Note]
-> Since the version of [typstfmt](https://crates.io/crates/typstfmt) on crates.io is not the latest, I'm unable to publish this crate there as well, because [no one can publish a crate that depends on git repositories](https://github.com/rust-lang/cargo/issues/6738#issuecomment-472224210).
-
 ## Crate Features
 
 Specify `full` to enable all the following features. Note that embedding fonts will produce a large binary.
@@ -27,7 +24,7 @@ $ cargo run --example compile --features embed_additional_fonts
 
 ### `format`
 
-You can format a Typst document; a thin wrapper of [typstfmt](https://github.com/astrale-sharp/typstfmt).
+You can format a Typst document with [typstyle](https://github.com/Enter-tainer/typstyle).
 
 See [`examples/format.rs`](examples/format.rs) for usage.
 
@@ -40,7 +37,7 @@ $ cargo run --example format --features format
 You can update PDF metadata. Following metadata is supported:
 
 | Metadata          | In Acrobat Reader              | In Apple Preview                   |
-| ----------------- | ------------------------------ | ---------------------------------- |
+|-------------------|--------------------------------|------------------------------------|
 | Title             | Title                          | Title                              |
 | Author            | Author                         | Author                             |
 | Application       | Application _and_ PDF Producer | PDF Producer _and_ Content creator |
@@ -55,7 +52,10 @@ You can update PDF metadata. Following metadata is supported:
 > [!Note]
 >
 > - All metadata will be overwritten, not merged.
-> - Both creation and modification date are set automatically to the current date _without time information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+> - Both creation and modification date are set automatically to the current date
+    _without
+    time
+    information_ which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
 You can specify some of them with Typst. As of Typst [v0.10.0](https://github.com/typst/typst/releases/tag/v0.10.0), the following metadata is supported:
 
@@ -139,7 +139,7 @@ Note that you have to install `exiftool` to run all tests.
 - Fonts under the [assets/fonts](assets/fonts) directory are licensed under its own license.
 
   | Fonts                                              | License                                                                |
-  | -------------------------------------------------- | ---------------------------------------------------------------------- |
+    | -------------------------------------------------- | ---------------------------------------------------------------------- |
   | `assets/fonts/ComputerModern/cmunrm.ttf`           | [LICENSE](assets/fonts/ComputerModern/SIL%20Open%20Font%20License.txt) |
   | `assets/fonts/iAWriterDuo/iAWriterDuoS-*.ttf`      | [LICENSE](assets/fonts/iAWriterDuo/LICENSE.md)                         |
   | `assets/fonts/NotoSansJP/NotoSansJP-*.ttf`         | [LICENSE](assets/fonts/NotoSansJP/OFL.txt)                             |
@@ -150,7 +150,7 @@ Note that you have to install `exiftool` to run all tests.
 ## Acknowledgements
 
 - [typst/typst](https://github.com/typst/typst/)
-- [astrale-sharp/typstfmt](https://github.com/astrale-sharp/typstfmt)
+- [Enter-tainer/typstyle](https://github.com/Enter-tainer/typstyle)
 - [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/)
 - All the fonts authors and contributors
 
