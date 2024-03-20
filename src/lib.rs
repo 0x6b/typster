@@ -1,7 +1,7 @@
 #[cfg(feature = "compile")]
 pub use compile::{compile, CompileParams};
 #[cfg(feature = "compile")]
-pub use fonts::{list_fonts, FontInformation, FontVariant};
+pub use fonts::list_fonts;
 #[cfg(feature = "format")]
 pub use format::{format, FormatParams};
 #[cfg(feature = "pdf_permission")]
