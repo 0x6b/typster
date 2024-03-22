@@ -64,6 +64,7 @@ toml = "0.8.11"
 
 [dev-dependencies]
 sha2 = "0.10.8"
+test-context = "0.3.0"
 tokio = { version = "1.36.0", features = ["net"] }
 
 [features]
