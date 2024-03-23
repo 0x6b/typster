@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "1.3.2"
+version = "1.3.3"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
