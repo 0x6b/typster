@@ -8,6 +8,13 @@ A naive Rust library that provides a way to work with [Typst](https://typst.app/
 typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = ["full"] }
 ```
 
+## Tested Environment
+
+The crate may function in other environments, but it has only been tested in the following environment:
+
+- rustc 1.77.0 (aedd173a2 2024-03-17)
+- macOS Sonoma 14.4 (23E214)
+
 ## Supported Typst Version
 
 Version [0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0) (March 15, 2024)
@@ -114,13 +121,13 @@ This feature also enables `compile` feature.
 
 You can embed additional fonts in the binary for easier deployment. Each feature also enables `compile` feature.
 
+- `embed_additional_fonts`: embed all fonts listed below.
 - `embed_cmu_roman`: [Computer Modern Roman](https://www.fontsquirrel.com/fonts/computer-modern)
 - `embed_ia_writer_duo`: [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)
 - `embed_noto_sans_jp`: [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)
 - `embed_noto_serif_jp`: [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
 - `embed_recursive`: [Recursive Sans & Mono](https://github.com/arrowtype/recursive/)
 - `embed_source_code_pro`: [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
-- `embed_additional_fonts`: all of the above
 
 > [!Note]
 > typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80) are always embedded.
