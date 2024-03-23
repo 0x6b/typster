@@ -142,7 +142,7 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
                 if !changed {
                     return;
                 }
-                print!("Change detected. Recompiling...");
+                info!("Change detected. Recompiling...");
                 match crate::compile(&params) {
                     Ok(duration) => info!("compilation succeeded in {duration:?}"),
                     Err(why) => error!("{why}"),
