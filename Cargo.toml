@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "1.3.1"
+version = "1.3.2"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -58,6 +58,11 @@ tokio = { version = "1.36.0", features = ["fs", "macros", "net", "rt-multi-threa
 # Open in browser
 open = { version = "5.1.2", optional = true }
 
+# logging
+log = { version = "0.4.21", default-features = false, optional = true }
+tracing = { version = "0.1.40", default-features = false, optional = true }
+tracing-subscriber = { version = "0.3.18", default-features = false, features = ["fmt", "tracing-log", "ansi"], optional = true }
+
 [build-dependencies]
 serde = { version = "1.0.197", features = ["derive"] }
 toml = "0.8.11"
@@ -99,7 +104,7 @@ compile = [
 format = ["dep:typst-syntax", "dep:typstyle"]
 pdf_metadata = ["dep:chrono", "dep:lopdf", "dep:xmp_toolkit"]
 pdf_permission = ["dep:qpdf"]
-watch = ["compile", "dep:axum", "dep:notify", "dep:tokio", "dep:open"]
+watch = ["compile", "dep:axum", "dep:log", "dep:notify", "dep:open", "dep:tokio", "dep:tracing", "dep:tracing-subscriber"]
 
 # Enable these features to embed fonts into the binary.
 ## assets/fonts/ComputerModern/cmunrm.ttf
