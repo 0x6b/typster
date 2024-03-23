@@ -12,6 +12,7 @@ use axum::{
     routing::get,
     Router,
 };
+use log::{error, info};
 use notify::{
     event::{DataChange, ModifyKind::Data},
     Event,
@@ -75,6 +76,8 @@ const EXTENSIONS: [&str; 16] = [
 /// ```
 
 pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Error>> {
+    tracing_subscriber::fmt::init();
+
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
     let address = listener.local_addr()?.ip().to_string();
@@ -86,9 +89,9 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
 
     match crate::compile(&params) {
         Ok(duration) => {
-            println!("Initial compilation succeeded in {duration:?}. Watching for changes...")
+            info!("Initial compilation succeeded in {duration:?}. Watching for changes...")
         }
-        Err(why) => eprintln!("{why}"),
+        Err(why) => error!("{why}"),
     }
 
     let state = Arc::new(SharedState {
@@ -107,17 +110,17 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
         .route("/target.pdf", get(pdf))
         .route("/listen", get(listen))
         .with_state(Arc::clone(&state));
-    println!("Listening on {}:{}", state.address, state.port);
+    info!("Listening on {}:{}", state.address, state.port);
 
     if open {
         match open::that_detached(format!("http://{}:{}", state.address, state.port)) {
-            Ok(_) => println!("Opened in default browser"),
-            Err(why) => eprintln!("{why}"),
+            Ok(_) => info!("Opened in default browser"),
+            Err(why) => error!("{why}"),
         }
     }
 
     tokio::spawn(async move {
-        println!("Press Ctrl+C to exit");
+        info!("Press Ctrl+C to exit");
         async {
             tokio::signal::ctrl_c()
                 .await
@@ -143,13 +146,13 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
                 }
                 print!("Change detected. Recompiling...");
                 match crate::compile(&params) {
-                    Ok(duration) => println!("compilation succeeded in {duration:?}"),
-                    Err(why) => eprintln!("{why}"),
+                    Ok(duration) => info!("compilation succeeded in {duration:?}"),
+                    Err(why) => error!("{why}"),
                 }
                 state.changed.notify_one()
             }
         }
-        Err(e) => println!("watch error: {:?}", e),
+        Err(e) => error!("watch error: {:?}", e),
     })?;
     watcher.watch(input.parent().unwrap(), RecursiveMode::Recursive)?;
     let server = axum::serve(listener, router).into_future();
@@ -157,13 +160,13 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
     select! {
         _ = server => {}
         _ = state_selector.shutdown.notified() => {
-            println!("\nShutting down...");
+            info!("Shutting down...");
             watcher.unwatch(input.parent().unwrap())?;
             remove_file(&state_selector.output)?;
         }
     }
 
-    println!("Bye!");
+    info!("Bye!");
     Ok(())
 }
 
