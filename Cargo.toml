@@ -73,6 +73,7 @@ test-context = "0.3.0"
 tokio = { version = "1.36.0", features = ["net"] }
 
 [features]
+default = []
 full = [
     "compile",
     "embed_additional_fonts",
