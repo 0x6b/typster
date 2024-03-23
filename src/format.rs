@@ -4,6 +4,8 @@ use typst_syntax::parse;
 use typstyle::{get_no_format_nodes, PrettyPrinter};
 
 /// Parameters for a formatting operation.
+///
+/// See also [`format()`].
 #[derive(Debug, Clone, Default)]
 pub struct FormatParams {
     /// Path to the input Typst file.

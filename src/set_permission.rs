@@ -4,6 +4,8 @@ use qpdf::{EncryptionParams, EncryptionParamsR6};
 use serde::{Deserialize, Serialize};
 
 /// Parameters for PDF permission.
+///
+/// See also [`set_permission()`].
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PermissionParams {
     /// User password, which is required to open the document. Set to [`None`] to allow anyone to
@@ -118,7 +120,7 @@ impl Default for PermissionParams {
 /// Sets permission of a PDF file.
 ///
 /// Note that in-place update is not possible, so the output file must be different from the input
-/// file.
+/// file. The only supported encryption algorithm is AES-256 (PDF 1.7, or Acrobat 9).
 ///
 /// # Arguments
 ///

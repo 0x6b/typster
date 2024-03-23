@@ -29,7 +29,7 @@
 //! - `format`: Enables the [`format()`] function.
 //! - `pdf_metadata`: Enables the [`update_metadata()`] function.
 //! - `pdf_permission`: Enables the [`set_permission()`] function.
-//! - `watch`: Enables the [`watch()`] function.
+//! - `watch`: Enables the [`watch()`] function. This feature also enables the `compile` feature.
 //!
 //! ## Fonts Embedding
 //!

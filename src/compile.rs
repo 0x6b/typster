@@ -9,6 +9,8 @@ use typst::{eval::Tracer, foundations::Smart, model::Document, visualize::Color,
 use crate::world::SystemWorld;
 
 /// Parameters for Typst document compilation.
+///
+/// See also [`compile()`].
 #[derive(Debug, Clone, Default)]
 pub struct CompileParams {
     /// Path to the input Typst file.

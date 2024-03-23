@@ -99,6 +99,8 @@ You can set PDF permission update. Following PDF 1.7 permissions are supported:
 - printing (high, low, or disallow).
 - encrypt metadata.
 
+The only supported encryption algorithm is AES-256.
+
 See [`examples/set_permission.rs`](examples/set_permission.rs) for usage.
 
 ```console
