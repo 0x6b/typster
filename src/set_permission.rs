@@ -115,11 +115,14 @@ impl Default for PermissionParams {
     }
 }
 
-/// Sets permission for a PDF file. Note that in-place update is not possible.
+/// Sets permission of a PDF file.
+///
+/// Note that in-place update is not possible, so the output file must be different from the input
+/// file.
 ///
 /// # Arguments
 ///
-/// - `input` - Path to the PDF file.
+/// - `input` - Path to the input PDF file.
 /// - `output` - Path to the output PDF file.
 /// - `params` - [`PermissionParams`] to set.
 ///

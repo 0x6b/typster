@@ -48,7 +48,8 @@ const EXTENSIONS: [&str; 16] = [
 /// # Arguments
 ///
 /// - `params` - [`CompileParams`] struct.
-/// - `open` - Whether to open the output PDF file with the default browser.
+/// - `open` - Whether to open the output PDF file with the default browser once after the server
+///   launches.
 ///
 /// # Example
 ///

@@ -8,17 +8,17 @@ use typst::{eval::Tracer, foundations::Smart, model::Document, visualize::Color,
 
 use crate::world::SystemWorld;
 
-/// Parameters for [Typst](https://typst.app/) document compilation.
+/// Parameters for Typst document compilation.
 #[derive(Debug, Clone, Default)]
 pub struct CompileParams {
-    /// Path to input [Typst](https://typst.app/) file.
+    /// Path to the input Typst file.
     pub input: PathBuf,
 
     /// String key-value pairs visible through `sys.inputs` [dictionary](https://typst.app/docs/reference/foundations/dictionary/) in the `input` document.
     pub dict: Vec<(String, String)>,
 
-    /// Path to output file (PDF, PNG). Output format is determined by extension, and only PNG and
-    /// PDF are supported.
+    /// Path to the output file (PDF, PNG). Output format is determined by extension, and only PNG
+    /// and PDF are supported.
     pub output: PathBuf,
 
     /// Adds additional directories to search for fonts.
