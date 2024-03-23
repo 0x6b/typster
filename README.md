@@ -8,6 +8,12 @@ A naive Rust library that provides a way to work with [Typst](https://typst.app/
 typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = ["full"] }
 ```
 
+## Supported Typst Version
+
+Version [0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0) (March 15, 2024)
+
+This crate is for my personal use and learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
+
 ## Crate Features
 
 ### `full`

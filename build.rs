@@ -54,7 +54,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 /// ```
 pub fn version() -> &'static str {{ "{typster_version}" }}
 
-/// Returns the [Typst](https://typst.app/) version the library was compiled with.
+/// Returns the Typst version the library was compiled with.
 ///
 /// # Example
 ///

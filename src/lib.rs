@@ -1,4 +1,21 @@
 //! A naive Rust Library that provides a way to work with [Typst](https://typst.app/) document and PDF file programmatically.
+//!
+//! # Overview
+//!
+//! You can use this library to:
+//!
+//! - [compile](compile()) a Typst file to a PDF file
+//! - [format](format()) a Typst file
+//! - [set permission](set_permission()) for a PDF file
+//! - [update metadata](update_metadata()) of a PDF file
+//! - [watch](watch()) for changes in the input Typst file along with its dependencies and recompile
+//!   it when a change is detected
+//!
+//! # Supported Typst Version
+//!
+//! Version [0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0) (March 15, 2024)
+//!
+//! This crate is for my personal use and Typst/Rust learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
 
 #[cfg(feature = "compile")]
 pub use compile::{compile, CompileParams};
