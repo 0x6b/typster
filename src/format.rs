@@ -1,7 +1,7 @@
 use std::{fs::read_to_string, path::PathBuf};
 
 use typst_syntax::parse;
-use typstyle::{get_no_format_nodes, PrettyPrinter};
+use typstyle_core::{get_no_format_nodes, PrettyPrinter};
 
 /// Parameters for a formatting operation.
 ///
