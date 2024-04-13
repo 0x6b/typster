@@ -1,7 +1,7 @@
 use std::{fs::read_to_string, path::PathBuf};
 
 use typst_syntax::parse;
-use typstyle_core::{get_no_format_nodes, PrettyPrinter};
+use typstyle_core::{attr::calculate_attributes, PrettyPrinter};
 
 /// Parameters for a formatting operation.
 ///
@@ -42,9 +42,9 @@ pub struct FormatParams {
 
 pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
     let root = parse(&read_to_string(&params.input)?);
-    let disabled_nodes = get_no_format_nodes(root.clone());
+    let attr_map = calculate_attributes(root.clone());
     let markup = root.cast().unwrap();
-    let printer = PrettyPrinter::new(disabled_nodes);
+    let printer = PrettyPrinter::new(attr_map);
     let doc = printer.convert_markup(markup);
     Ok(doc.pretty(params.column).to_string())
 }

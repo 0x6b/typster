@@ -93,6 +93,14 @@ impl FontSearcher {
             process(data);
         }
 
+        #[cfg(any(
+            feature = "embed_cmu_roman",
+            feature = "embed_ia_writer_duo",
+            feature = "embed_noto_sans_jp",
+            feature = "embed_noto_serif_jp",
+            feature = "embed_recursive",
+            feature = "embed_source_code_pro"
+        ))]
         macro_rules! add {
             ($filename:literal) => {
                 process(include_bytes!(concat!("../assets/fonts/", $filename)));
