@@ -1,8 +1,7 @@
 use std::{
     collections::HashMap,
     error::Error,
-    fs::{read_to_string, remove_file, File},
-    io::copy,
+    fs::{read, read_to_string, remove_file},
     path::{Path, PathBuf},
     process::Command,
 };
@@ -174,11 +173,18 @@ fn test_typst_version() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn calculate_hash(path: &Path) -> Result<String, Box<dyn Error>> {
-    let mut file = File::open(path)?;
+fn calculate_hash<P>(path: P) -> Result<String, Box<dyn Error>>
+where
+    P: AsRef<Path>,
+{
     let mut hasher = Sha256::new();
-    copy(&mut file, &mut hasher)?;
-    Ok(format!("{:x}", hasher.finalize()))
+    hasher.update(read(&path)?);
+    let hash = hasher.finalize();
+    let hex = hash.iter().fold(String::new(), |mut output, b| {
+        output.push_str(&format!("{b:02x}"));
+        output
+    });
+    Ok(hex)
 }
 
 fn get_properties(path: &Path) -> Result<HashMap<String, String>, Box<dyn Error>> {
