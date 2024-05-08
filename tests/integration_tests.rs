@@ -59,7 +59,7 @@ fn test_export_pdf(
     assert!(out.exists());
     assert_eq!(
         calculate_hash(out)?,
-        "f9f09e14e1a9906ca327649b94c7958e304f6e66bc1a378abe77c179f3c49cf0"
+        "3526ef71183c27704953997dd21149fae918a39231bc09db9f7cb080500b00ba"
     );
 
     remove_file(out)?;
