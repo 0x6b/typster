@@ -35,12 +35,12 @@
       emph[#kind 2.#theorem-number.display() 【#title】]
     }
   }
-  
+
   box(stroke: (left: 1pt), inset: (left: 5pt, top: 2pt, bottom: 5pt))[
     #title-text #h(0.5em)
     #body
   ]
-  
+
   theorem-number.step()
 }
 
@@ -55,7 +55,7 @@
 
 #theorem(kind: "定義", title: [$sigma$-加法族])[
   $Omega$ の部分集合族 $cF$ が以下の性質を満たすとき、 $Omega$ を $sigma$-加法族という。
-  
+
   + $Omega in cF$
   + $A in cF ==> A^c in cF$
   + $A_1, A_2, dots in cF$ に対して以下のことが成り立つ（_$sigma$-加法性、完全加法性、加算加法性_）:
@@ -71,7 +71,7 @@ $Omega$ と $cF$ の組 $(Omega, cF)$ を#strong[可測空間]という。
 
 #theorem(kind: "定義", title: [確率測度])[
   $(Omega, cF)$ を可測空間とする。 $cF$ 上の関数 $P$ が次を満たすとき、これを#strong[確率測度]という。
-  
+
   - $0 <= P(A) <= 1 #h(0.5em) (forall A in cF)$
   - $P(Omega) = 1$
   - $A_1, A_2, dots in cF$ が $A_i sect A_j = nothing #h(0.25em) (forall i != j)$ のとき、

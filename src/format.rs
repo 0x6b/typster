@@ -1,7 +1,7 @@
 use std::{fs::read_to_string, path::PathBuf};
 
 use typst_syntax::parse;
-use typstyle_core::{attr::calculate_attributes, PrettyPrinter};
+use typstyle_core::{attr::calculate_attributes, strip_trailing_whitespace, PrettyPrinter};
 
 /// Parameters for a formatting operation.
 ///
@@ -46,5 +46,5 @@ pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error
     let markup = root.cast().unwrap();
     let printer = PrettyPrinter::new(attr_map);
     let doc = printer.convert_markup(markup);
-    Ok(doc.pretty(params.column).to_string())
+    Ok(strip_trailing_whitespace(&doc.pretty(params.column).to_string()))
 }
