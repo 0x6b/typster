@@ -59,7 +59,7 @@ fn test_export_pdf(
     assert!(out.exists());
     assert_eq!(
         calculate_hash(out)?,
-        "3526ef71183c27704953997dd21149fae918a39231bc09db9f7cb080500b00ba"
+        "38c041a1439b5303f0e2acff2f2145294eb80ee9f54d5bf7bd7ea4007034921f"
     );
 
     remove_file(out)?;
@@ -168,7 +168,7 @@ fn test_format(
 
 #[test]
 fn test_typst_version() -> Result<(), Box<dyn Error>> {
-    assert_eq!(typst_version(), "0.11.0");
+    assert_eq!(typst_version(), "0.11.1");
 
     Ok(())
 }
