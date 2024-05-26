@@ -17,7 +17,7 @@ The crate may function in other environments, but it has only been tested in the
 
 ## Supported Typst Version
 
-Version [0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0) (March 15, 2024)
+Version [0.11.1](https://github.com/typst/typst/releases/tag/v0.11.1) (May 17, 2024)
 
 This crate is for my personal use and learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
 
@@ -29,7 +29,7 @@ Specify `full` to enable all the following features.
 
 ### `compile`
 
-You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.11.0/crates/typst-cli) [v0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0).
+You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.11.1/crates/typst-cli) [v0.11.1](https://github.com/typst/typst/releases/tag/v0.11.1).
 
 See [`examples/compile.rs`](examples/compile.rs) for usage.
 
@@ -69,7 +69,7 @@ You can update PDF metadata. Following metadata is supported:
 > - Both creation and modification date are set automatically to the current date
     _without_ time information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
-You can specify some of them with Typst. As of Typst [v0.11.0](https://github.com/typst/typst/releases/tag/v0.11.0), the following metadata is supported:
+You can specify some of them with Typst. As of Typst [v0.11.1](https://github.com/typst/typst/releases/tag/v0.11.1), the following metadata is supported:
 
 - Title
 - Author
@@ -132,7 +132,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_source_code_pro`: [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.11.1/src/lib.rs#L67-L80) are always embedded.
 
 > [!Warning]
 > - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
