@@ -12,8 +12,8 @@ typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = 
 
 The crate may function in other environments, but it has only been tested in the following environment:
 
-- rustc 1.77.0 (aedd173a2 2024-03-17)
-- macOS Sonoma 14.4 (23E214)
+- rustc 1.79.0 (129f3b996 2024-06-10)
+- macOS Sonoma 14.5 (23F79)
 
 ## Supported Typst Version
 
