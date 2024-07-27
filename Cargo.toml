@@ -42,7 +42,7 @@ typstyle = { version = "0.11.30", optional = true }
 
 # PDF metadata management
 lopdf = { version = "0.33", optional = true }
-xmp_toolkit = { version = "1.8", optional = true }
+xmp_toolkit = { version = "1.9", optional = true }
 
 # PDF permission setting
 qpdf = { version = "0.3", features = ["vendored"], optional = true }
@@ -53,7 +53,7 @@ serde = { version = "1.0", features = ["derive"] }
 # Watch server
 axum = { version = "0.7", features = ["ws"], optional = true }
 notify = { version = "6.1", optional = true }
-tokio = { version = "1.38", features = ["fs", "macros", "net", "rt-multi-thread", "signal"], optional = true }
+tokio = { version = "1.39", features = ["fs", "macros", "net", "rt-multi-thread", "signal"], optional = true }
 
 # Open in browser
 open = { version = "5.3", optional = true }
@@ -68,9 +68,9 @@ serde = { version = "1.0", features = ["derive"] }
 toml = "0.8"
 
 [dev-dependencies]
-sha2 = "0.11.0-pre.3"
+sha2 = "0.11.0-pre"
 test-context = "0.3"
-tokio = { version = "1.38", features = ["net"] }
+tokio = { version = "1.39", features = ["net"] }
 
 [features]
 default = []
