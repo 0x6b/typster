@@ -153,7 +153,7 @@ pub fn update_metadata(
 
     // check if xmp can be updated
     if !f.can_put_xmp(&xmp) {
-        return Err("cannot update metadata for some reason".into());
+        return Err("The file cannot be updated with a given set of XMP metadata for some reason. This depends on the size of the packet, the options with which the file was opened, and the capabilities of the handler for the file format.".into());
     }
 
     f.put_xmp(&xmp)?;
