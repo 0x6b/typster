@@ -80,7 +80,7 @@ const EXTENSIONS: [&str; 16] = [
 pub async fn watch(
     params: &CompileParams,
     open: bool,
-    app: Option<&'static str>,
+    app: Option<&str>,
 ) -> Result<(), Box<dyn Error>> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
