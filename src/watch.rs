@@ -50,6 +50,7 @@ const EXTENSIONS: [&str; 16] = [
 /// - `params` - [`CompileParams`] struct.
 /// - `open` - Whether to open the output PDF file with the default browser once after the server
 ///   launches.
+/// - `app` - Open the output PDF file with the given application
 ///
 /// # Example
 ///
@@ -70,13 +71,17 @@ const EXTENSIONS: [&str; 16] = [
 /// };
 ///
 /// rt.block_on(async {
-///     if let Err(error) = typster::watch(&params, true).await {
+///     if let Err(error) = typster::watch(&params, true, None).await {
 ///         eprintln!("Server error: {}", error)
 ///     }
 /// });
 /// ```
 
-pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Error>> {
+pub async fn watch(
+    params: &CompileParams,
+    open: bool,
+    app: Option<&'static str>,
+) -> Result<(), Box<dyn Error>> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
     let address = listener.local_addr()?.ip().to_string();
@@ -112,9 +117,16 @@ pub async fn watch(params: &CompileParams, open: bool) -> Result<(), Box<dyn Err
     info!("Listening on {}:{}", state.address, state.port);
 
     if open {
-        match open::that_detached(format!("http://{}:{}", state.address, state.port)) {
-            Ok(_) => info!("Opened in default browser"),
-            Err(why) => error!("{why}"),
+        if let Some(app) = app {
+            match open::with_detached(format!("http://{}:{}", state.address, state.port), app) {
+                Ok(_) => info!("Opened in default browser"),
+                Err(why) => error!("{why}"),
+            }
+        } else {
+            match open::that_detached(format!("http://{}:{}", state.address, state.port)) {
+                Ok(_) => info!("Opened in default browser"),
+                Err(why) => error!("{why}"),
+            }
         }
     }
 

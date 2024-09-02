@@ -18,7 +18,7 @@ fn main() {
     };
 
     rt.block_on(async {
-        if let Err(error) = typster::watch(&params, true).await {
+        if let Err(error) = typster::watch(&params, true, None).await {
             eprintln!("Server error: {}", error)
         }
     });
