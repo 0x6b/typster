@@ -1,5 +1,6 @@
 use std::{
-    error::Error, fs::remove_file, future::IntoFuture, net::SocketAddr, path::PathBuf, sync::Arc,
+    error::Error, fmt::Display, fs::remove_file, future::IntoFuture, net::SocketAddr,
+    path::PathBuf, sync::Arc,
 };
 
 use axum::{
@@ -30,6 +31,7 @@ pub struct SharedState {
     pub output: PathBuf,
     pub changed: Notify,
     pub shutdown: Notify,
+    pub fitting_type: FittingType,
 }
 
 // list of supported extensions
@@ -71,16 +73,51 @@ const EXTENSIONS: [&str; 16] = [
 /// };
 ///
 /// rt.block_on(async {
-///     if let Err(error) = typster::watch(&params, true, None).await {
+///     if let Err(error) = typster::watch(&params, true, None, Some(typster::FittingType::Width)).await {
 ///         eprintln!("Server error: {}", error)
 ///     }
 /// });
 /// ```
 
+/// Fitting type for the PDF output (Google Chrome only, maybe)
+#[derive(Debug, Clone, Default)]
+pub enum FittingType {
+    /// Fit to page
+    Page,
+    /// Fit to width
+    #[default]
+    Width,
+    /// Fit to height
+    Height,
+}
+
+impl From<&str> for FittingType {
+    fn from(value: &str) -> Self {
+        match value {
+            "page" => FittingType::Page,
+            "width" => FittingType::Width,
+            "height" => FittingType::Height,
+            _ => FittingType::Page,
+        }
+    }
+}
+
+impl Display for FittingType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // https://chromium.googlesource.com/chromium/src/+/6363f8da6aae63abedc87f60b629585f10bd8940/chrome/browser/resources/pdf/open_pdf_params_parser.js#61
+        match self {
+            FittingType::Page => write!(f, "fit"),
+            FittingType::Width => write!(f, "fith"),
+            FittingType::Height => write!(f, "fitv"),
+        }
+    }
+}
+
 pub async fn watch(
     params: &CompileParams,
     open: bool,
     app: Option<&str>,
+    fitting_type: Option<FittingType>,
 ) -> Result<(), Box<dyn Error>> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 0));
     let listener = TcpListener::bind(&addr).await?;
@@ -105,6 +142,7 @@ pub async fn watch(
         output,
         changed: Notify::new(),
         shutdown: Notify::new(),
+        fitting_type: fitting_type.unwrap_or_default(),
     });
     let state_handler = Arc::clone(&state);
     let state_selector = Arc::clone(&state);
@@ -186,6 +224,7 @@ pub async fn root(State(state): State<Arc<SharedState>>) -> Html<String> {
         .replace("{addr}", &state.address)
         .replace("{port}", &state.port.to_string())
         .replace("{input}", &state.input.display().to_string())
+        .replace("{fitting_type}", &state.fitting_type.to_string())
         .into()
 }
 

@@ -61,6 +61,8 @@ pub use update_metadata::{update_metadata, PdfMetadata};
 pub use version::{typst_version, version};
 #[cfg(feature = "watch")]
 pub use watch::watch;
+#[cfg(feature = "watch")]
+pub use watch::FittingType;
 
 #[cfg(feature = "compile")]
 mod compile;
