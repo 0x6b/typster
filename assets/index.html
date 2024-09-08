@@ -3,8 +3,6 @@
 <head>
     <title>typster watcher: {input}</title>
     <script>
-        let connected = false;
-
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('target').focus();
         });
@@ -13,48 +11,32 @@
         path.protocol = 'ws:';
         path.pathname = '/listen';
 
-        let ws = null;
-
-        function updatePdf() {
-            const pdf = document.getElementById("target")
-            if (pdf) {
-                pdf.src += '';
-                pdf.focus();
+        function onMessage(event) {
+            if (event.data !== "refresh") {
+                console.error(`[typster] - Received unknown message from websocket: ${event.data}`)
+                return;
             }
+
+            console.log("[typster] - Got refresh message, updating pdf");
+            const pdf = document.getElementById("target")
+            let url = new URL(pdf.src);
+            url.search = '?t=' + Date.now();
+            pdf.src = url.toString();
         }
 
-        function ensureConnection() {
-            if (connected) return;
-
-            ws = new WebSocket(path.toString());
-
-            ws.addEventListener('open', (_) => {
-                console.log('[typster] - Connected to the server')
-                connected = true;
-                updatePdf();
-            });
-
-            ws.addEventListener('message', (_) => {
-                console.log('[typster] - Updating pdf')
-                updatePdf();
-            });
-
-            ws.addEventListener('close', (_) => {
-                console.log('[typster] - Disconnected')
-                connected = false;
-            });
-
-            ws.addEventListener('error', (_) => {
-                console.log('[typster] - Connection error')
-                connected = false;
-            });
+        function onOpen(event) {
+            console.log("[typster] - Connected to the listen endpoint");
         }
 
-        ensureConnection();
+        function onClose(event) {
+            console.log("[typster] - Connection closed");
+        }
 
-        setInterval(function () {
-            ensureConnection()
-        }, 1000);
+        const ws = new WebSocket(path)
+
+        ws.addEventListener("open", onOpen)
+        ws.addEventListener("close", onClose)
+        ws.addEventListener("message", onMessage)
     </script>
 
     <style>
