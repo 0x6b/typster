@@ -1,12 +1,12 @@
 use std::{
     collections::HashMap,
     error::Error,
-    fs::{read, read_to_string, remove_file},
+    fs::{read_to_string, remove_file},
     path::{Path, PathBuf},
     process::Command,
 };
 
-use sha2::{Digest, Sha256};
+use sha2_hasher::Sha2Hasher;
 use test_context::{test_context, TestContext};
 use typster::{
     compile, format, set_permission, typst_version, update_metadata, CompileParams, FormatParams,
@@ -57,10 +57,7 @@ fn test_export_pdf(
 ) -> Result<(), Box<dyn Error>> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(
-        calculate_hash(out)?,
-        "38c041a1439b5303f0e2acff2f2145294eb80ee9f54d5bf7bd7ea4007034921f"
-    );
+    assert_eq!(out.sha256()?, "38c041a1439b5303f0e2acff2f2145294eb80ee9f54d5bf7bd7ea4007034921f");
 
     remove_file(out)?;
     Ok(())
@@ -73,10 +70,7 @@ fn test_export_png(
 ) -> Result<(), Box<dyn Error>> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(
-        calculate_hash(out)?,
-        "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10"
-    );
+    assert_eq!(out.sha256()?, "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10");
 
     remove_file(out)?;
     Ok(())
@@ -171,20 +165,6 @@ fn test_typst_version() -> Result<(), Box<dyn Error>> {
     assert_eq!(typst_version(), "0.11.1");
 
     Ok(())
-}
-
-fn calculate_hash<P>(path: P) -> Result<String, Box<dyn Error>>
-where
-    P: AsRef<Path>,
-{
-    let mut hasher = Sha256::new();
-    hasher.update(read(&path)?);
-    let hash = hasher.finalize();
-    let hex = hash.iter().fold(String::new(), |mut output, b| {
-        output.push_str(&format!("{b:02x}"));
-        output
-    });
-    Ok(hex)
 }
 
 fn get_properties(path: &Path) -> Result<HashMap<String, String>, Box<dyn Error>> {
