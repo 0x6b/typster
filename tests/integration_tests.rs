@@ -1,12 +1,12 @@
 use std::{
     collections::HashMap,
-    error::Error,
-    fs::{read, read_to_string, remove_file},
+    fs::{read_to_string, remove_file},
     path::{Path, PathBuf},
     process::Command,
 };
 
-use sha2::{Digest, Sha256};
+use anyhow::{anyhow, Result};
+use sha2_hasher::Sha2Hasher;
 use test_context::{test_context, TestContext};
 use typster::{
     compile, format, set_permission, typst_version, update_metadata, CompileParams, FormatParams,
@@ -54,13 +54,10 @@ impl TestContext for TypsterTestContext {
 #[test]
 fn test_export_pdf(
     TypsterTestContext { export_pdf: (out, params), .. }: &TypsterTestContext,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(
-        calculate_hash(out)?,
-        "38c041a1439b5303f0e2acff2f2145294eb80ee9f54d5bf7bd7ea4007034921f"
-    );
+    assert_eq!(out.sha256()?, "38c041a1439b5303f0e2acff2f2145294eb80ee9f54d5bf7bd7ea4007034921f");
 
     remove_file(out)?;
     Ok(())
@@ -70,13 +67,10 @@ fn test_export_pdf(
 #[test]
 fn test_export_png(
     TypsterTestContext { export_png: (out, params), .. }: &TypsterTestContext,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(
-        calculate_hash(out)?,
-        "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10"
-    );
+    assert_eq!(out.sha256()?, "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10");
 
     remove_file(out)?;
     Ok(())
@@ -86,7 +80,7 @@ fn test_export_png(
 #[test]
 fn test_update_metadata(
     TypsterTestContext { update_metadata: (out, params), .. }: &TypsterTestContext,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<()> {
     let mut custom_properties = HashMap::new();
     custom_properties.insert("robots".to_string(), "noindex".to_string());
     custom_properties.insert("custom".to_string(), "properties".to_string());
@@ -132,7 +126,7 @@ fn test_set_permission(
     TypsterTestContext {
         set_permission: (out_permission, (out, params)), ..
     }: &TypsterTestContext,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(set_permission(
         out.clone(),
@@ -160,34 +154,20 @@ fn test_set_permission(
 #[test]
 fn test_format(
     TypsterTestContext { format: (expected, params), .. }: &TypsterTestContext,
-) -> Result<(), Box<dyn Error>> {
-    assert_eq!(*expected, format(params)?);
+) -> Result<()> {
+    assert_eq!(*expected, format(params).map_err(|e| anyhow!(e.to_string()))?);
 
     Ok(())
 }
 
 #[test]
-fn test_typst_version() -> Result<(), Box<dyn Error>> {
+fn test_typst_version() -> Result<()> {
     assert_eq!(typst_version(), "0.11.1");
 
     Ok(())
 }
 
-fn calculate_hash<P>(path: P) -> Result<String, Box<dyn Error>>
-where
-    P: AsRef<Path>,
-{
-    let mut hasher = Sha256::new();
-    hasher.update(read(&path)?);
-    let hash = hasher.finalize();
-    let hex = hash.iter().fold(String::new(), |mut output, b| {
-        output.push_str(&format!("{b:02x}"));
-        output
-    });
-    Ok(hex)
-}
-
-fn get_properties(path: &Path) -> Result<HashMap<String, String>, Box<dyn Error>> {
+fn get_properties(path: &Path) -> Result<HashMap<String, String>> {
     let out = String::from_utf8(Command::new("exiftool").arg(path).output()?.stdout)?;
     let props = out
         .split('\n')
