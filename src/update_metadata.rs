@@ -78,8 +78,8 @@ impl Default for PdfMetadata {
 /// Note that:
 ///
 /// - All metadata will be overwritten, not merged.
-/// - Both creation and modification date are set automatically to the current date _without_ time
-///   information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
+/// - The creation is set automatically to the current date _without_ time information which means
+///   time is always 0:00 UTC, for some privacy reasons (or my preference.)
 ///
 /// # Arguments
 ///
@@ -146,9 +146,6 @@ pub fn update_metadata(
     let mut now = XmpDateTime::current()?;
     now.time = None;
     xmp.set_property_date(XMP, "CreateDate", &XmpValue::from(now.clone()))?;
-    xmp.set_property_date(XMP, "ModifyDate", &XmpValue::from(now))?;
-
-    // check if xmp can be updated
     if !f.can_put_xmp(&xmp) {
         return Err("The file cannot be updated with a given set of XMP metadata for some reason. This depends on the size of the packet, the options with which the file was opened, and the capabilities of the handler for the file format.".into());
     }
