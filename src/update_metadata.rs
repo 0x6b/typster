@@ -1,8 +1,11 @@
 use std::{collections::HashMap, path::Path};
 
-use lopdf::{Dictionary, Document, Object};
+use lopdf::{text_string, Dictionary, Document, Object};
 use serde::{Deserialize, Serialize};
-use xmp_toolkit::{xmp_ns, OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue};
+use xmp_toolkit::{
+    xmp_ns::{DC, XMP, XMP_RIGHTS},
+    OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue,
+};
 
 /// PDF, dublin core, and [Extensible Metadata Platform (XMP)](https://www.adobe.com/devnet/xmp.html) metadata for a PDF document.
 ///
@@ -135,21 +138,15 @@ pub fn update_metadata(
 
     let mut xmp = XmpMeta::new()?;
 
-    let metadata = metadata.clone();
-
-    xmp.set_property(xmp_ns::DC, "title", &XmpValue::from(metadata.title.clone()))?;
-    xmp.set_property(xmp_ns::XMP, "CreatorTool", &XmpValue::from(metadata.application.clone()))?;
-    xmp.set_property(xmp_ns::DC, "description", &XmpValue::from(metadata.subject.clone()))?;
-    xmp.set_property_bool(
-        xmp_ns::XMP_RIGHTS,
-        "Marked",
-        &XmpValue::from(metadata.copyright_status),
-    )?;
-    xmp.set_property(xmp_ns::DC, "rights", &XmpValue::from(metadata.copyright_notice))?;
+    xmp.set_localized_text(DC, "title", None, "x-default", &metadata.title)?;
+    xmp.set_localized_text(XMP, "CreatorTool", None, "x-default", &metadata.application)?;
+    xmp.set_localized_text(DC, "description", None, "x-default", &metadata.subject)?;
+    xmp.set_property_bool(XMP_RIGHTS, "Marked", &XmpValue::from(metadata.copyright_status))?;
+    xmp.set_localized_text(DC, "rights", None, "x-default", &metadata.copyright_notice)?;
     let mut now = XmpDateTime::current()?;
     now.time = None;
-    xmp.set_property_date(xmp_ns::XMP, "CreateDate", &XmpValue::from(now.clone()))?;
-    xmp.set_property_date(xmp_ns::XMP, "ModifyDate", &XmpValue::from(now))?;
+    xmp.set_property_date(XMP, "CreateDate", &XmpValue::from(now.clone()))?;
+    xmp.set_property_date(XMP, "ModifyDate", &XmpValue::from(now))?;
 
     // check if xmp can be updated
     if !f.can_put_xmp(&xmp) {
@@ -163,19 +160,19 @@ pub fn update_metadata(
     doc.trailer.remove(b"Info");
 
     let mut dict = Dictionary::new();
-    dict.set("Title", Object::string_literal(metadata.title));
-    dict.set("Subject", Object::string_literal(metadata.subject));
-    dict.set("Author", Object::string_literal(metadata.author.clone()));
-    dict.set("Producer", Object::string_literal(metadata.application.clone()));
-    dict.set("Creator", Object::string_literal(metadata.application));
+    dict.set("Title", text_string(&metadata.title));
+    dict.set("Subject", text_string(&metadata.subject));
+    dict.set("Author", text_string(&metadata.author));
+    dict.set("Producer", text_string(&metadata.application));
+    dict.set("Creator", text_string(&metadata.application));
     let now = chrono::Local::now().format("%Y%m%d").to_string();
-    dict.set("CreationDate", Object::string_literal(now.clone()));
-    dict.set("ModDate", Object::string_literal(now));
-    dict.set("Keywords", Object::string_literal(metadata.keywords.join(", ")));
+    dict.set("CreationDate", text_string(&now));
+    dict.set("ModDate", text_string(&now));
+    dict.set("Keywords", text_string(&metadata.keywords.join(", ")));
     metadata
         .custom_properties
-        .into_iter()
-        .for_each(|(k, v)| dict.set(k, Object::string_literal(v)));
+        .iter()
+        .for_each(|(k, v)| dict.set(k.to_string(), text_string(v)));
     let t = doc.add_object(Object::Dictionary(dict));
 
     doc.trailer.set("Info", t);

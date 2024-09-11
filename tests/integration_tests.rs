@@ -86,10 +86,10 @@ fn test_update_metadata(
     custom_properties.insert("custom".to_string(), "properties".to_string());
 
     let metadata = PdfMetadata {
-        title: "Title (typster)".to_string(),
-        author: "Author (typster)".to_string(),
-        application: "Application (typster)".to_string(),
-        subject: "Subject (typster)".to_string(),
+        title: "Title タイトル (typster)".to_string(),
+        author: "Author 著者 (typster)".to_string(),
+        application: "Application アプリケーション (typster)".to_string(),
+        subject: "Subject 題名 (typster)".to_string(),
         copyright_status: true,
         copyright_notice: "Copyright notice (typster)".to_string(),
         keywords: vec!["typster".to_string(), "rust".to_string(), "pdf".to_string()],
@@ -103,12 +103,15 @@ fn test_update_metadata(
     assert!(out.metadata()?.len() > 0);
 
     let props = get_properties(out)?;
-    assert_eq!(props.get("Title"), Some(&"Title (typster)".to_string()));
-    assert_eq!(props.get("Author"), Some(&"Author (typster)".to_string()));
-    assert_eq!(props.get("Creator"), Some(&"Application (typster)".to_string()));
-    assert_eq!(props.get("Producer"), Some(&"Application (typster)".to_string()));
-    assert_eq!(props.get("Creator Tool"), Some(&"Application (typster)".to_string()));
-    assert_eq!(props.get("Subject"), Some(&"Subject (typster)".to_string()));
+    assert_eq!(props.get("Title"), Some(&"Title タイトル (typster)".to_string()));
+    assert_eq!(props.get("Author"), Some(&"Author 著者 (typster)".to_string()));
+    assert_eq!(props.get("Creator"), Some(&"Application アプリケーション (typster)".to_string()));
+    assert_eq!(props.get("Producer"), Some(&"Application アプリケーション (typster)".to_string()));
+    assert_eq!(
+        props.get("Creator Tool"),
+        Some(&"Application アプリケーション (typster)".to_string())
+    );
+    assert_eq!(props.get("Subject"), Some(&"Subject 題名 (typster)".to_string()));
     assert_eq!(props.get("Marked"), Some(&"True".to_string()));
     assert_eq!(props.get("Rights"), Some(&"Copyright notice (typster)".to_string()));
     assert_eq!(props.get("Keywords"), Some(&"typster, rust, pdf".to_string()));
