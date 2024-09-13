@@ -52,7 +52,7 @@ $ cargo run --example format --features format
 You can update PDF metadata. Following metadata is supported:
 
 | Metadata          | In Acrobat Reader              | In Apple Preview                   |
-|-------------------|--------------------------------|------------------------------------|
+| ----------------- | ------------------------------ | ---------------------------------- |
 | Title             | Title                          | Title                              |
 | Author            | Author                         | Author                             |
 | Application       | Application _and_ PDF Producer | PDF Producer _and_ Content creator |
@@ -65,12 +65,9 @@ You can update PDF metadata. Following metadata is supported:
 | Custom properties | Custom Properties              | (None)                             |
 
 > [!Note]
+>
 > - All metadata will be overwritten, not merged.
-> - Both creation and modification date are set automatically to the current date
-    _without_ time information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
-
-> [!Warning]
-> Unicode characters are not supported in metadata (at this time, hopefully).
+> - Both creation and modification date are set automatically to the current date _without_ time information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
 You can specify some of them with Typst. As of Typst [v0.11.1](https://github.com/typst/typst/releases/tag/v0.11.1), the following metadata is supported:
 
@@ -138,6 +135,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 > typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.11.1/src/lib.rs#L67-L80) are always embedded.
 
 > [!Warning]
+>
 > - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
 > - Embedding fonts will produce a large binary.
 
