@@ -13,11 +13,11 @@ typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = 
 The crate may function in other environments, but it has only been tested in the following environment:
 
 - rustc 1.81.0 (eeb90cda1 2024-09-04)
-- macOS Sonoma 14.6.1 (23G93)
+- macOS Sequoia 15.0.1 (24A348)
 
 ## Supported Typst Version
 
-Version [0.11.1](https://github.com/typst/typst/releases/tag/v0.11.1) (May 17, 2024)
+Version [0.12.0 Release Candidate 1](https://github.com/typst/typst/releases/tag/v0.12.0-rc1) (October 3, 2024)
 
 This crate is for my personal use and learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
 
@@ -29,7 +29,7 @@ Specify `full` to enable all the following features.
 
 ### `compile`
 
-You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.11.1/crates/typst-cli) [v0.11.1](https://github.com/typst/typst/releases/tag/v0.11.1).
+You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.12.0-rc1/crates/typst-cli) https://github.com/typst/typst/releases/tag/v0.12.0-rc1.
 
 See [`examples/compile.rs`](examples/compile.rs) for usage.
 
@@ -38,6 +38,9 @@ $ cargo run --example compile --features embed_additional_fonts
 ```
 
 ### `format`
+
+> [!Warning]
+> At the time of writing, this feature is not available. Await for typstyle next update.
 
 You can format a Typst document with [typstyle](https://github.com/Enter-tainer/typstyle).
 
@@ -132,7 +135,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_source_code_pro`: [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.11.1/src/lib.rs#L67-L80) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/ac0c0c95da1444a5abe7c468c5fec471c1bf6c35/src/lib.rs#L67-L83) are always embedded.
 
 > [!Warning]
 >

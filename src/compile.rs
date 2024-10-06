@@ -1,10 +1,18 @@
 use std::{
+    error::Error,
     fs,
     path::{Path, PathBuf},
     time::Duration,
 };
 
-use typst::{eval::Tracer, foundations::Smart, model::Document, visualize::Color, World};
+use ecow::eco_format;
+use typst::{
+    diag::{At, SourceResult, Warned},
+    foundations::Smart,
+    model::Document,
+};
+use typst_pdf::{PdfOptions, PdfStandards};
+use typst_syntax::Span;
 
 use crate::world::SystemWorld;
 
@@ -28,6 +36,12 @@ pub struct CompileParams {
 
     /// The PPI (pixels per inch) to use for PNG export. [`None`] means 144.
     pub ppi: Option<f32>,
+
+    /// Custom path to local packages, defaults to system-dependent location
+    pub package_path: Option<PathBuf>,
+
+    /// Custom path to package cache, defaults to system-dependent location
+    pub package_cache_path: Option<PathBuf>,
 }
 
 /// Compiles an input file into a supported output format.
@@ -55,6 +69,8 @@ pub struct CompileParams {
 ///     font_paths: vec!["assets".into()],
 ///     dict: vec![("input".to_string(), "value".to_string())],
 ///     ppi: None,
+///     package_path: None,
+///     package_cache_path: None,
 /// };
 /// match typster::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
@@ -67,26 +83,53 @@ pub struct CompileParams {
 /// ```console
 /// $ typst compile examples/sample.typ examples/sample.pdf
 /// ```
-pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn std::error::Error>> {
-    let world = SystemWorld::new(&params.input, &params.font_paths, params.dict.clone())
-        .map_err(|err| err.to_string())?;
+pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn Error>> {
+    let world = SystemWorld::new(
+        &params.input,
+        &params.font_paths,
+        params.dict.clone(),
+        &params.package_path,
+        &params.package_cache_path,
+    )
+    .map_err(|err| err.to_string())?;
     let start = std::time::Instant::now();
 
-    // Ensure that the main file is present.
-    world.source(world.main()).map_err(|err| err.to_string())?;
+    let Warned { output, warnings } = typst::compile(&world);
+    let result = output.and_then(|document| export(&document, params));
 
-    let mut tracer = Tracer::new();
-    match typst::compile(&world, &mut tracer) {
-        Ok(document) => {
-            export(&document, params)?;
-            Ok(start.elapsed())
-        }
-        Err(why) => Err(format!("Error {why:?}").into()),
+    match result {
+        Ok(()) => Ok(start.elapsed()),
+        Err(errors) => Err(warnings
+            .into_iter()
+            .chain(errors)
+            .map(|diagnostic| {
+                format!(
+                    "{:?}: {}\n{}",
+                    diagnostic.severity,
+                    diagnostic.message.clone(),
+                    diagnostic
+                        .hints
+                        .iter()
+                        .map(|e| format!("hint: {e}"))
+                        .collect::<Vec<String>>()
+                        .join("\n")
+                )
+            })
+            .collect::<Vec<String>>()
+            .join("\n")
+            .into()),
     }
 }
 
 /// Export into the target format.
-fn export(document: &Document, params: &CompileParams) -> Result<(), Box<dyn std::error::Error>> {
+// fn export(document: &Document, params: &CompileParams) -> Result<(), Box<dyn std::error::Error>>
+// {     match params.output.extension() {
+//         Some(ext) if ext.eq_ignore_ascii_case("png") => export_image(document, params),
+//         _ => export_pdf(document, params),
+//     }
+// }
+
+fn export(document: &Document, params: &CompileParams) -> SourceResult<()> {
     match params.output.extension() {
         Some(ext) if ext.eq_ignore_ascii_case("png") => export_image(document, params),
         _ => export_pdf(document, params),
@@ -94,43 +137,69 @@ fn export(document: &Document, params: &CompileParams) -> Result<(), Box<dyn std
 }
 
 /// Export to one or multiple PNGs.
-fn export_image(
-    document: &Document,
-    params: &CompileParams,
-) -> Result<(), Box<dyn std::error::Error>> {
-    // Determine whether we have a `{n}` numbering.
-    let string = &params.output.to_str().unwrap_or_default();
-    let numbered = string.contains("{n}");
-    if !numbered && document.pages.len() > 1 {
+fn export_image(document: &Document, params: &CompileParams) -> SourceResult<()> {
+    let output = &params.output.to_str().unwrap_or_default();
+    let can_handle_multiple = output_template::has_indexable_template(output);
+
+    if !can_handle_multiple && document.pages.len() > 1 {
         panic!("{}", "cannot export multiple images without `{{n}}` in output path");
     }
 
-    // Find a number width that accommodates all pages. For instance, the
-    // first page should be numbered "001" if there are between 100 and
-    // 999 pages.
-    let width = 1 + document.pages.len().checked_ilog10().unwrap_or(0) as usize;
-    let mut storage;
-
-    for (i, page) in document.pages.iter().enumerate() {
-        let path = if numbered {
-            storage = string.replace("{n}", &format!("{:0width$}", i + 1));
+    document.pages.iter().enumerate().for_each(|(i, page)| {
+        let storage;
+        let path = if can_handle_multiple {
+            storage = output_template::format(output, i + 1, document.pages.len());
             Path::new(&storage)
         } else {
             params.output.as_path()
         };
-        let pixmap =
-            typst_render::render(&page.frame, params.ppi.unwrap_or(144.0) / 72.0, Color::WHITE);
-        pixmap.save_png(path)?;
-    }
+        let pixmap = typst_render::render(page, params.ppi.unwrap_or(144.0) / 72.0);
+        let buf = pixmap.encode_png().unwrap();
+        fs::write(path, buf).unwrap();
+    });
 
     Ok(())
 }
 
 /// Export to a PDF.
-fn export_pdf(
-    document: &Document,
-    params: &CompileParams,
-) -> Result<(), Box<dyn std::error::Error>> {
-    fs::write(&params.output, typst_pdf::pdf(document, Smart::Auto, None))?;
+fn export_pdf(document: &Document, params: &CompileParams) -> SourceResult<()> {
+    let options = PdfOptions {
+        ident: Smart::Auto,
+        timestamp: None,
+        page_ranges: None,
+        standards: PdfStandards::default(),
+    };
+    fs::write(&params.output, typst_pdf::pdf(document, &options)?)
+        .map_err(|err| eco_format!("failed to write PDF: {err}"))
+        .at(Span::detached())?;
     Ok(())
+}
+
+mod output_template {
+    const INDEXABLE: [&str; 3] = ["{p}", "{0p}", "{n}"];
+
+    pub fn has_indexable_template(output: &str) -> bool {
+        INDEXABLE.iter().any(|template| output.contains(template))
+    }
+
+    pub fn format(output: &str, this_page: usize, total_pages: usize) -> String {
+        // Find the base 10 width of number `i`
+        fn width(i: usize) -> usize {
+            1 + i.checked_ilog10().unwrap_or(0) as usize
+        }
+
+        let other_templates = ["{t}"];
+        INDEXABLE
+            .iter()
+            .chain(other_templates.iter())
+            .fold(output.to_string(), |out, template| {
+                let replacement = match *template {
+                    "{p}" => format!("{this_page}"),
+                    "{0p}" | "{n}" => format!("{:01$}", this_page, width(total_pages)),
+                    "{t}" => format!("{total_pages}"),
+                    _ => unreachable!("unhandled template placeholder {template}"),
+                };
+                out.replace(template, replacement.as_str())
+            })
+    }
 }

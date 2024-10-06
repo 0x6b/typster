@@ -104,6 +104,8 @@ impl Default for PdfMetadata {
 ///     font_paths: vec!["assets".into()],
 ///     dict: vec![("input".to_string(), "value".to_string())],
 ///     ppi: None,
+///     package_path: None,
+///     package_cache_path: None,
 /// };
 /// match typster::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),

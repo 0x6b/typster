@@ -57,7 +57,7 @@ fn test_export_pdf(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "38c041a1439b5303f0e2acff2f2145294eb80ee9f54d5bf7bd7ea4007034921f");
+    assert_eq!(out.sha256()?, "cbcbfa23f8b21e0f197d08e39039872d43269fab7bfc8cd4de359d8fb43cad64");
 
     remove_file(out)?;
     Ok(())
@@ -70,7 +70,7 @@ fn test_export_png(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "6e75034f19b9046f4f304973e6371cfbce2c090c056e521ae3dad7553777fc10");
+    assert_eq!(out.sha256()?, "47a57f29c1675ba454f75d99aa92b7a308e5c2106b93781b10acf94a179ed08d");
 
     remove_file(out)?;
     Ok(())
@@ -165,7 +165,7 @@ fn test_format(
 
 #[test]
 fn test_typst_version() -> Result<()> {
-    assert_eq!(typst_version(), "0.11.1");
+    assert_eq!(typst_version(), "0.12.0-rc1");
 
     Ok(())
 }

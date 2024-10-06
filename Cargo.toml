@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.11.24"
+version = "0.12.0-rc1"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -29,16 +29,18 @@ parking_lot = "0.12"
 same-file = { version = "1.0", optional = true }
 siphasher = { version = "1.0", optional = true }
 tar = { version = "0.4", optional = true }
-typst = { version = "0.11.1", optional = true }
-typst-assets = { version = "0.11.1", features = ["fonts"], optional = true }
-typst-pdf = { version = "0.11.1", optional = true }
-typst-render = { version = "0.11.1", optional = true }
-typst-timing = { version = "0.11.1", optional = true }
+typst = { version = "0.12.0-rc1", optional = true }
+typst-assets = { version = "0.12.0-rc1", features = ["fonts"], optional = true }
+typst-kit = { version = "0.12.0-rc1", optional = true }
+typst-pdf = { version = "0.12.0-rc1", optional = true }
+typst-render = { version = "0.12.0-rc1", optional = true }
+typst-syntax = { version = "0.12.0-rc1", optional = true }
+typst-timing = { version = "0.12.0-rc1", optional = true }
+typst-utils = { version = "0.12.0-rc1", optional = true }
 ureq = { version = "2.10", optional = true }
 
 # Formatting
-typst-syntax = { version = "0.11.1", optional = true }
-typstyle = { version = "0.11.32", optional = true }
+typstyle = { version = "0.11.34", optional = true }
 
 # PDF metadata management
 lopdf = { version = "0.34", optional = true }
@@ -98,9 +100,12 @@ compile = [
     "dep:tar",
     "dep:typst",
     "dep:typst-assets",
+    "dep:typst-kit",
     "dep:typst-pdf",
     "dep:typst-render",
+    "dep:typst-syntax",
     "dep:typst-timing",
+    "dep:typst-utils",
     "dep:ureq",
 ]
 format = ["dep:typst-syntax", "dep:typstyle"]
