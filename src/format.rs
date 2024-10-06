@@ -1,7 +1,8 @@
-use std::{fs::read_to_string, path::PathBuf};
+// use std::fs::read_to_string;
+use std::path::PathBuf;
 
-use typst_syntax::parse;
-use typstyle_core::{attr::calculate_attributes, strip_trailing_whitespace, PrettyPrinter};
+// use typst_syntax::parse;
+// use typstyle_core::{attr::calculate_attributes, strip_trailing_whitespace, PrettyPrinter};
 
 /// Parameters for a formatting operation.
 ///
@@ -40,11 +41,13 @@ pub struct FormatParams {
 /// println!("{}", typster::format(&params).map_or_else(|why| why.to_string(), |s| s));
 /// ```
 
-pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
-    let root = parse(&read_to_string(&params.input)?);
-    let attr_map = calculate_attributes(root.clone());
-    let markup = root.cast().unwrap();
-    let printer = PrettyPrinter::new(attr_map);
-    let doc = printer.convert_markup(markup);
-    Ok(strip_trailing_whitespace(&doc.pretty(params.column).to_string()))
+pub fn format(_params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
+    // let root = parse(&read_to_string(&params.input)?);
+    // let attr_map = calculate_attributes(root.clone());
+    // let markup = root.cast().unwrap();
+    // let printer = PrettyPrinter::new(attr_map);
+    // let doc = printer.convert_markup(markup);
+    // Ok(strip_trailing_whitespace(&doc.pretty(params.column).to_string()))
+
+    unimplemented!("format function is not implemented yet for Typst 0.12.0-rc1")
 }

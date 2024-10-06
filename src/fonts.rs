@@ -201,6 +201,8 @@ use crate::CompileParams; // For documentation purposes.
 ///     font_paths: vec![],
 ///     dict: vec![("input".to_string(), "value".to_string())],
 ///     ppi: None,
+///     package_path: None,
+///     package_cache_path: None,
 /// };
 ///
 /// typster::list_fonts(&params.font_paths)

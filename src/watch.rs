@@ -70,6 +70,8 @@ const EXTENSIONS: [&str; 16] = [
 ///     font_paths: vec!["assets".into()],
 ///     dict: vec![("input".to_string(), "value".to_string())],
 ///     ppi: None,
+///     package_path: None,
+///     package_cache_path: None,
 /// };
 ///
 /// rt.block_on(async {
