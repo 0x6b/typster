@@ -39,9 +39,6 @@ $ cargo run --example compile --features embed_additional_fonts
 
 ### `format`
 
-> [!Warning]
-> At the time of writing, this feature is not available. Await for typstyle next update.
-
 You can format a Typst document with [typstyle](https://github.com/Enter-tainer/typstyle).
 
 See [`examples/format.rs`](examples/format.rs) for usage.
