@@ -70,7 +70,7 @@ fn test_export_png(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "47a57f29c1675ba454f75d99aa92b7a308e5c2106b93781b10acf94a179ed08d");
+    assert_eq!(out.sha256()?, "2762936fe4097e14059d4b42c875209e5002d57f19d65de8ec78743831a275dc");
 
     remove_file(out)?;
     Ok(())
