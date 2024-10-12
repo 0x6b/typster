@@ -8,5 +8,5 @@ fn main() {
         column: 80,
     };
 
-    println!("{}", typster::format(&params).map_or_else(|why| why.to_string(), |s| s));
+    println!("{}", typster::format(&params).unwrap_or_else(|why| why.to_string()));
 }
