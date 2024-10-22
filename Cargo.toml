@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.12.0-rc2"
+version = "0.12.0"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -29,19 +29,18 @@ parking_lot = "0.12"
 same-file = { version = "1.0", optional = true }
 siphasher = { version = "1.0", optional = true }
 tar = { version = "0.4", optional = true }
-typst = { version = "0.12.0-rc2", optional = true }
-typst-assets = { version = "0.12.0-rc2", features = ["fonts"], optional = true }
-typst-kit = { version = "0.12.0-rc2", optional = true }
-typst-pdf = { version = "0.12.0-rc2", optional = true }
-typst-render = { version = "0.12.0-rc2", optional = true }
-typst-syntax = { version = "0.12.0-rc2", optional = true }
-typst-timing = { version = "0.12.0-rc2", optional = true }
-typst-utils = { version = "0.12.0-rc2", optional = true }
+typst = { version = "0.12.0", optional = true }
+typst-assets = { version = "0.12.0", features = ["fonts"], optional = true }
+typst-kit = { version = "0.12.0", optional = true }
+typst-pdf = { version = "0.12.0", optional = true }
+typst-render = { version = "0.12.0", optional = true }
+typst-syntax = { version = "0.12.0", optional = true }
+typst-timing = { version = "0.12.0", optional = true }
+typst-utils = { version = "0.12.0", optional = true }
 ureq = { version = "2.10", optional = true }
 
 # Formatting
-#typstyle = { version = "0.11.34", optional = true }
-typstyle = { git = "https://github.com/Enter-tainer/typstyle/", branch = "mgt/0.12.0", optional = true }
+typstyle = { version = "0.12.0", optional = true }
 
 # PDF metadata management
 lopdf = { version = "0.34", optional = true }
@@ -51,7 +50,7 @@ xmp_toolkit = { version = "1.9", optional = true }
 qpdf = { version = "0.3", features = ["vendored"], optional = true }
 
 # Ser/de support
-serde = { version = "1.0", features = ["derive"] }
+serde = { version = "=1.0.210", features = ["derive"] }
 
 # Watch server
 axum = { version = "0.7", features = ["ws"], optional = true }
