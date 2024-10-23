@@ -4,7 +4,6 @@ use tokio::runtime::Runtime;
 use typster::FittingType;
 
 fn main() {
-    tracing_subscriber::fmt::init();
     let rt = Runtime::new().unwrap();
     let params = typster::CompileParams {
         input: PathBuf::from(env!("CARGO_MANIFEST_DIR"))

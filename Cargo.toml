@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.12.1"
+version = "0.12.2"
 edition = "2021"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -24,7 +24,7 @@ ecow = { version = "0.2", features = ["serde"], optional = true }
 env_proxy = { version = "0.4", optional = true }
 flate2 = { version = "1.0", optional = true }
 fontdb = { version = "0.23", optional = true }
-once_cell = "1.19" # updating to 1.20 will cause the conflict with tracing_subscriber
+once_cell = "1.20"
 parking_lot = "0.12"
 same-file = { version = "1.0", optional = true }
 siphasher = { version = "1.0", optional = true }
@@ -62,8 +62,6 @@ open = { version = "5.3", optional = true }
 
 # logging
 log = { version = "0.4", default-features = false, optional = true }
-tracing = { version = "0.1", default-features = false, optional = true }
-tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt", "tracing-log", "ansi"], optional = true }
 
 [build-dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -111,7 +109,7 @@ compile = [
 format = ["dep:typst-syntax", "dep:typstyle"]
 pdf_metadata = ["dep:chrono", "dep:lopdf", "dep:xmp_toolkit"]
 pdf_permission = ["dep:qpdf"]
-watch = ["compile", "dep:axum", "dep:log", "dep:notify", "dep:open", "dep:tokio", "dep:tracing", "dep:tracing-subscriber"]
+watch = ["compile", "dep:axum", "dep:log", "dep:notify", "dep:open", "dep:tokio"]
 
 # Enable these features to embed fonts into the binary.
 ## assets/fonts/ComputerModern/cmunrm.ttf
