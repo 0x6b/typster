@@ -5,7 +5,7 @@
   title: "確率論の基礎",
   author: "typster",
   keywords: "確率論, 確率空間, 確率測度, 確率質量関数, 可測空間, 可測集合, 事象, Event, 確率, 定理, 定義, 例",
-  date: auto,
+  date: auto
 )
 
 // --------- ちょっとした設定 ---------
@@ -60,7 +60,7 @@
   + $A in cF ==> A^c in cF$
   + $A_1, A_2, dots in cF$ に対して以下のことが成り立つ（_$sigma$-加法性、完全加法性、加算加法性_）:
     $
-      union.big_(i=1)^infinity A_i in cF
+    union.big_(i=1)^infinity A_i in cF
     $
 ]
 
@@ -77,7 +77,7 @@ $Omega$ と $cF$ の組 $(Omega, cF)$ を#strong[可測空間]という。
   - $A_1, A_2, dots in cF$ が $A_i sect A_j = nothing #h(0.25em) (forall i != j)$ のとき、
     次が成り立つ（$sigma$-加法性、完全加法性）:
     $
-      P(union.big_(i=1)^infinity A_i) = sum_(i=1)^infinity P(A_i)
+    P(union.big_(i=1)^infinity A_i) = sum_(i=1)^infinity P(A_i)
     $
 ]
 
@@ -86,7 +86,7 @@ $P$ が $(Omega, cF)$ の確率測度のとき、 $(Omega, cF, P)$ を#strong[�
 #theorem(kind: "例", title: [一定時間に到着するメールの数])[
   $Omega = {0, 1, 2, dots}$ で、
   $
-    P(A) = sum_(omega in A) (lambda^omega) / (omega!) e^(-lambda)
+  P(A) = sum_(omega in A) (lambda^omega)/(omega!) e^(-lambda)
   $
   とすると、これも確率測度になっている（$A$ は強度 $lambda$ の Poisson 過程に従うという）。
 ]
