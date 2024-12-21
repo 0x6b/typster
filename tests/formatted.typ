@@ -1,3 +1,4 @@
+
 // Shamelessly copied from https://zenn.dev/monaqa/articles/2023-04-19-typst-introduction
 // Thank you!
 
@@ -95,3 +96,4 @@ $Omega$ が加算無限の場合、 $cF = 2^Omega$ を考えておけば問題�
 $0 <= h(omega) <= 1$, $sum_(omega in Omega) h(omega) = 1$ となるような $h$ を用いて
 $P(A) = sum_(omega in A) h(omega)$ とおけば、 $P$ は確率測度となる。
 この $h(omega)$ のことを、確率質量関数という。
+
