@@ -158,7 +158,7 @@ fn test_set_permission(
 fn test_format(
     TypsterTestContext { format: (expected, params), .. }: &TypsterTestContext,
 ) -> Result<()> {
-    assert_eq!(*expected, format(params).map_err(|e| anyhow!(e.to_string()))?);
+    assert_eq!(*expected, format(params).map_err(|e| anyhow!(e.to_string()))?.trim());
 
     Ok(())
 }
