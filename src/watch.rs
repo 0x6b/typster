@@ -80,41 +80,6 @@ const EXTENSIONS: [&str; 16] = [
 ///     }
 /// });
 /// ```
-
-/// Fitting type for the PDF output (Google Chrome only, maybe)
-#[derive(Debug, Clone, Default)]
-pub enum FittingType {
-    /// Fit to page
-    Page,
-    /// Fit to width
-    #[default]
-    Width,
-    /// Fit to height
-    Height,
-}
-
-impl From<&str> for FittingType {
-    fn from(value: &str) -> Self {
-        match value {
-            "page" => FittingType::Page,
-            "width" => FittingType::Width,
-            "height" => FittingType::Height,
-            _ => FittingType::Page,
-        }
-    }
-}
-
-impl Display for FittingType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        // https://chromium.googlesource.com/chromium/src/+/6363f8da6aae63abedc87f60b629585f10bd8940/chrome/browser/resources/pdf/open_pdf_params_parser.js#61
-        match self {
-            FittingType::Page => write!(f, "fit"),
-            FittingType::Width => write!(f, "fith"),
-            FittingType::Height => write!(f, "fitv"),
-        }
-    }
-}
-
 pub async fn watch(
     params: &CompileParams,
     open: bool,
@@ -251,5 +216,39 @@ async fn handler(mut socket: WebSocket, state: Arc<SharedState>) {
     loop {
         state.changed.notified().await;
         _ = socket.send(Message::Text("refresh".into())).await;
+    }
+}
+
+/// Fitting type for the PDF output (Google Chrome only, maybe)
+#[derive(Debug, Clone, Default)]
+pub enum FittingType {
+    /// Fit to page
+    Page,
+    /// Fit to width
+    #[default]
+    Width,
+    /// Fit to height
+    Height,
+}
+
+impl From<&str> for FittingType {
+    fn from(value: &str) -> Self {
+        match value {
+            "page" => FittingType::Page,
+            "width" => FittingType::Width,
+            "height" => FittingType::Height,
+            _ => FittingType::Page,
+        }
+    }
+}
+
+impl Display for FittingType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // https://chromium.googlesource.com/chromium/src/+/6363f8da6aae63abedc87f60b629585f10bd8940/chrome/browser/resources/pdf/open_pdf_params_parser.js#61
+        match self {
+            FittingType::Page => write!(f, "fit"),
+            FittingType::Width => write!(f, "fith"),
+            FittingType::Height => write!(f, "fitv"),
+        }
     }
 }

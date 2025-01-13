@@ -118,6 +118,10 @@ impl FontSearcher {
             add!("iAWriterDuo/iAWriterDuoS-Italic.ttf");
             add!("iAWriterDuo/iAWriterDuoS-Regular.ttf");
         }
+        #[cfg(feature = "embed_noto_emoji")]
+        {
+            add!("NotoEmoji/NotoEmoji-VariableFont_wght.ttf");
+        }
         #[cfg(feature = "embed_noto_sans_jp")]
         {
             add!("NotoSansJP/NotoSansJP-Black.ttf");
