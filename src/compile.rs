@@ -122,13 +122,6 @@ pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn Error>> {
 }
 
 /// Export into the target format.
-// fn export(document: &Document, params: &CompileParams) -> Result<(), Box<dyn std::error::Error>>
-// {     match params.output.extension() {
-//         Some(ext) if ext.eq_ignore_ascii_case("png") => export_image(document, params),
-//         _ => export_pdf(document, params),
-//     }
-// }
-
 fn export(document: &Document, params: &CompileParams) -> SourceResult<()> {
     match params.output.extension() {
         Some(ext) if ext.eq_ignore_ascii_case("png") => export_image(document, params),
