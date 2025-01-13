@@ -39,7 +39,6 @@ pub struct FormatParams {
 ///
 /// println!("{}", typster::format(&params).map_or_else(|why| why.to_string(), |s| s));
 /// ```
-
 pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
     let root = parse(&read_to_string(&params.input)?);
     let config = PrinterConfig { max_width: params.column, ..Default::default() };
