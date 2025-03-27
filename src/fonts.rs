@@ -1,7 +1,10 @@
 use std::{collections::HashMap, fs, path::PathBuf, sync::OnceLock};
 
 use fontdb::{Database, Source};
-use typst::text::{Font, FontBook, FontInfo};
+use typst::{
+    foundations::Bytes,
+    text::{Font, FontBook, FontInfo},
+};
 
 /// Searches for fonts.
 pub struct FontSearcher {
@@ -27,8 +30,8 @@ impl FontSlot {
     pub fn get(&self) -> Option<Font> {
         self.font
             .get_or_init(|| {
-                let data = fs::read(&self.path).ok()?.into();
-                Font::new(data, self.index)
+                let data = fs::read(&self.path).ok()?;
+                Font::new(Bytes::new(data), self.index)
             })
             .clone()
     }
@@ -77,7 +80,7 @@ impl FontSearcher {
     /// Add fonts that are embedded in the binary.
     fn add_embedded(&mut self) {
         let mut process = |bytes: &'static [u8]| {
-            let buffer = typst::foundations::Bytes::from_static(bytes);
+            let buffer = Bytes::new(bytes);
             for (i, font) in Font::iter(buffer).enumerate() {
                 self.book.push(font.info().clone());
                 self.fonts.push(FontSlot {

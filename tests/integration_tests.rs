@@ -42,7 +42,11 @@ impl TestContext for TypsterTestContext {
             set_permission: (path("set_permission_protected.pdf"), params("set_permission.pdf")),
             format: (
                 read_to_string(path("formatted.typ")).unwrap().trim().to_string(),
-                FormatParams { input: path("sample.typ"), column: 80 },
+                FormatParams {
+                    input: path("sample.typ"),
+                    column: 80,
+                    tab_spaces: 2,
+                },
             ),
         }
     }
@@ -57,7 +61,7 @@ fn test_export_pdf(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "846c0af3f2cca66e1f5ea7e17dd2c966a2b5f7fa03b0e1144beeadcda4a4c295");
+    assert_eq!(out.sha256()?, "26daa30425ec95a3fdcc49aa642f5429c5cba719016b98a00a5ec14bade854ee");
 
     remove_file(out)?;
     Ok(())
@@ -70,7 +74,7 @@ fn test_export_png(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "c51390dfecbd91d39ed3eef90c54258578219eeca2878ea06ff593faf4abb0e1");
+    assert_eq!(out.sha256()?, "c0a75e2a658bfac879d2f26fe996e3402629d50a68b5a3075286ac567e576bcf");
 
     remove_file(out)?;
     Ok(())
@@ -165,7 +169,7 @@ fn test_format(
 
 #[test]
 fn test_typst_version() -> Result<()> {
-    assert_eq!(typst_version(), "0.12.0");
+    assert_eq!(typst_version(), "0.13.1");
 
     Ok(())
 }

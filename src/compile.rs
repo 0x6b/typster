@@ -9,7 +9,7 @@ use ecow::eco_format;
 use typst::{
     diag::{At, SourceResult, Warned},
     foundations::Smart,
-    model::Document,
+    layout::PagedDocument,
 };
 use typst_pdf::{PdfOptions, PdfStandards};
 use typst_syntax::Span;
@@ -122,7 +122,7 @@ pub fn compile(params: &CompileParams) -> Result<Duration, Box<dyn Error>> {
 }
 
 /// Export into the target format.
-fn export(document: &Document, params: &CompileParams) -> SourceResult<()> {
+fn export(document: &PagedDocument, params: &CompileParams) -> SourceResult<()> {
     match params.output.extension() {
         Some(ext) if ext.eq_ignore_ascii_case("png") => export_image(document, params),
         _ => export_pdf(document, params),
@@ -130,7 +130,7 @@ fn export(document: &Document, params: &CompileParams) -> SourceResult<()> {
 }
 
 /// Export to one or multiple PNGs.
-fn export_image(document: &Document, params: &CompileParams) -> SourceResult<()> {
+fn export_image(document: &PagedDocument, params: &CompileParams) -> SourceResult<()> {
     let output = &params.output.to_str().unwrap_or_default();
     let can_handle_multiple = output_template::has_indexable_template(output);
 
@@ -155,7 +155,7 @@ fn export_image(document: &Document, params: &CompileParams) -> SourceResult<()>
 }
 
 /// Export to a PDF.
-fn export_pdf(document: &Document, params: &CompileParams) -> SourceResult<()> {
+fn export_pdf(document: &PagedDocument, params: &CompileParams) -> SourceResult<()> {
     let options = PdfOptions {
         ident: Smart::Auto,
         timestamp: None,

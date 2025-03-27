@@ -1,7 +1,6 @@
 use std::{fs::read_to_string, path::PathBuf};
 
-use typst_syntax::parse;
-use typstyle_core::{strip_trailing_whitespace, AttrStore, PrettyPrinter, PrinterConfig};
+use typstyle_core::{Config, Typstyle};
 
 /// Parameters for a formatting operation.
 ///
@@ -13,6 +12,9 @@ pub struct FormatParams {
 
     /// The width of the output.
     pub column: usize,
+
+    /// The number of spaces to use for a tab character.
+    pub tab_spaces: usize,
 }
 
 /// Formats a Typst file with [Enter-tainer/typstyle](https://github.com/Enter-tainer/typstyle/).
@@ -35,16 +37,17 @@ pub struct FormatParams {
 ///         .join("examples")
 ///         .join("sample.typ"),
 ///     column: 80,
+///     tab_spaces: 2,
 /// };
 ///
 /// println!("{}", typster::format(&params).map_or_else(|why| why.to_string(), |s| s));
 /// ```
 pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
-    let root = parse(&read_to_string(&params.input)?);
-    let config = PrinterConfig { max_width: params.column, ..Default::default() };
-    let attr_store = AttrStore::new(&root);
-    let markup = root.cast().unwrap();
-    let printer = PrettyPrinter::new(config, attr_store);
-    let doc = printer.convert_markup(markup);
-    Ok(strip_trailing_whitespace(&doc.pretty(params.column).to_string()))
+    let config = Config::new()
+        .with_width(params.column)
+        .with_tab_spaces(params.tab_spaces);
+    let result = Typstyle::new(config)
+        .format_content(&read_to_string(&params.input)?)
+        .map_err(|why| why.to_string())?;
+    Ok(result)
 }

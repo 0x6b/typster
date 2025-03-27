@@ -53,7 +53,7 @@
 
 // --------- ここから本文のマークアップ ---------
 
-#theorem(kind: "定義", title: [$sigma$-加法族])[
+#context theorem(kind: "定義", title: [$sigma$-加法族])[
   $Omega$ の部分集合族 $cF$ が以下の性質を満たすとき、 $Omega$ を $sigma$-加法族という。
 
   + $Omega in cF$
@@ -69,12 +69,12 @@ $A subset Omega$ に「確率」を定めたい。矛盾なく「確率」が定
 $Omega$ と $cF$ の組 $(Omega, cF)$ を#strong[可測空間]という。
 また、$cF$ の元を#strong[可測集合]（または事象、Event）という。
 
-#theorem(kind: "定義", title: [確率測度])[
+#context theorem(kind: "定義", title: [確率測度])[
   $(Omega, cF)$ を可測空間とする。 $cF$ 上の関数 $P$ が次を満たすとき、これを#strong[確率測度]という。
 
   - $0 <= P(A) <= 1 #h(0.5em) (forall A in cF)$
   - $P(Omega) = 1$
-  - $A_1, A_2, dots in cF$ が $A_i sect A_j = nothing #h(0.25em) (forall i != j)$ のとき、
+  - $A_1, A_2, dots in cF$ が $A_i inter A_j = nothing #h(0.25em) (forall i != j)$ のとき、
     次が成り立つ（$sigma$-加法性、完全加法性）:
     $
     P(union.big_(i=1)^infinity A_i) = sum_(i=1)^infinity P(A_i)
@@ -83,7 +83,7 @@ $Omega$ と $cF$ の組 $(Omega, cF)$ を#strong[可測空間]という。
 
 $P$ が $(Omega, cF)$ の確率測度のとき、 $(Omega, cF, P)$ を#strong[確率空間]という。
 
-#theorem(kind: "例", title: [一定時間に到着するメールの数])[
+#context theorem(kind: "例", title: [一定時間に到着するメールの数])[
   $Omega = {0, 1, 2, dots}$ で、
   $
   P(A) = sum_(omega in A) (lambda^omega)/(omega!) e^(-lambda)
