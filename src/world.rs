@@ -193,7 +193,7 @@ impl FileSlot {
             || read(self.id, project_root, package_storage),
             |data, prev| {
                 let name = if prev.is_some() { "reparsing file" } else { "parsing file" };
-                let _scope = TimingScope::new(name, None);
+                let _scope = TimingScope::new(name);
                 let text = decode_utf8(&data)?;
                 if let Some(mut prev) = prev {
                     prev.replace(text);
@@ -207,8 +207,10 @@ impl FileSlot {
 
     /// Retrieve the file's bytes.
     fn file(&mut self, project_root: &Path, package_storage: &PackageStorage) -> FileResult<Bytes> {
-        self.file
-            .get_or_init(|| read(self.id, project_root, package_storage), |data, _| Ok(data.into()))
+        self.file.get_or_init(
+            || read(self.id, project_root, package_storage),
+            |data, _| Ok(Bytes::new(data)),
+        )
     }
 }
 

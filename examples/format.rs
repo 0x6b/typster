@@ -6,6 +6,7 @@ fn main() {
             .join("examples")
             .join("sample.typ"),
         column: 80,
+        tab_spaces: 2,
     };
 
     println!("{}", typster::format(&params).unwrap_or_else(|why| why.to_string()));
