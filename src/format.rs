@@ -47,7 +47,8 @@ pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error
         .with_width(params.column)
         .with_tab_spaces(params.tab_spaces);
     let result = Typstyle::new(config)
-        .format_content(&read_to_string(&params.input)?)
+        .format_text(&read_to_string(&params.input)?)
+        .render()
         .map_err(|why| why.to_string())?;
     Ok(result)
 }
