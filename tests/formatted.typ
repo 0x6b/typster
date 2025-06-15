@@ -86,7 +86,7 @@ $P$ が $(Omega, cF)$ の確率測度のとき、 $(Omega, cF, P)$ を#strong[�
 #context theorem(kind: "例", title: [一定時間に到着するメールの数])[
   $Omega = {0, 1, 2, dots}$ で、
   $
-    P(A) = sum_(omega in A) (lambda^omega) / (omega!) e^(-lambda)
+    P(A) = sum_(omega in A) (lambda^omega)/(omega!) e^(-lambda)
   $
   とすると、これも確率測度になっている（$A$ は強度 $lambda$ の Poisson 過程に従うという）。
 ]
