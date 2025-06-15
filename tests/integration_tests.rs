@@ -175,6 +175,10 @@ fn test_typst_version() -> Result<()> {
 }
 
 fn get_properties(path: &Path) -> Result<HashMap<String, String>> {
+    if !Command::new("exiftool").output().is_ok() {
+        return Err(anyhow!("ExifTool is not installed or not found in PATH"));
+    }
+    
     let out = String::from_utf8(Command::new("exiftool").arg(path).output()?.stdout)?;
     let props = out
         .split('\n')
