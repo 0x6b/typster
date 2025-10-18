@@ -61,7 +61,7 @@ fn test_export_pdf(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "26daa30425ec95a3fdcc49aa642f5429c5cba719016b98a00a5ec14bade854ee");
+    assert_eq!(out.sha256()?, "d975563c936222867d54fe6bbc5e5b1cf4bdc5ccdcbd73ce6d449944c1bf31e1");
 
     remove_file(out)?;
     Ok(())
