@@ -61,7 +61,7 @@ fn test_export_pdf(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "d975563c936222867d54fe6bbc5e5b1cf4bdc5ccdcbd73ce6d449944c1bf31e1");
+    assert_eq!(out.sha256()?, "df55d90c0524768c6e0c520d1437595377019d0910f066fcf8e132213452e340");
 
     remove_file(out)?;
     Ok(())
@@ -149,7 +149,7 @@ fn test_set_permission(
     assert!(out_permission.metadata()?.len() > 0);
 
     let props = get_properties(out_permission)?;
-    assert!(props.get("Encryption").is_some());
+    assert!(props.contains_key("Encryption"));
     assert_eq!(props.get("User Access"), Some(&"Copy, Annotate, Extract".to_string()));
 
     remove_file(out)?;
@@ -169,16 +169,16 @@ fn test_format(
 
 #[test]
 fn test_typst_version() -> Result<()> {
-    assert_eq!(typst_version(), "0.13.1");
+    assert_eq!(typst_version(), "0.14.0");
 
     Ok(())
 }
 
 fn get_properties(path: &Path) -> Result<HashMap<String, String>> {
-    if !Command::new("exiftool").output().is_ok() {
+    if Command::new("exiftool").output().is_err() {
         return Err(anyhow!("ExifTool is not installed or not found in PATH"));
     }
-    
+
     let out = String::from_utf8(Command::new("exiftool").arg(path).output()?.stdout)?;
     let props = out
         .split('\n')

@@ -13,7 +13,7 @@
 //!
 //! # Supported Typst Version
 //!
-//! Version [0.11.1](https://github.com/typst/typst/releases/tag/v0.11.1) (May 17, 2024)
+//! Version [0.14.0](https://github.com/typst/typst/releases/tag/v0.14.0) (October 25, 2025)
 //!
 //! This crate is for my personal use and Typst/Rust learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
 //!

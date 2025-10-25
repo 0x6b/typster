@@ -7,17 +7,17 @@ use std::{
     sync::OnceLock,
 };
 
-use chrono::{DateTime, Datelike, Local};
+use chrono::{DateTime, Datelike, Duration, Local};
 use ecow::{eco_format, EcoString};
 use once_cell::sync::Lazy;
 use parking_lot::Mutex;
 use typst::{
-    diag::{FileError, FileResult},
-    foundations::{Bytes, Datetime, Dict, IntoValue},
-    syntax::{FileId, Source, VirtualPath},
-    text::{Font, FontBook},
-    utils::LazyHash,
-    Library, World,
+diag::{FileError, FileResult},
+foundations::{Bytes, Datetime, Dict, IntoValue},
+syntax::{FileId, Source, VirtualPath},
+text::{Font, FontBook},
+utils::LazyHash,
+Library, LibraryExt, World,
 };
 use typst_kit::{download::ProgressSink, package::PackageStorage};
 use typst_timing::{timed, TimingScope};
@@ -139,11 +139,11 @@ impl World for SystemWorld {
     }
 
     fn today(&self, offset: Option<i64>) -> Option<Datetime> {
-        let now = self.now.get_or_init(chrono::Local::now);
+        let now = self.now.get_or_init(Local::now);
 
         let naive = match offset {
             None => now.naive_local(),
-            Some(o) => now.naive_utc() + chrono::Duration::try_hours(o)?,
+            Some(o) => now.naive_utc() + Duration::try_hours(o)?,
         };
 
         Datetime::from_ymd(

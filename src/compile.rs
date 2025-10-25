@@ -161,6 +161,7 @@ fn export_pdf(document: &PagedDocument, params: &CompileParams) -> SourceResult<
         timestamp: None,
         page_ranges: None,
         standards: PdfStandards::default(),
+        tagged: true,
     };
     fs::write(&params.output, typst_pdf::pdf(document, &options)?)
         .map_err(|err| eco_format!("failed to write PDF: {err}"))
