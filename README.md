@@ -134,7 +134,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_source_code_pro`: [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.0/src/lib.rs#L67-L83) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.0/src/lib.rs#L104-L120) are always embedded.
 
 > [!Warning]
 >
