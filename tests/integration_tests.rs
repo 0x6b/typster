@@ -61,7 +61,7 @@ fn test_export_pdf(
 ) -> Result<()> {
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "45156f8ea12623a3201a3db7ac6b5d113a4267643127acc27461f1c6b5977551");
+    assert_eq!(out.sha256()?, "df55d90c0524768c6e0c520d1437595377019d0910f066fcf8e132213452e340");
 
     remove_file(out)?;
     Ok(())
@@ -169,7 +169,7 @@ fn test_format(
 
 #[test]
 fn test_typst_version() -> Result<()> {
-    assert_eq!(typst_version(), "0.14.0-rc.2");
+    assert_eq!(typst_version(), "0.14.0");
 
     Ok(())
 }
@@ -178,7 +178,7 @@ fn get_properties(path: &Path) -> Result<HashMap<String, String>> {
     if Command::new("exiftool").output().is_err() {
         return Err(anyhow!("ExifTool is not installed or not found in PATH"));
     }
-    
+
     let out = String::from_utf8(Command::new("exiftool").arg(path).output()?.stdout)?;
     let props = out
         .split('\n')
