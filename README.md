@@ -17,7 +17,7 @@ The crate may function in other environments, but it has only been tested in the
 
 ## Supported Typst Version
 
-Version [0.13.1](https://github.com/typst/typst/releases/tag/v0.13.1) (March 7, 2025)
+Version [0.14.0](https://github.com/typst/typst/releases/tag/v0.14.0) (October 25, 2025)
 
 This crate is for my personal use and learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
 
@@ -29,7 +29,7 @@ Specify `full` to enable all the following features.
 
 ### `compile`
 
-You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.12.0/crates/typst-cli).
+You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.14.0/crates/typst-cli).
 
 See [`examples/compile.rs`](examples/compile.rs) for usage.
 
@@ -69,7 +69,7 @@ You can update PDF metadata. Following metadata is supported:
 > - All metadata will be overwritten, not merged.
 > - Both creation and modification date are set automatically to the current date _without_ time information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
-You can specify some of them with Typst. As of Typst v0.13.1, the following metadata is supported:
+You can specify some of them with Typst. As of Typst v0.14.0, the following metadata is supported:
 
 - Title
 - Author
@@ -134,7 +134,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_source_code_pro`: [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.13.1/src/lib.rs#L67-L83) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.0/src/lib.rs#L67-L83) are always embedded.
 
 > [!Warning]
 >
