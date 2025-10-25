@@ -2,7 +2,7 @@
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
 version = "0.14.1"
-edition = "2021"
+edition = "2024"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
 homepage = "https://github.com/0x6b/typster"
@@ -10,7 +10,6 @@ repository = "https://github.com/0x6b/typster"
 readme = "README.md"
 categories = ["text-processing"]
 keywords = ["text", "typst", "formatter", "pdf", "metadata"]
-rust-version = "1.77"
 
 [lib]
 name = "typster"
