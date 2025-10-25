@@ -6,7 +6,7 @@ use std::{
 };
 
 use anyhow::{anyhow, Result};
-use sha2_hasher::Sha2Hasher;
+use sha2_hasher::sync::Sha2Hasher;
 use test_context::{test_context, TestContext};
 use typster::{
     compile, format, set_permission, typst_version, update_metadata, CompileParams, FormatParams,
