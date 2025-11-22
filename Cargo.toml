@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.14.2"
+version = "0.14.3"
 edition = "2024"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -109,6 +109,8 @@ embed_noto_serif_jp = ["compile"]
 embed_recursive = ["compile"]
 ## assets/fonts/SourceCodePro/SourceCodePro-*
 embed_source_code_pro = ["compile"]
+## assets/fonts/WarpnineMono/WarpnineMono-*
+embed_warpnine_mono = ["compile"]
 ## all of the above
 embed_additional_fonts = [
     "embed_cmu_roman",
@@ -118,4 +120,5 @@ embed_additional_fonts = [
     "embed_noto_serif_jp",
     "embed_recursive",
     "embed_source_code_pro",
+    "embed_warpnine_mono",
 ]
