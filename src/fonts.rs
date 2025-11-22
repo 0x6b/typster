@@ -170,6 +170,25 @@ impl FontSearcher {
             add!("SourceCodePro/SourceCodePro-SemiBold.ttf");
             add!("SourceCodePro/SourceCodePro-SemiBoldItalic.ttf");
         }
+        #[cfg(feature = "embed_warpnine_mono")]
+        {
+            add!("WarpnineMono/WarpnineMono-Black.ttf");
+            add!("WarpnineMono/WarpnineMono-BlackItalic.ttf");
+            add!("WarpnineMono/WarpnineMono-Bold.ttf");
+            add!("WarpnineMono/WarpnineMono-BoldItalic.ttf");
+            add!("WarpnineMono/WarpnineMono-ExtraBlack.ttf");
+            add!("WarpnineMono/WarpnineMono-ExtraBlackItalic.ttf");
+            add!("WarpnineMono/WarpnineMono-ExtraBold.ttf");
+            add!("WarpnineMono/WarpnineMono-ExtraBoldItalic.ttf");
+            add!("WarpnineMono/WarpnineMono-Italic.ttf");
+            add!("WarpnineMono/WarpnineMono-Light.ttf");
+            add!("WarpnineMono/WarpnineMono-LightItalic.ttf");
+            add!("WarpnineMono/WarpnineMono-Medium.ttf");
+            add!("WarpnineMono/WarpnineMono-MediumItalic.ttf");
+            add!("WarpnineMono/WarpnineMono-Regular.ttf");
+            add!("WarpnineMono/WarpnineMono-SemiBold.ttf");
+            add!("WarpnineMono/WarpnineMono-SemiBoldItalic.ttf");
+        }
     }
 }
 

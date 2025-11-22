@@ -132,6 +132,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_noto_serif_jp`: [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
 - `embed_recursive`: [Recursive Sans & Mono](https://github.com/arrowtype/recursive/)
 - `embed_source_code_pro`: [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
+- `embed_warpnine_mono`: [WarpNine Mono](https://github.com/0x6b/warpnine-mono/)
 
 > [!Note]
 > typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.0/src/lib.rs#L104-L120) are always embedded.
