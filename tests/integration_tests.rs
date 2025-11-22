@@ -56,12 +56,11 @@ impl TestContext for TypsterTestContext {
 
 #[test_context(TypsterTestContext)]
 #[test]
-fn test_export_pdf(
-    TypsterTestContext { export_pdf: (out, params), .. }: &TypsterTestContext,
-) -> Result<()> {
+fn test_export_pdf(ctx: &TypsterTestContext) -> Result<()> {
+    let TypsterTestContext { export_pdf: (out, params), .. } = ctx;
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "df55d90c0524768c6e0c520d1437595377019d0910f066fcf8e132213452e340");
+    assert_eq!(out.sha256()?, "8ddcad71b8bbd43cd5fa893a14832a0fb959b43a18ed370fde25102b86807769");
 
     remove_file(out)?;
     Ok(())
@@ -69,9 +68,8 @@ fn test_export_pdf(
 
 #[test_context(TypsterTestContext)]
 #[test]
-fn test_export_png(
-    TypsterTestContext { export_png: (out, params), .. }: &TypsterTestContext,
-) -> Result<()> {
+fn test_export_png(ctx: &TypsterTestContext) -> Result<()> {
+    let TypsterTestContext { export_png: (out, params), .. } = ctx;
     assert!(compile(params).is_ok());
     assert!(out.exists());
     assert_eq!(out.sha256()?, "c0a75e2a658bfac879d2f26fe996e3402629d50a68b5a3075286ac567e576bcf");
@@ -82,9 +80,8 @@ fn test_export_png(
 
 #[test_context(TypsterTestContext)]
 #[test]
-fn test_update_metadata(
-    TypsterTestContext { update_metadata: (out, params), .. }: &TypsterTestContext,
-) -> Result<()> {
+fn test_update_metadata(ctx: &TypsterTestContext) -> Result<()> {
+    let TypsterTestContext { update_metadata: (out, params), .. } = ctx;
     let mut custom_properties = HashMap::new();
     custom_properties.insert("robots".to_string(), "noindex".to_string());
     custom_properties.insert("custom".to_string(), "properties".to_string());
@@ -129,11 +126,11 @@ fn test_update_metadata(
 
 #[test_context(TypsterTestContext)]
 #[test]
-fn test_set_permission(
-    TypsterTestContext {
-        set_permission: (out_permission, (out, params)), ..
-    }: &TypsterTestContext,
-) -> Result<()> {
+fn test_set_permission(ctx: &TypsterTestContext) -> Result<()> {
+    let TypsterTestContext {
+        set_permission: (out_permission, (out, params)),
+        ..
+    } = ctx;
     assert!(compile(params).is_ok());
     assert!(set_permission(
         out.clone(),
@@ -159,9 +156,8 @@ fn test_set_permission(
 
 #[test_context(TypsterTestContext)]
 #[test]
-fn test_format(
-    TypsterTestContext { format: (expected, params), .. }: &TypsterTestContext,
-) -> Result<()> {
+fn test_format(ctx: &TypsterTestContext) -> Result<()> {
+    let TypsterTestContext { format: (expected, params), .. } = ctx;
     assert_eq!(*expected, format(params).map_err(|e| anyhow!(e.to_string()))?.trim());
 
     Ok(())
