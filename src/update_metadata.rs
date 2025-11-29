@@ -1,11 +1,8 @@
 use std::{collections::HashMap, path::Path};
 
-use lopdf::{Dictionary, Document, Object, text_string};
+use lopdf::{Dictionary, Document, Object, Stream, text_string};
 use serde::{Deserialize, Serialize};
-use xmp_toolkit::{
-    OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue,
-    xmp_ns::{DC, XMP, XMP_RIGHTS},
-};
+use xmp_writer::{DateTime, LangId, XmpWriter};
 
 /// PDF, dublin core, and [Extensible Metadata Platform (XMP)](https://www.adobe.com/devnet/xmp.html) metadata for a PDF document.
 ///
@@ -135,27 +132,95 @@ pub fn update_metadata(
     path: &Path,
     metadata: &PdfMetadata,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let mut f = XmpFile::new()?;
-    f.open_file(path, OpenFileOptions::default().only_xmp().for_update())?;
+    let mut doc = Document::load(path)?;
 
-    let mut xmp = XmpMeta::new()?;
+    // Generate XMP metadata using xmp-writer
+    let xmp_string = generate_xmp(metadata);
 
-    xmp.set_localized_text(DC, "title", None, "x-default", &metadata.title)?;
-    xmp.set_localized_text(XMP, "CreatorTool", None, "x-default", &metadata.application)?;
-    xmp.set_localized_text(DC, "description", None, "x-default", &metadata.subject)?;
-    xmp.set_property_bool(XMP_RIGHTS, "Marked", &XmpValue::from(metadata.copyright_status))?;
-    xmp.set_localized_text(DC, "rights", None, "x-default", &metadata.copyright_notice)?;
-    let mut now = XmpDateTime::current()?;
-    now.time = None;
-    xmp.set_property_date(XMP, "CreateDate", &XmpValue::from(now.clone()))?;
-    if !f.can_put_xmp(&xmp) {
-        return Err("The file cannot be updated with a given set of XMP metadata for some reason. This depends on the size of the packet, the options with which the file was opened, and the capabilities of the handler for the file format.".into());
+    // Find and update the XMP metadata stream in the PDF
+    update_xmp_stream(&mut doc, &xmp_string)?;
+
+    // Update PDF Info dictionary
+    update_info_dict(&mut doc, metadata);
+
+    doc.save(path)?;
+
+    Ok(())
+}
+
+/// Generate XMP metadata string using xmp-writer
+fn generate_xmp(metadata: &PdfMetadata) -> String {
+    let mut xmp = XmpWriter::new();
+
+    // Dublin Core properties
+    xmp.title([(Some(LangId("x-default")), metadata.title.as_str())]);
+    xmp.description([(Some(LangId("x-default")), metadata.subject.as_str())]);
+    xmp.creator([metadata.author.as_str()]);
+    xmp.language([LangId(&metadata.language)]);
+
+    // XMP Rights Management
+    xmp.marked(metadata.copyright_status);
+    xmp.rights([(Some(LangId("x-default")), metadata.copyright_notice.as_str())]);
+
+    // XMP Basic
+    xmp.creator_tool(&metadata.application);
+    let now = chrono::Local::now();
+    let date = DateTime::date(now.format("%Y").to_string().parse().unwrap_or(2024),
+                              now.format("%m").to_string().parse().unwrap_or(1),
+                              now.format("%d").to_string().parse().unwrap_or(1));
+    xmp.create_date(date);
+    xmp.modify_date(date);
+
+    // PDF properties
+    if !metadata.keywords.is_empty() {
+        xmp.pdf_keywords(&metadata.keywords.join(", "));
     }
 
-    f.put_xmp(&xmp)?;
-    f.close();
+    xmp.finish(None)
+}
 
-    let mut doc = Document::load(path)?;
+/// Find and update the XMP metadata stream in the PDF document
+fn update_xmp_stream(doc: &mut Document, xmp_string: &str) -> Result<(), Box<dyn std::error::Error>> {
+    // Get the catalog ObjectId from the trailer
+    let catalog_id = doc.trailer.get(b"Root")?.as_reference()?;
+
+    // Check if there's already a Metadata entry in the catalog
+    {
+        let catalog = doc.catalog()?;
+        if let Ok(metadata_ref) = catalog.get(b"Metadata") {
+            if let Ok(metadata_id) = metadata_ref.as_reference() {
+                // Update existing metadata stream
+                if let Ok(Object::Stream(stream)) = doc.get_object_mut(metadata_id) {
+                    stream.set_plain_content(xmp_string.as_bytes().to_vec());
+                    stream.dict.set("Length", xmp_string.len() as i64);
+                    // Remove any compression filter for XMP
+                    stream.dict.remove(b"Filter");
+                    return Ok(());
+                }
+            }
+        }
+    }
+
+    // No existing metadata stream found, create a new one
+    let mut stream_dict = Dictionary::new();
+    stream_dict.set("Type", Object::Name(b"Metadata".to_vec()));
+    stream_dict.set("Subtype", Object::Name(b"XML".to_vec()));
+    stream_dict.set("Length", xmp_string.len() as i64);
+
+    let stream = Stream::new(stream_dict, xmp_string.as_bytes().to_vec());
+    let metadata_id = doc.add_object(Object::Stream(stream));
+
+    // Add the Metadata reference to the catalog
+    let catalog_mut = doc.get_object_mut(catalog_id)?;
+    if let Object::Dictionary(catalog_dict) = catalog_mut {
+        catalog_dict.set("Metadata", metadata_id);
+    }
+
+    Ok(())
+}
+
+/// Update the PDF Info dictionary
+fn update_info_dict(doc: &mut Document, metadata: &PdfMetadata) {
     doc.trailer.remove(b"Info");
 
     let mut dict = Dictionary::new();
@@ -175,7 +240,4 @@ pub fn update_metadata(
     let t = doc.add_object(Object::Dictionary(dict));
 
     doc.trailer.set("Info", t);
-    doc.save(path)?;
-
-    Ok(())
 }
