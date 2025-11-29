@@ -30,7 +30,7 @@ impl FontSlot {
     pub fn get(&self) -> Option<Font> {
         self.font
             .get_or_init(|| {
-                let data = fs::read(&self.path).ok()?;
+                let data = read(&self.path).ok()?;
                 Font::new(Bytes::new(data), self.index)
             })
             .clone()
@@ -92,7 +92,7 @@ impl FontSearcher {
         };
 
         // Always embed the typst default fonts.
-        for data in typst_assets::fonts() {
+        for data in fonts() {
             process(data);
         }
 
@@ -191,6 +191,9 @@ impl FontSearcher {
         }
     }
 }
+
+use fs::read;
+use typst_assets::fonts;
 
 #[allow(unused_imports)]
 use crate::CompileParams; // For documentation purposes.

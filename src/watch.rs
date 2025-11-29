@@ -4,25 +4,29 @@ use std::{
 };
 
 use axum::{
+    Router,
     body::Body,
     extract::{
-        ws::{Message, WebSocket},
         State, WebSocketUpgrade,
+        ws::{Message, WebSocket},
     },
     response::{Html, IntoResponse, Response},
     routing::get,
-    Router,
+    serve,
 };
+use fs::read;
 use log::{error, info};
 use notify::{
-    event::{DataChange, ModifyKind::Data},
     Event,
     EventKind::Modify,
     RecursiveMode, Watcher,
+    event::{DataChange, ModifyKind::Data},
+    recommended_watcher,
 };
-use tokio::{fs, net::TcpListener, select, sync::Notify};
+use open::{that_detached, with_detached};
+use tokio::{fs, net::TcpListener, select, signal::ctrl_c, spawn, sync::Notify};
 
-use crate::CompileParams;
+use crate::{CompileParams, compile};
 
 pub struct SharedState {
     pub port: u16,
@@ -95,7 +99,7 @@ pub async fn watch(
     let output = params.output.clone();
     let params = params.clone();
 
-    match crate::compile(&params) {
+    match compile(&params) {
         Ok(duration) => {
             info!("Initial compilation succeeded in {duration:?}. Watching for changes...")
         }
@@ -123,30 +127,28 @@ pub async fn watch(
 
     if open {
         if let Some(app) = app {
-            match open::with_detached(format!("http://{}:{}", state.address, state.port), app) {
+            match with_detached(format!("http://{}:{}", state.address, state.port), app) {
                 Ok(_) => info!("Opened in default browser"),
                 Err(why) => error!("{why}"),
             }
         } else {
-            match open::that_detached(format!("http://{}:{}", state.address, state.port)) {
+            match that_detached(format!("http://{}:{}", state.address, state.port)) {
                 Ok(_) => info!("Opened in default browser"),
                 Err(why) => error!("{why}"),
             }
         }
     }
 
-    tokio::spawn(async move {
+    spawn(async move {
         info!("Press Ctrl+C to exit");
         async {
-            tokio::signal::ctrl_c()
-                .await
-                .expect("Failed to register handler for Ctrl+C");
+            ctrl_c().await.expect("Failed to register handler for Ctrl+C");
         }
         .await;
         state_handler.shutdown.notify_waiters();
     });
 
-    let mut watcher = notify::recommended_watcher(move |res: Result<Event, _>| match res {
+    let mut watcher = recommended_watcher(move |res: Result<Event, _>| match res {
         Ok(event) => {
             if let Modify(Data(DataChange::Content)) = event.kind {
                 let changed = !event
@@ -161,7 +163,7 @@ pub async fn watch(
                     return;
                 }
                 info!("Change detected. Recompiling...");
-                match crate::compile(&params) {
+                match compile(&params) {
                     Ok(duration) => info!("compilation succeeded in {duration:?}"),
                     Err(why) => error!("{why}"),
                 }
@@ -171,7 +173,7 @@ pub async fn watch(
         Err(e) => error!("watch error: {:?}", e),
     })?;
     watcher.watch(input.parent().unwrap(), RecursiveMode::Recursive)?;
-    let server = axum::serve(listener, router).into_future();
+    let server = serve(listener, router).into_future();
 
     select! {
         _ = server => {}
@@ -198,7 +200,7 @@ pub async fn root(State(state): State<Arc<SharedState>>) -> Html<String> {
 pub async fn pdf(State(state): State<Arc<SharedState>>) -> impl IntoResponse {
     Response::builder()
         .header("Content-Type", "application/pdf")
-        .body(Body::from(match fs::read(&state.output).await {
+        .body(Body::from(match read(&state.output).await {
             Ok(data) => data,
             Err(why) => panic!("{:#?}", why),
         }))

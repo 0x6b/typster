@@ -4,23 +4,28 @@ use std::{
     io::Read,
     mem,
     path::{Path, PathBuf},
+    str::from_utf8,
     sync::OnceLock,
 };
 
 use chrono::{DateTime, Datelike, Duration, Local};
-use ecow::{eco_format, EcoString};
+use ecow::{EcoString, eco_format};
+use fs::metadata;
+use io::stdin;
+use mem::replace;
 use once_cell::sync::Lazy;
+use package::storage;
 use parking_lot::Mutex;
 use typst::{
-diag::{FileError, FileResult},
-foundations::{Bytes, Datetime, Dict, IntoValue},
-syntax::{FileId, Source, VirtualPath},
-text::{Font, FontBook},
-utils::LazyHash,
-Library, LibraryExt, World,
+    Library, LibraryExt, World,
+    diag::{FileError, FileResult},
+    foundations::{Bytes, Datetime, Dict, IntoValue},
+    syntax::{FileId, Source, VirtualPath},
+    text::{Font, FontBook},
+    utils::LazyHash,
 };
 use typst_kit::{download::ProgressSink, package::PackageStorage};
-use typst_timing::{timed, TimingScope};
+use typst_timing::{TimingScope, timed};
 
 use crate::{
     fonts::{FontSearcher, FontSlot},
@@ -107,7 +112,7 @@ impl SystemWorld {
             book: LazyHash::new(searcher.book),
             fonts: searcher.fonts,
             slots: Mutex::new(HashMap::new()),
-            package_storage: package::storage(package_path, package_cache_path),
+            package_storage: storage(package_path, package_cache_path),
             now: OnceLock::new(),
         })
     }
@@ -237,20 +242,22 @@ impl<T: Clone> SlotCell<T> {
         f: impl FnOnce(Vec<u8>, Option<T>) -> FileResult<T>,
     ) -> FileResult<T> {
         // If we accessed the file already in this compilation, retrieve it.
-        if mem::replace(&mut self.accessed, true)
-            && let Some(data) = &self.data {
-                return data.clone();
-            }
+        if replace(&mut self.accessed, true)
+            && let Some(data) = &self.data
+        {
+            return data.clone();
+        }
 
         // Read and hash the file.
         let result = timed!("loading file", load());
         let fingerprint = timed!("hashing file", typst_utils::hash128(&result));
 
         // If the file contents didn't change, yield the old processed data.
-        if mem::replace(&mut self.fingerprint, fingerprint) == fingerprint
-            && let Some(data) = &self.data {
-                return data.clone();
-            }
+        if replace(&mut self.fingerprint, fingerprint) == fingerprint
+            && let Some(data) = &self.data
+        {
+            return data.clone();
+        }
 
         let prev = self.data.take().and_then(Result::ok);
         let value = result.and_then(|data| f(data, prev));
@@ -296,7 +303,7 @@ fn read(id: FileId, project_root: &Path, package_storage: &PackageStorage) -> Fi
 /// Read a file from disk.
 fn read_from_disk(path: &Path) -> FileResult<Vec<u8>> {
     let f = |e| FileError::from_io(e, path);
-    if fs::metadata(path).map_err(f)?.is_dir() {
+    if metadata(path).map_err(f)?.is_dir() {
         Err(FileError::IsDirectory)
     } else {
         fs::read(path).map_err(f)
@@ -306,7 +313,7 @@ fn read_from_disk(path: &Path) -> FileResult<Vec<u8>> {
 /// Read from stdin.
 fn read_from_stdin() -> FileResult<Vec<u8>> {
     let mut buf = Vec::new();
-    let result = io::stdin().read_to_end(&mut buf);
+    let result = stdin().read_to_end(&mut buf);
     match result {
         Ok(_) => (),
         Err(err) if err.kind() == io::ErrorKind::BrokenPipe => (),
@@ -318,7 +325,7 @@ fn read_from_stdin() -> FileResult<Vec<u8>> {
 /// Decode UTF-8 with an optional BOM.
 fn decode_utf8(buf: &[u8]) -> FileResult<&str> {
     // Remove UTF-8 BOM.
-    Ok(std::str::from_utf8(buf.strip_prefix(b"\xef\xbb\xbf").unwrap_or(buf))?)
+    Ok(from_utf8(buf.strip_prefix(b"\xef\xbb\xbf").unwrap_or(buf))?)
 }
 
 /// An error that occurs during world construction.

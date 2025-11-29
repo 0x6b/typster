@@ -1,6 +1,6 @@
 use std::{collections::HashMap, path::PathBuf};
 
-use typster::PdfMetadata;
+use typster::{PdfMetadata, update_metadata};
 
 fn main() {
     let mut custom_properties = HashMap::new();
@@ -23,5 +23,5 @@ fn main() {
         .join("examples")
         .join("sample.pdf");
 
-    typster::update_metadata(&path, &metadata).unwrap();
+    update_metadata(&path, &metadata).unwrap();
 }

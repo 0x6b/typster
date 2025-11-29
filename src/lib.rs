@@ -49,20 +49,20 @@
 //!   be explicitly added via [`CompileParams::font_paths`].
 
 #[cfg(feature = "compile")]
-pub use compile::{compile, CompileParams};
+pub use compile::{CompileParams, compile};
 #[cfg(feature = "compile")]
 pub use fonts::list_fonts;
 #[cfg(feature = "format")]
-pub use format::{format, FormatParams};
+pub use format::{FormatParams, format};
 #[cfg(feature = "pdf_permission")]
-pub use set_permission::{set_permission, PermissionParams, PrintPermission};
+pub use set_permission::{PermissionParams, PrintPermission, set_permission};
 #[cfg(feature = "pdf_metadata")]
-pub use update_metadata::{update_metadata, PdfMetadata};
+pub use update_metadata::{PdfMetadata, update_metadata};
 pub use version::{typst_version, version};
 #[cfg(feature = "watch")]
-pub use watch::watch;
-#[cfg(feature = "watch")]
 pub use watch::FittingType;
+#[cfg(feature = "watch")]
+pub use watch::watch;
 
 #[cfg(feature = "compile")]
 mod compile;

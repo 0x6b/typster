@@ -1,5 +1,7 @@
 use std::path::PathBuf;
 
+use typster::compile;
+
 fn main() {
     // equivalent to:
     //     typst compile examples/sample.typ examples/sample.pdf
@@ -16,7 +18,7 @@ fn main() {
         package_path: None,
         package_cache_path: None,
     };
-    match typster::compile(&params) {
+    match compile(&params) {
         Ok(duration) => println!("Compilation succeeded in {duration:?}"),
         Err(why) => eprintln!("{why}"),
     }
