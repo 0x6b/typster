@@ -102,7 +102,9 @@ impl FontSearcher {
             feature = "embed_noto_sans_jp",
             feature = "embed_noto_serif_jp",
             feature = "embed_recursive",
-            feature = "embed_source_code_pro"
+            feature = "embed_source_code_pro",
+            feature = "embed_warpnine_mono",
+            feature = "embed_warpnine_sans",
         ))]
         macro_rules! add {
             ($filename:literal) => {
@@ -188,6 +190,23 @@ impl FontSearcher {
             add!("WarpnineMono/WarpnineMono-Regular.ttf");
             add!("WarpnineMono/WarpnineMono-SemiBold.ttf");
             add!("WarpnineMono/WarpnineMono-SemiBoldItalic.ttf");
+        }
+        #[cfg(feature = "embed_warpnine_sans")]
+        {
+            add!("WarpnineSans/WarpnineSansCondensed-Black.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-BlackItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Bold.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-BoldItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-ExtraBold.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-ExtraBoldItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Italic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Light.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-LightItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Medium.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-MediumItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Regular.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-SemiBold.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-SemiBoldItalic.ttf");
         }
     }
 }

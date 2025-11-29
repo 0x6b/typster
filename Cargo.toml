@@ -111,6 +111,8 @@ embed_recursive = ["compile"]
 embed_source_code_pro = ["compile"]
 ## assets/fonts/WarpnineMono/WarpnineMono-*
 embed_warpnine_mono = ["compile"]
+## assets/fonts/WarpnineMono/WarpnineSansCondensed-*
+embed_warpnine_sans = ["compile"]
 ## all of the above
 embed_additional_fonts = [
     "embed_cmu_roman",
@@ -121,4 +123,5 @@ embed_additional_fonts = [
     "embed_recursive",
     "embed_source_code_pro",
     "embed_warpnine_mono",
+    "embed_warpnine_sans",
 ]
