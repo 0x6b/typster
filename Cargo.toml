@@ -1,7 +1,7 @@
 [package]
 name = "typster"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.14.4"
+version = "0.14.5"
 edition = "2024"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
@@ -35,7 +35,7 @@ typstyle-core = { version = "0.14", optional = true }
 
 # PDF metadata management
 lopdf = { version = "0.38", optional = true }
-xmp_toolkit = { version = "1.11", optional = true }
+xmp-writer = { version = "0.3", optional = true }
 
 # PDF permission setting
 qpdf = { version = "0.3", features = ["vendored"], optional = true }
@@ -90,7 +90,7 @@ compile = [
     "dep:typst-utils",
 ]
 format = ["dep:typst-syntax", "dep:typstyle-core"]
-pdf_metadata = ["dep:chrono", "dep:lopdf", "dep:xmp_toolkit"]
+pdf_metadata = ["dep:chrono", "dep:lopdf", "dep:xmp-writer"]
 pdf_permission = ["dep:qpdf"]
 watch = ["compile", "dep:axum", "dep:log", "dep:notify", "dep:open", "dep:tokio"]
 
