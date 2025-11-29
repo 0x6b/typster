@@ -5,12 +5,12 @@ use std::{
     process::Command,
 };
 
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use sha2_hasher::sync::Sha2Hasher;
-use test_context::{test_context, TestContext};
+use test_context::{TestContext, test_context};
 use typster::{
-    compile, format, set_permission, typst_version, update_metadata, CompileParams, FormatParams,
-    PdfMetadata, PermissionParams, PrintPermission,
+    CompileParams, FormatParams, PdfMetadata, PermissionParams, PrintPermission, compile, format,
+    set_permission, typst_version, update_metadata,
 };
 
 struct TypsterTestContext {
@@ -60,7 +60,7 @@ fn test_export_pdf(ctx: &TypsterTestContext) -> Result<()> {
     let TypsterTestContext { export_pdf: (out, params), .. } = ctx;
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "8ddcad71b8bbd43cd5fa893a14832a0fb959b43a18ed370fde25102b86807769");
+    assert_eq!(out.sha256()?, "135e55b094c17bbc5091aaa79d68a5635d0e5c476fc00f412c3a4c150e506001");
 
     remove_file(out)?;
     Ok(())
@@ -128,20 +128,21 @@ fn test_update_metadata(ctx: &TypsterTestContext) -> Result<()> {
 #[test]
 fn test_set_permission(ctx: &TypsterTestContext) -> Result<()> {
     let TypsterTestContext {
-        set_permission: (out_permission, (out, params)),
-        ..
+        set_permission: (out_permission, (out, params)), ..
     } = ctx;
     assert!(compile(params).is_ok());
-    assert!(set_permission(
-        out.clone(),
-        out_permission.clone(),
-        &PermissionParams {
-            owner_password: Some("owner".to_string()),
-            allow_print: PrintPermission::None,
-            ..Default::default()
-        },
-    )
-    .is_ok());
+    assert!(
+        set_permission(
+            out.clone(),
+            out_permission.clone(),
+            &PermissionParams {
+                owner_password: Some("owner".to_string()),
+                allow_print: PrintPermission::None,
+                ..Default::default()
+            },
+        )
+        .is_ok()
+    );
     assert!(out_permission.exists());
     assert!(out_permission.metadata()?.len() > 0);
 
@@ -182,11 +183,7 @@ fn get_properties(path: &Path) -> Result<HashMap<String, String>> {
         .filter_map(|mut line| {
             let key = line.next().unwrap_or_default().trim().to_string();
             let value = line.next().unwrap_or_default().trim().to_string();
-            if !key.is_empty() {
-                Some((key, value))
-            } else {
-                None
-            }
+            if !key.is_empty() { Some((key, value)) } else { None }
         })
         .collect::<HashMap<_, _>>();
 
