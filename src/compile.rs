@@ -6,12 +6,15 @@ use std::{
 };
 
 use ecow::eco_format;
+use fs::write;
+use output_template::{format, has_indexable_template};
 use typst::{
     diag::{At, SourceResult, Warned},
     foundations::Smart,
     layout::PagedDocument,
 };
-use typst_pdf::{PdfOptions, PdfStandards};
+use typst_pdf::{PdfOptions, PdfStandards, pdf};
+use typst_render::render;
 use typst_syntax::Span;
 
 use crate::world::SystemWorld;
@@ -132,7 +135,7 @@ fn export(document: &PagedDocument, params: &CompileParams) -> SourceResult<()> 
 /// Export to one or multiple PNGs.
 fn export_image(document: &PagedDocument, params: &CompileParams) -> SourceResult<()> {
     let output = &params.output.to_str().unwrap_or_default();
-    let can_handle_multiple = output_template::has_indexable_template(output);
+    let can_handle_multiple = has_indexable_template(output);
 
     if !can_handle_multiple && document.pages.len() > 1 {
         panic!("{}", "cannot export multiple images without `{{n}}` in output path");
@@ -141,14 +144,14 @@ fn export_image(document: &PagedDocument, params: &CompileParams) -> SourceResul
     document.pages.iter().enumerate().for_each(|(i, page)| {
         let storage;
         let path = if can_handle_multiple {
-            storage = output_template::format(output, i + 1, document.pages.len());
+            storage = format(output, i + 1, document.pages.len());
             Path::new(&storage)
         } else {
             params.output.as_path()
         };
-        let pixmap = typst_render::render(page, params.ppi.unwrap_or(144.0) / 72.0);
+        let pixmap = render(page, params.ppi.unwrap_or(144.0) / 72.0);
         let buf = pixmap.encode_png().unwrap();
-        fs::write(path, buf).unwrap();
+        write(path, buf).unwrap();
     });
 
     Ok(())
@@ -163,7 +166,7 @@ fn export_pdf(document: &PagedDocument, params: &CompileParams) -> SourceResult<
         standards: PdfStandards::default(),
         tagged: true,
     };
-    fs::write(&params.output, typst_pdf::pdf(document, &options)?)
+    write(&params.output, pdf(document, &options)?)
         .map_err(|err| eco_format!("failed to write PDF: {err}"))
         .at(Span::detached())?;
     Ok(())

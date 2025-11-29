@@ -1,7 +1,7 @@
 use std::{
     env::var,
     error::Error,
-    fs::{read_to_string, File},
+    fs::{File, read_to_string},
     io::Write,
     path::Path,
 };

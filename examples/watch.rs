@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use tokio::runtime::Runtime;
-use typster::FittingType;
+use typster::{FittingType, watch};
 
 fn main() {
     let rt = Runtime::new().unwrap();
@@ -21,7 +21,7 @@ fn main() {
 
     rt.block_on(async {
         if let Err(error) =
-            typster::watch(&params, true, Some("Google Chrome.app"), Some(FittingType::Width)).await
+            watch(&params, true, Some("Google Chrome.app"), Some(FittingType::Width)).await
         {
             eprintln!("Server error: {}", error)
         }

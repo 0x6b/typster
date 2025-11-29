@@ -30,7 +30,7 @@ impl FontSlot {
     pub fn get(&self) -> Option<Font> {
         self.font
             .get_or_init(|| {
-                let data = fs::read(&self.path).ok()?;
+                let data = read(&self.path).ok()?;
                 Font::new(Bytes::new(data), self.index)
             })
             .clone()
@@ -92,7 +92,7 @@ impl FontSearcher {
         };
 
         // Always embed the typst default fonts.
-        for data in typst_assets::fonts() {
+        for data in fonts() {
             process(data);
         }
 
@@ -102,7 +102,9 @@ impl FontSearcher {
             feature = "embed_noto_sans_jp",
             feature = "embed_noto_serif_jp",
             feature = "embed_recursive",
-            feature = "embed_source_code_pro"
+            feature = "embed_source_code_pro",
+            feature = "embed_warpnine_mono",
+            feature = "embed_warpnine_sans",
         ))]
         macro_rules! add {
             ($filename:literal) => {
@@ -189,8 +191,28 @@ impl FontSearcher {
             add!("WarpnineMono/WarpnineMono-SemiBold.ttf");
             add!("WarpnineMono/WarpnineMono-SemiBoldItalic.ttf");
         }
+        #[cfg(feature = "embed_warpnine_sans")]
+        {
+            add!("WarpnineSans/WarpnineSansCondensed-Black.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-BlackItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Bold.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-BoldItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-ExtraBold.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-ExtraBoldItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Italic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Light.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-LightItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Medium.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-MediumItalic.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-Regular.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-SemiBold.ttf");
+            add!("WarpnineSans/WarpnineSansCondensed-SemiBoldItalic.ttf");
+        }
     }
 }
+
+use fs::read;
+use typst_assets::fonts;
 
 #[allow(unused_imports)]
 use crate::CompileParams; // For documentation purposes.

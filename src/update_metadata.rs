@@ -1,10 +1,10 @@
 use std::{collections::HashMap, path::Path};
 
-use lopdf::{text_string, Dictionary, Document, Object};
+use lopdf::{Dictionary, Document, Object, text_string};
 use serde::{Deserialize, Serialize};
 use xmp_toolkit::{
-    xmp_ns::{DC, XMP, XMP_RIGHTS},
     OpenFileOptions, XmpDateTime, XmpFile, XmpMeta, XmpValue,
+    xmp_ns::{DC, XMP, XMP_RIGHTS},
 };
 
 /// PDF, dublin core, and [Extensible Metadata Platform (XMP)](https://www.adobe.com/devnet/xmp.html) metadata for a PDF document.
