@@ -106,7 +106,7 @@ fn test_update_metadata(ctx: &TypsterTestContext) -> Result<()> {
     let props = get_properties(out)?;
     assert_eq!(props.get("Title"), Some(&"Title タイトル (typster)".to_string()));
     assert_eq!(props.get("Author"), Some(&"Author 著者 (typster)".to_string()));
-    assert_eq!(props.get("Creator"), Some(&"Application アプリケーション (typster)".to_string()));
+    assert_eq!(props.get("Creator"), Some(&"Author 著者 (typster)".to_string()));
     assert_eq!(props.get("Producer"), Some(&"Application アプリケーション (typster)".to_string()));
     assert_eq!(
         props.get("Creator Tool"),
