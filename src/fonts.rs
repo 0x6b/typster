@@ -265,6 +265,7 @@ use crate::CompileParams; // For documentation purposes.
 ///     ppi: None,
 ///     package_path: None,
 ///     package_cache_path: None,
+///     pdf_standards: None,
 /// };
 ///
 /// typster::list_fonts(&params.font_paths)

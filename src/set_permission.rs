@@ -148,6 +148,7 @@ impl Default for PermissionParams {
 ///     ppi: None,
 ///     package_path: None,
 ///     package_cache_path: None,
+///     pdf_standards: None,
 /// };
 /// match typster::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),

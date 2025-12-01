@@ -103,6 +103,7 @@ impl Default for PdfMetadata {
 ///     ppi: None,
 ///     package_path: None,
 ///     package_cache_path: None,
+///     pdf_standards: None,
 /// };
 /// match typster::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
@@ -165,9 +166,11 @@ fn generate_xmp(metadata: &PdfMetadata) -> String {
     // XMP Basic
     xmp.creator_tool(&metadata.application);
     let now = chrono::Local::now();
-    let date = DateTime::date(now.format("%Y").to_string().parse().unwrap_or(2024),
-                              now.format("%m").to_string().parse().unwrap_or(1),
-                              now.format("%d").to_string().parse().unwrap_or(1));
+    let date = DateTime::date(
+        now.format("%Y").to_string().parse().unwrap_or(2024),
+        now.format("%m").to_string().parse().unwrap_or(1),
+        now.format("%d").to_string().parse().unwrap_or(1),
+    );
     xmp.create_date(date);
     xmp.modify_date(date);
 
@@ -180,7 +183,10 @@ fn generate_xmp(metadata: &PdfMetadata) -> String {
 }
 
 /// Find and update the XMP metadata stream in the PDF document
-fn update_xmp_stream(doc: &mut Document, xmp_string: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn update_xmp_stream(
+    doc: &mut Document,
+    xmp_string: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
     // Get the catalog ObjectId from the trailer
     let catalog_id = doc.trailer.get(b"Root")?.as_reference()?;
 
