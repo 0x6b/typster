@@ -77,6 +77,7 @@ impl Default for PdfMetadata {
 /// - All metadata will be overwritten, not merged.
 /// - The creation is set automatically to the current date _without_ time information which means
 ///   time is always 0:00 UTC, for some privacy reasons (or my preference.)
+/// - PDF/UA conformance (`pdfuaid:part`) is preserved if present in the original document.
 ///
 /// # Arguments
 ///
@@ -135,8 +136,11 @@ pub fn update_metadata(
 ) -> Result<(), Box<dyn std::error::Error>> {
     let mut doc = Document::load(path)?;
 
+    // Extract existing PDF/UA conformance before overwriting
+    let pdfua_part = extract_pdfua_part(&doc);
+
     // Generate XMP metadata using xmp-writer
-    let xmp_string = generate_xmp(metadata);
+    let xmp_string = generate_xmp(metadata, pdfua_part);
 
     // Find and update the XMP metadata stream in the PDF
     update_xmp_stream(&mut doc, &xmp_string)?;
@@ -149,8 +153,34 @@ pub fn update_metadata(
     Ok(())
 }
 
+/// Extract the PDF/UA part number from existing XMP metadata
+fn extract_pdfua_part(doc: &Document) -> Option<i32> {
+    let catalog = doc.catalog().ok()?;
+    let metadata_ref = catalog.get(b"Metadata").ok()?;
+    let metadata_id = metadata_ref.as_reference().ok()?;
+
+    if let Ok(Object::Stream(stream)) = doc.get_object(metadata_id) {
+        // Try decompressed first, fall back to raw content (XMP is often uncompressed)
+        let content = stream
+            .decompressed_content()
+            .unwrap_or_else(|_| stream.content.clone());
+        let xmp_str = String::from_utf8_lossy(&content);
+
+        // Look for pdfuaid:part in the XMP content
+        // Pattern: <pdfuaid:part>1</pdfuaid:part>
+        if let Some(start) = xmp_str.find("<pdfuaid:part>") {
+            let after_tag = &xmp_str[start + 14..];
+            if let Some(end) = after_tag.find("</pdfuaid:part>") {
+                let part_str = &after_tag[..end];
+                return part_str.trim().parse().ok();
+            }
+        }
+    }
+    None
+}
+
 /// Generate XMP metadata string using xmp-writer
-fn generate_xmp(metadata: &PdfMetadata) -> String {
+fn generate_xmp(metadata: &PdfMetadata, pdfua_part: Option<i32>) -> String {
     let mut xmp = XmpWriter::new();
 
     // Dublin Core properties
@@ -177,6 +207,11 @@ fn generate_xmp(metadata: &PdfMetadata) -> String {
     // PDF properties
     if !metadata.keywords.is_empty() {
         xmp.pdf_keywords(&metadata.keywords.join(", "));
+    }
+
+    // PDF/UA conformance (preserve if present in original document)
+    if let Some(part) = pdfua_part {
+        xmp.pdfua_part(part);
     }
 
     xmp.finish(None)
