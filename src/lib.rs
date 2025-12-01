@@ -25,7 +25,7 @@
 //!
 //! ## Capabilities
 //!
-//! - `compile`: Enables the [`compile()`] and [`list_fonts()`] functions.
+//! - `compile`: Enables the [`compile()`], [`list_fonts()`] functions, and [`PdfStandard`] enum.
 //! - `format`: Enables the [`format()`] function.
 //! - `pdf_metadata`: Enables the [`update_metadata()`] function.
 //! - `pdf_permission`: Enables the [`set_permission()`] function.
@@ -49,7 +49,7 @@
 //!   be explicitly added via [`CompileParams::font_paths`].
 
 #[cfg(feature = "compile")]
-pub use compile::{CompileParams, compile};
+pub use compile::{CompileParams, PdfStandard, compile};
 #[cfg(feature = "compile")]
 pub use fonts::list_fonts;
 #[cfg(feature = "format")]

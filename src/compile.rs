@@ -13,11 +13,74 @@ use typst::{
     foundations::Smart,
     layout::PagedDocument,
 };
-use typst_pdf::{PdfOptions, PdfStandards, pdf};
+use typst_pdf::{PdfOptions, PdfStandard as TypstPdfStandard, PdfStandards, pdf};
 use typst_render::render;
 use typst_syntax::Span;
 
 use crate::world::SystemWorld;
+
+/// PDF standard that can be enforced during export.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PdfStandard {
+    /// PDF 1.4.
+    V1_4,
+    /// PDF 1.5.
+    V1_5,
+    /// PDF 1.6.
+    V1_6,
+    /// PDF 1.7.
+    V1_7,
+    /// PDF 2.0.
+    V2_0,
+    /// PDF/A-1b.
+    A1b,
+    /// PDF/A-1a.
+    A1a,
+    /// PDF/A-2b.
+    A2b,
+    /// PDF/A-2u.
+    A2u,
+    /// PDF/A-2a.
+    A2a,
+    /// PDF/A-3b.
+    A3b,
+    /// PDF/A-3u.
+    A3u,
+    /// PDF/A-3a.
+    A3a,
+    /// PDF/A-4.
+    A4,
+    /// PDF/A-4f.
+    A4f,
+    /// PDF/A-4e.
+    A4e,
+    /// PDF/UA-1.
+    Ua1,
+}
+
+impl From<PdfStandard> for TypstPdfStandard {
+    fn from(standard: PdfStandard) -> Self {
+        match standard {
+            PdfStandard::V1_4 => TypstPdfStandard::V_1_4,
+            PdfStandard::V1_5 => TypstPdfStandard::V_1_5,
+            PdfStandard::V1_6 => TypstPdfStandard::V_1_6,
+            PdfStandard::V1_7 => TypstPdfStandard::V_1_7,
+            PdfStandard::V2_0 => TypstPdfStandard::V_2_0,
+            PdfStandard::A1b => TypstPdfStandard::A_1b,
+            PdfStandard::A1a => TypstPdfStandard::A_1a,
+            PdfStandard::A2b => TypstPdfStandard::A_2b,
+            PdfStandard::A2u => TypstPdfStandard::A_2u,
+            PdfStandard::A2a => TypstPdfStandard::A_2a,
+            PdfStandard::A3b => TypstPdfStandard::A_3b,
+            PdfStandard::A3u => TypstPdfStandard::A_3u,
+            PdfStandard::A3a => TypstPdfStandard::A_3a,
+            PdfStandard::A4 => TypstPdfStandard::A_4,
+            PdfStandard::A4f => TypstPdfStandard::A_4f,
+            PdfStandard::A4e => TypstPdfStandard::A_4e,
+            PdfStandard::Ua1 => TypstPdfStandard::Ua_1,
+        }
+    }
+}
 
 /// Parameters for Typst document compilation.
 ///
@@ -45,6 +108,11 @@ pub struct CompileParams {
 
     /// Custom path to package cache, defaults to system-dependent location
     pub package_cache_path: Option<PathBuf>,
+
+    /// PDF standards to enforce conformance with. When [`None`], no specific standard is enforced.
+    /// The list is validated for compatibility (e.g., PDF/A-2b requires PDF 1.7 or later).
+    /// See [`PdfStandard`] for available options.
+    pub pdf_standards: Option<Vec<PdfStandard>>,
 }
 
 /// Compiles an input file into a supported output format.
@@ -74,6 +142,7 @@ pub struct CompileParams {
 ///     ppi: None,
 ///     package_path: None,
 ///     package_cache_path: None,
+///     pdf_standards: None,
 /// };
 /// match typster::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
@@ -159,11 +228,20 @@ fn export_image(document: &PagedDocument, params: &CompileParams) -> SourceResul
 
 /// Export to a PDF.
 fn export_pdf(document: &PagedDocument, params: &CompileParams) -> SourceResult<()> {
+    let standards = match &params.pdf_standards {
+        Some(list) => {
+            let typst_standards: Vec<TypstPdfStandard> = list.iter().map(|s| (*s).into()).collect();
+            PdfStandards::new(&typst_standards)
+                .map_err(|err| eco_format!("invalid PDF standards: {err}"))
+                .at(Span::detached())?
+        }
+        None => PdfStandards::default(),
+    };
     let options = PdfOptions {
         ident: Smart::Auto,
         timestamp: None,
         page_ranges: None,
-        standards: PdfStandards::default(),
+        standards,
         tagged: true,
     };
     write(&params.output, pdf(document, &options)?)

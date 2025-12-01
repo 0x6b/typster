@@ -76,6 +76,7 @@ const EXTENSIONS: [&str; 16] = [
 ///     ppi: None,
 ///     package_path: None,
 ///     package_cache_path: None,
+///     pdf_standards: None,
 /// };
 ///
 /// rt.block_on(async {
