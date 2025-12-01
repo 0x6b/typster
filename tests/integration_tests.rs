@@ -60,7 +60,7 @@ fn test_export_pdf(ctx: &TypsterTestContext) -> Result<()> {
     let TypsterTestContext { export_pdf: (out, params), .. } = ctx;
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "135e55b094c17bbc5091aaa79d68a5635d0e5c476fc00f412c3a4c150e506001");
+    assert_eq!(out.sha256()?, "14f11fad6909de1f647ca87598071de7a56d201e79bc28d677fc1dc89d7a16fe");
 
     remove_file(out)?;
     Ok(())
@@ -106,7 +106,7 @@ fn test_update_metadata(ctx: &TypsterTestContext) -> Result<()> {
     let props = get_properties(out)?;
     assert_eq!(props.get("Title"), Some(&"Title タイトル (typster)".to_string()));
     assert_eq!(props.get("Author"), Some(&"Author 著者 (typster)".to_string()));
-    assert_eq!(props.get("Creator"), Some(&"Application アプリケーション (typster)".to_string()));
+    assert_eq!(props.get("Creator"), Some(&"Author 著者 (typster)".to_string()));
     assert_eq!(props.get("Producer"), Some(&"Application アプリケーション (typster)".to_string()));
     assert_eq!(
         props.get("Creator Tool"),

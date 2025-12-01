@@ -193,6 +193,20 @@ impl FontSearcher {
         }
         #[cfg(feature = "embed_warpnine_sans")]
         {
+            add!("WarpnineSans/WarpnineSans-Black.ttf");
+            add!("WarpnineSans/WarpnineSans-BlackItalic.ttf");
+            add!("WarpnineSans/WarpnineSans-Bold.ttf");
+            add!("WarpnineSans/WarpnineSans-BoldItalic.ttf");
+            add!("WarpnineSans/WarpnineSans-ExtraBold.ttf");
+            add!("WarpnineSans/WarpnineSans-ExtraBoldItalic.ttf");
+            add!("WarpnineSans/WarpnineSans-Italic.ttf");
+            add!("WarpnineSans/WarpnineSans-Light.ttf");
+            add!("WarpnineSans/WarpnineSans-LightItalic.ttf");
+            add!("WarpnineSans/WarpnineSans-Medium.ttf");
+            add!("WarpnineSans/WarpnineSans-MediumItalic.ttf");
+            add!("WarpnineSans/WarpnineSans-Regular.ttf");
+            add!("WarpnineSans/WarpnineSans-SemiBold.ttf");
+            add!("WarpnineSans/WarpnineSans-SemiBoldItalic.ttf");
             add!("WarpnineSans/WarpnineSansCondensed-Black.ttf");
             add!("WarpnineSans/WarpnineSansCondensed-BlackItalic.ttf");
             add!("WarpnineSans/WarpnineSansCondensed-Bold.ttf");
@@ -207,7 +221,7 @@ impl FontSearcher {
             add!("WarpnineSans/WarpnineSansCondensed-Regular.ttf");
             add!("WarpnineSans/WarpnineSansCondensed-SemiBold.ttf");
             add!("WarpnineSans/WarpnineSansCondensed-SemiBoldItalic.ttf");
-        }
+        };
     }
 }
 
@@ -222,9 +236,9 @@ use crate::CompileParams; // For documentation purposes.
 /// Note that:
 ///
 /// - typst-cli [defaults](https://github.com/typst/typst-assets/blob/5ca2a6996da97dcba893247576a4a70bbbae8a7a/src/lib.rs#L67-L80)
-///   are always embedded.
+/// are always embedded.
 /// - The crate won't search system fonts to ensure the reproducibility. All fonts you need should
-///   be explicitly added via [`CompileParams::font_paths`].
+/// be explicitly added via [`CompileParams::font_paths`].
 ///
 /// # Argument
 ///
@@ -238,7 +252,7 @@ use crate::CompileParams; // For documentation purposes.
 ///
 /// Following is an example of how to use the `list_fonts` function:
 ///
-/// ```rust
+/// `rust
 /// let params = typster::CompileParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
@@ -256,7 +270,7 @@ use crate::CompileParams; // For documentation purposes.
 /// typster::list_fonts(&params.font_paths)
 ///     .iter()
 ///     .for_each(|(family, _)| println!("{family}"));
-/// ```
+///`
 pub fn list_fonts(font_paths: &[PathBuf]) -> HashMap<String, Vec<FontInfo>> {
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);

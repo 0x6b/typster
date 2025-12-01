@@ -9,4 +9,5 @@ Fonts under this directory are licensed under its own license. See the respectiv
 | [Recursive Sans & Mono](https://github.com/arrowtype/recursive/)            | `Recursive/recursive-static-OTFs.otc`       | [LICENSE](Recursive/OFL.txt)                              |
 | [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)        | `SourceCodePro/SourceCodePro-*.ttf`         | [LICENSE](SourceCodePro/OFL.txt)                          |
 | [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)                         | `iAWriterDuo/iAWriterDuoS-*.ttf`            | [LICENSE](iAWriterDuo/LICENSE.md)                         |
-| [Warpnine Mono](https://github.com/0x6b/warpnine-mono/)                     | `WarpnineMono/WarpnineMono-*.ttf`           | [LICENSE](WarpnineMono/OFL)                               |
+| [Warpnine Mono](https://github.com/0x6b/warpnine-fonts/)                    | `WarpnineMono/WarpnineMono-*.ttf`           | [LICENSE](WarpnineMono/OFL)                               |
+| [Warpnine Sans](https://github.com/0x6b/warpnine-fonts/)                    | `WarpnineSans/WarpnineSans-*.ttf`           | [LICENSE](WarpnineSans/OFL)                               |
