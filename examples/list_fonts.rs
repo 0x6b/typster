@@ -15,6 +15,7 @@ fn main() {
         ppi: None,
         package_path: None,
         package_cache_path: None,
+        pdf_standards: None,
     };
 
     list_fonts(&params.font_paths).iter().for_each(|(family, fontinfo)| {
@@ -31,10 +32,8 @@ fn main() {
         sorted.sort_by(|a, b| a.0.cmp(&b.0).then(a.1.cmp(&b.1)).then(a.2.cmp(&b.2)));
 
         println!("{}:", family);
-        sorted
-            .iter()
-            .for_each(|(style, weight, stretch)| {
-                println!("  - Style: {style}, Weight: {weight}, Stretch: {stretch}")
-            });
+        sorted.iter().for_each(|(style, weight, stretch)| {
+            println!("  - Style: {style}, Weight: {weight}, Stretch: {stretch}")
+        });
     });
 }
