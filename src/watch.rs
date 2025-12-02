@@ -1,6 +1,14 @@
 use std::{
-    error::Error, fmt::Display, fs::remove_file, future::IntoFuture, net::SocketAddr,
-    path::PathBuf, sync::Arc,
+    error::Error,
+    fmt::Display,
+    fs::remove_file,
+    future::IntoFuture,
+    io,
+    io::{BufRead, BufReader},
+    net::SocketAddr,
+    path::PathBuf,
+    sync::Arc,
+    thread,
 };
 
 use axum::{
@@ -24,7 +32,14 @@ use notify::{
     recommended_watcher,
 };
 use open::{that_detached, with_detached};
-use tokio::{fs, net::TcpListener, select, signal::ctrl_c, spawn, sync::Notify};
+use tokio::{
+    fs,
+    net::TcpListener,
+    select,
+    signal::ctrl_c,
+    spawn,
+    sync::{Notify, mpsc, mpsc::unbounded_channel},
+};
 
 use crate::{CompileParams, compile};
 
@@ -141,12 +156,46 @@ pub async fn watch(
     }
 
     spawn(async move {
-        info!("Press Ctrl+C to exit");
+        info!("Press Enter to recompile, Ctrl+C to exit");
         async {
             ctrl_c().await.expect("Failed to register handler for Ctrl+C");
         }
         .await;
         state_handler.shutdown.notify_waiters();
+    });
+
+    let (stdin_tx, mut stdin_rx) = unbounded_channel();
+    thread::spawn(move || {
+        let stdin = io::stdin();
+        let reader = BufReader::new(stdin.lock());
+        for _ in reader.lines().map_while(Result::ok) {
+            if stdin_tx.send(()).is_err() {
+                break;
+            }
+        }
+    });
+
+    let params_stdin = params.clone();
+    let state_stdin = Arc::clone(&state);
+    spawn(async move {
+        loop {
+            select! {
+                result = stdin_rx.recv() => {
+                    if result.is_none() {
+                        break;
+                    }
+                    info!("Manual recompilation triggered");
+                    match compile(&params_stdin) {
+                        Ok(duration) => info!("compilation succeeded in {duration:?}"),
+                        Err(why) => error!("{why}"),
+                    }
+                    state_stdin.changed.notify_one();
+                }
+                _ = state_stdin.shutdown.notified() => {
+                    break;
+                }
+            }
+        }
     });
 
     let mut watcher = recommended_watcher(move |res: Result<Event, _>| match res {
