@@ -1,6 +1,10 @@
-use std::{error::Error, fmt::Display, path::PathBuf};
+use std::{
+    error::Error,
+    fmt::{Display, Formatter},
+    path::PathBuf,
+};
 
-use qpdf::{EncryptionParams, EncryptionParamsR6};
+use qpdf::{EncryptionParams, EncryptionParamsR6, writer};
 use serde::{Deserialize, Serialize};
 
 /// Parameters for PDF permission.
@@ -54,7 +58,7 @@ pub enum PrintPermission {
 }
 
 impl Display for PrintPermission {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             PrintPermission::Full => write!(f, "full"),
             PrintPermission::Low => write!(f, "low"),
@@ -63,8 +67,8 @@ impl Display for PrintPermission {
     }
 }
 
-impl From<&PrintPermission> for qpdf::writer::PrintPermission {
-    fn from(permission: &PrintPermission) -> qpdf::writer::PrintPermission {
+impl From<&PrintPermission> for writer::PrintPermission {
+    fn from(permission: &PrintPermission) -> writer::PrintPermission {
         match permission {
             PrintPermission::Full => qpdf::PrintPermission::Full,
             PrintPermission::Low => qpdf::PrintPermission::Low,

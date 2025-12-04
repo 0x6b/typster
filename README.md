@@ -17,7 +17,7 @@ The crate may function in other environments, but it has only been tested in the
 
 ## Supported Typst Version
 
-Version [0.14.0](https://github.com/typst/typst/releases/tag/v0.14.0) (October 25, 2025)
+Version [0.14.1](https://github.com/typst/typst/releases/tag/v0.14.1) (December 3, 2025)
 
 This crate is for my personal use and learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
 
@@ -29,7 +29,7 @@ Specify `full` to enable all the following features.
 
 ### `compile`
 
-You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.14.0/crates/typst-cli).
+You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.14.1/crates/typst-cli).
 
 See [`examples/compile.rs`](examples/compile.rs) for usage.
 
@@ -69,7 +69,7 @@ You can update PDF metadata. Following metadata is supported:
 > - All metadata will be overwritten, not merged.
 > - Both creation and modification date are set automatically to the current date _without_ time information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
-You can specify some of them with Typst. As of Typst v0.14.0, the following metadata is supported:
+You can specify some of them with Typst. As of Typst v0.14.1, the following metadata is supported:
 
 - Title
 - Author
@@ -132,14 +132,15 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_noto_serif_jp`: [Noto Serif JP](https://fonts.google.com/noto/specimen/Noto+Serif+JP)
 - `embed_recursive`: [Recursive Sans & Mono](https://github.com/arrowtype/recursive/)
 - `embed_source_code_pro`: [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
-- `embed_warpnine_mono`: [WarpNine Mono](https://github.com/0x6b/warpnine-mono/)
+- `embed_warpnine_mono`: [WarpNine Mono](https://github.com/0x6b/warpnine-fonts/)
+- `embed_warpnine_sans`: [WarpNine Sans](https://github.com/0x6b/warpnine-fonts/)
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.0/src/lib.rs#L104-L120) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.1/src/lib.rs#L104-L120) are always embedded.
 
 > [!Warning]
 >
-> - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L21).
+> - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L101).
 > - Embedding fonts will produce a large binary.
 
 ## Testing
