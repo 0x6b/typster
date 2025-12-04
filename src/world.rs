@@ -1,7 +1,9 @@
 use std::{
     collections::HashMap,
-    fmt, fs, io,
-    io::Read,
+    fmt,
+    fmt::Formatter,
+    fs, io,
+    io::{Error, Read},
     mem,
     path::{Path, PathBuf},
     str::from_utf8,
@@ -338,11 +340,11 @@ pub enum WorldCreationError {
     /// The root directory does not appear to exist.
     RootNotFound(PathBuf),
     /// Another type of I/O error.
-    Io(io::Error),
+    Io(Error),
 }
 
 impl fmt::Display for WorldCreationError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
             WorldCreationError::InputNotFound(path) => {
                 write!(f, "input file not found (searched at {})", path.display())

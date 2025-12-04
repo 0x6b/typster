@@ -1,6 +1,6 @@
 use std::{
     error::Error,
-    fmt::Display,
+    fmt::{Display, Formatter},
     fs::remove_file,
     future::IntoFuture,
     io,
@@ -38,7 +38,7 @@ use tokio::{
     select,
     signal::ctrl_c,
     spawn,
-    sync::{Notify, mpsc, mpsc::unbounded_channel},
+    sync::{Notify, mpsc::unbounded_channel},
 };
 
 use crate::{CompileParams, compile};
@@ -295,7 +295,7 @@ impl From<&str> for FittingType {
 }
 
 impl Display for FittingType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         // https://chromium.googlesource.com/chromium/src/+/6363f8da6aae63abedc87f60b629585f10bd8940/chrome/browser/resources/pdf/open_pdf_params_parser.js#61
         match self {
             FittingType::Page => write!(f, "fit"),
