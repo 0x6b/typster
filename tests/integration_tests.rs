@@ -60,7 +60,7 @@ fn test_export_pdf(ctx: &TypsterTestContext) -> Result<()> {
     let TypsterTestContext { export_pdf: (out, params), .. } = ctx;
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "e69f4d819b065a89fb1c4685c0ba7fea6b3980a441023cbf948733579f35870e");
+    assert_eq!(out.sha256()?, "c4d581039e484d9782d1a280584af2f2d296cee64f384437dea17bb86156347f");
 
     remove_file(out)?;
     Ok(())
@@ -166,7 +166,7 @@ fn test_format(ctx: &TypsterTestContext) -> Result<()> {
 
 #[test]
 fn test_typst_version() -> Result<()> {
-    assert_eq!(typst_version(), "0.14.1");
+    assert_eq!(typst_version(), "0.14.2");
 
     Ok(())
 }
