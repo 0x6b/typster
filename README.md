@@ -12,12 +12,12 @@ typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = 
 
 The crate may function in other environments, but it has only been tested in the following environment:
 
-- rustc 1.85.1 (4eb161250 2025-03-15)
-- macOS Sequoia 15.3.1 (24D70)
+- rustc 1.92.0 (ded5c06cf 2025-12-08)
+- macOS Sequoia 26.1 (25B78)
 
 ## Supported Typst Version
 
-Version [0.14.1](https://github.com/typst/typst/releases/tag/v0.14.1) (December 3, 2025)
+Version [0.14.2](https://github.com/typst/typst/releases/tag/v0.14.2) (December 3, 2025)
 
 This crate is for my personal use and learning purposes; it is not affiliated with the [Typst](https://typst.app/) project.
 
@@ -29,7 +29,7 @@ Specify `full` to enable all the following features.
 
 ### `compile`
 
-You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.14.1/crates/typst-cli).
+You can compile a Typst document to a PDF or a PNG file; a limited subset of [typst-cli](https://github.com/typst/typst/tree/v0.14.2/crates/typst-cli).
 
 See [`examples/compile.rs`](examples/compile.rs) for usage.
 
@@ -69,7 +69,7 @@ You can update PDF metadata. Following metadata is supported:
 > - All metadata will be overwritten, not merged.
 > - Both creation and modification date are set automatically to the current date _without_ time information which means time is always 0:00 UTC, for some privacy reasons (or my preference.)
 
-You can specify some of them with Typst. As of Typst v0.14.1, the following metadata is supported:
+You can specify some of them with Typst. As of Typst v0.14.2, the following metadata is supported:
 
 - Title
 - Author
@@ -136,7 +136,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 - `embed_warpnine_sans`: [WarpNine Sans](https://github.com/0x6b/warpnine-fonts/)
 
 > [!Note]
-> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.1/src/lib.rs#L104-L120) are always embedded.
+> typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.2/src/lib.rs#L104-L120) are always embedded.
 
 > [!Warning]
 >
