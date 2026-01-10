@@ -5,7 +5,7 @@ A Rust library for compiling, formatting, and watching [Typst](https://typst.app
 ## Usage
 
 ```toml
-typwriter = { git = "https://github.com/0x6b/typwriter", tag = "vx.x.x", features = ["full"] }
+typwriter = { version = "0.14", features = ["full"] }
 ```
 
 ## Tested Environment
