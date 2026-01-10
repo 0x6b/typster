@@ -1,6 +1,6 @@
 # typwriter
 
-A naive Rust library that provides a way to work with [Typst](https://typst.app/) document and PDF file programmatically.
+A Rust library for compiling, formatting, and watching [Typst](https://typst.app/) documents, with PDF metadata and permission management.
 
 ## Usage
 
