@@ -1,5 +1,7 @@
 use std::path::PathBuf;
 
+use typwriter::format;
+
 fn main() {
     let params = typwriter::FormatParams {
         input: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -9,5 +11,5 @@ fn main() {
         tab_spaces: 2,
     };
 
-    println!("{}", typwriter::format(&params).unwrap_or_else(|why| why.to_string()));
+    println!("{}", format(&params).unwrap_or_else(|why| why.to_string()));
 }

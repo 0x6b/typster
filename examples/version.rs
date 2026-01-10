@@ -1,3 +1,4 @@
+use typwriter::{typst_version, version};
 fn main() {
-    println!("Typwriter version: {} (Typst {})", typwriter::version(), typwriter::typst_version());
+    println!("Typwriter version: {} (Typst {})", version(), typst_version());
 }

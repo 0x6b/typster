@@ -3,8 +3,7 @@ use std::{
     fmt::{Display, Formatter},
     fs::remove_file,
     future::IntoFuture,
-    io,
-    io::{BufRead, BufReader},
+    io::{BufRead, BufReader, stdin},
     net::SocketAddr,
     path::PathBuf,
     sync::Arc,
@@ -166,7 +165,7 @@ pub async fn watch(
 
     let (stdin_tx, mut stdin_rx) = unbounded_channel();
     thread::spawn(move || {
-        let stdin = io::stdin();
+        let stdin = stdin();
         let reader = BufReader::new(stdin.lock());
         for _ in reader.lines().map_while(Result::ok) {
             if stdin_tx.send(()).is_err() {
