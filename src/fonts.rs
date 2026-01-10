@@ -99,12 +99,8 @@ impl FontSearcher {
         #[cfg(any(
             feature = "embed_cmu_roman",
             feature = "embed_ia_writer_duo",
-            feature = "embed_noto_sans_jp",
-            feature = "embed_noto_serif_jp",
-            feature = "embed_recursive",
+            feature = "embed_noto_emoji",
             feature = "embed_source_code_pro",
-            feature = "embed_warpnine_mono",
-            feature = "embed_warpnine_sans",
         ))]
         macro_rules! add {
             ($filename:literal) => {
@@ -129,29 +125,15 @@ impl FontSearcher {
         }
         #[cfg(feature = "embed_noto_sans_jp")]
         {
-            add!("NotoSansJP/NotoSansJP-Black.ttf");
-            add!("NotoSansJP/NotoSansJP-Bold.ttf");
-            add!("NotoSansJP/NotoSansJP-ExtraBold.ttf");
-            add!("NotoSansJP/NotoSansJP-ExtraLight.ttf");
-            add!("NotoSansJP/NotoSansJP-Light.ttf");
-            add!("NotoSansJP/NotoSansJP-Medium.ttf");
-            add!("NotoSansJP/NotoSansJP-Regular.ttf");
-            add!("NotoSansJP/NotoSansJP-SemiBold.ttf");
-            add!("NotoSansJP/NotoSansJP-Thin.ttf");
+            include!(concat!(env!("OUT_DIR"), "/embed_noto_sans_jp.rs"));
         }
         #[cfg(feature = "embed_noto_serif_jp")]
         {
-            add!("NotoSerifJP/NotoSerifJP-Black.ttf");
-            add!("NotoSerifJP/NotoSerifJP-Bold.ttf");
-            add!("NotoSerifJP/NotoSerifJP-ExtraLight.ttf");
-            add!("NotoSerifJP/NotoSerifJP-Light.ttf");
-            add!("NotoSerifJP/NotoSerifJP-Medium.ttf");
-            add!("NotoSerifJP/NotoSerifJP-Regular.ttf");
-            add!("NotoSerifJP/NotoSerifJP-SemiBold.ttf");
+            include!(concat!(env!("OUT_DIR"), "/embed_noto_serif_jp.rs"));
         }
         #[cfg(feature = "embed_recursive")]
         {
-            add!("Recursive/recursive-static-OTFs.otc");
+            include!(concat!(env!("OUT_DIR"), "/embed_recursive.rs"));
         }
         #[cfg(feature = "embed_source_code_pro")]
         {
@@ -174,54 +156,12 @@ impl FontSearcher {
         }
         #[cfg(feature = "embed_warpnine_mono")]
         {
-            add!("WarpnineMono/WarpnineMono-Black.ttf");
-            add!("WarpnineMono/WarpnineMono-BlackItalic.ttf");
-            add!("WarpnineMono/WarpnineMono-Bold.ttf");
-            add!("WarpnineMono/WarpnineMono-BoldItalic.ttf");
-            add!("WarpnineMono/WarpnineMono-ExtraBlack.ttf");
-            add!("WarpnineMono/WarpnineMono-ExtraBlackItalic.ttf");
-            add!("WarpnineMono/WarpnineMono-ExtraBold.ttf");
-            add!("WarpnineMono/WarpnineMono-ExtraBoldItalic.ttf");
-            add!("WarpnineMono/WarpnineMono-Italic.ttf");
-            add!("WarpnineMono/WarpnineMono-Light.ttf");
-            add!("WarpnineMono/WarpnineMono-LightItalic.ttf");
-            add!("WarpnineMono/WarpnineMono-Medium.ttf");
-            add!("WarpnineMono/WarpnineMono-MediumItalic.ttf");
-            add!("WarpnineMono/WarpnineMono-Regular.ttf");
-            add!("WarpnineMono/WarpnineMono-SemiBold.ttf");
-            add!("WarpnineMono/WarpnineMono-SemiBoldItalic.ttf");
+            include!(concat!(env!("OUT_DIR"), "/embed_warpnine_mono.rs"));
         }
         #[cfg(feature = "embed_warpnine_sans")]
         {
-            add!("WarpnineSans/WarpnineSans-Black.ttf");
-            add!("WarpnineSans/WarpnineSans-BlackItalic.ttf");
-            add!("WarpnineSans/WarpnineSans-Bold.ttf");
-            add!("WarpnineSans/WarpnineSans-BoldItalic.ttf");
-            add!("WarpnineSans/WarpnineSans-ExtraBold.ttf");
-            add!("WarpnineSans/WarpnineSans-ExtraBoldItalic.ttf");
-            add!("WarpnineSans/WarpnineSans-Italic.ttf");
-            add!("WarpnineSans/WarpnineSans-Light.ttf");
-            add!("WarpnineSans/WarpnineSans-LightItalic.ttf");
-            add!("WarpnineSans/WarpnineSans-Medium.ttf");
-            add!("WarpnineSans/WarpnineSans-MediumItalic.ttf");
-            add!("WarpnineSans/WarpnineSans-Regular.ttf");
-            add!("WarpnineSans/WarpnineSans-SemiBold.ttf");
-            add!("WarpnineSans/WarpnineSans-SemiBoldItalic.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-Black.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-BlackItalic.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-Bold.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-BoldItalic.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-ExtraBold.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-ExtraBoldItalic.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-Italic.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-Light.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-LightItalic.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-Medium.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-MediumItalic.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-Regular.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-SemiBold.ttf");
-            add!("WarpnineSans/WarpnineSansCondensed-SemiBoldItalic.ttf");
-        };
+            include!(concat!(env!("OUT_DIR"), "/embed_warpnine_sans.rs"));
+        }
     }
 }
 

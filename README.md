@@ -138,6 +138,16 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 > [!Note]
 > typst-cli [defaults](https://github.com/typst/typst-assets/blob/v0.14.2/src/lib.rs#L104-L120) are always embedded.
 
+> [!Note]
+> The following font features require network access at build time to download fonts:
+> - `embed_noto_sans_jp`
+> - `embed_noto_serif_jp`
+> - `embed_recursive`
+> - `embed_warpnine_mono`
+> - `embed_warpnine_sans`
+>
+> Downloaded fonts are cached in `$XDG_CACHE_HOME/typwriter/fonts` (or `~/.cache/typwriter/fonts` on macOS/Linux).
+
 > [!Warning]
 >
 > - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typwriter/blob/main/src/compile.rs#L101).
