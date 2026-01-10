@@ -32,7 +32,7 @@ pub struct FormatParams {
 /// Following is an example of how to use the `format` function:
 ///
 /// ```rust
-/// let params = typster::FormatParams {
+/// let params = typwriter::FormatParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample.typ"),
@@ -40,7 +40,7 @@ pub struct FormatParams {
 ///     tab_spaces: 2,
 /// };
 ///
-/// println!("{}", typster::format(&params).map_or_else(|why| why.to_string(), |s| s));
+/// println!("{}", typwriter::format(&params).map_or_else(|why| why.to_string(), |s| s));
 /// ```
 pub fn format(params: &FormatParams) -> Result<String, Box<dyn std::error::Error>> {
     let config = Config::new()

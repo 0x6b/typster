@@ -1,6 +1,6 @@
 use std::{error::Error, path::PathBuf};
 
-use typster::{PermissionParams, PrintPermission, set_permission};
+use typwriter::{PermissionParams, PrintPermission, set_permission};
 
 fn main() -> Result<(), Box<dyn Error>> {
     set_permission(

@@ -8,12 +8,12 @@ use std::{
 use anyhow::{Result, anyhow};
 use sha2_hasher::sync::Sha2Hasher;
 use test_context::{TestContext, test_context};
-use typster::{
+use typwriter::{
     CompileParams, FormatParams, PdfMetadata, PermissionParams, PrintPermission, compile, format,
     set_permission, typst_version, update_metadata,
 };
 
-struct TypsterTestContext {
+struct TypwriterTestContext {
     export_pdf: (PathBuf, CompileParams),
     export_png: (PathBuf, CompileParams),
     update_metadata: (PathBuf, CompileParams),
@@ -21,8 +21,8 @@ struct TypsterTestContext {
     format: (String, FormatParams),
 }
 
-impl TestContext for TypsterTestContext {
-    fn setup() -> TypsterTestContext {
+impl TestContext for TypwriterTestContext {
+    fn setup() -> TypwriterTestContext {
         let path = |n| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests").join(n);
         let params = |n| {
             (
@@ -35,7 +35,7 @@ impl TestContext for TypsterTestContext {
             )
         };
 
-        TypsterTestContext {
+        TypwriterTestContext {
             export_pdf: params("export_pdf.pdf"),
             export_png: params("export_png.png"),
             update_metadata: params("update_metadata.pdf"),
@@ -54,22 +54,22 @@ impl TestContext for TypsterTestContext {
     fn teardown(self) {}
 }
 
-#[test_context(TypsterTestContext)]
+#[test_context(TypwriterTestContext)]
 #[test]
-fn test_export_pdf(ctx: &TypsterTestContext) -> Result<()> {
-    let TypsterTestContext { export_pdf: (out, params), .. } = ctx;
+fn test_export_pdf(ctx: &TypwriterTestContext) -> Result<()> {
+    let TypwriterTestContext { export_pdf: (out, params), .. } = ctx;
     assert!(compile(params).is_ok());
     assert!(out.exists());
-    assert_eq!(out.sha256()?, "c4d581039e484d9782d1a280584af2f2d296cee64f384437dea17bb86156347f");
+    assert_eq!(out.sha256()?, "9c2571ad9b56c0f1a1f2d97d207ce922ac469c38ddd72bec4c1ce7d1ea9dab34");
 
     remove_file(out)?;
     Ok(())
 }
 
-#[test_context(TypsterTestContext)]
+#[test_context(TypwriterTestContext)]
 #[test]
-fn test_export_png(ctx: &TypsterTestContext) -> Result<()> {
-    let TypsterTestContext { export_png: (out, params), .. } = ctx;
+fn test_export_png(ctx: &TypwriterTestContext) -> Result<()> {
+    let TypwriterTestContext { export_png: (out, params), .. } = ctx;
     assert!(compile(params).is_ok());
     assert!(out.exists());
     assert_eq!(out.sha256()?, "c0a75e2a658bfac879d2f26fe996e3402629d50a68b5a3075286ac567e576bcf");
@@ -78,22 +78,22 @@ fn test_export_png(ctx: &TypsterTestContext) -> Result<()> {
     Ok(())
 }
 
-#[test_context(TypsterTestContext)]
+#[test_context(TypwriterTestContext)]
 #[test]
-fn test_update_metadata(ctx: &TypsterTestContext) -> Result<()> {
-    let TypsterTestContext { update_metadata: (out, params), .. } = ctx;
+fn test_update_metadata(ctx: &TypwriterTestContext) -> Result<()> {
+    let TypwriterTestContext { update_metadata: (out, params), .. } = ctx;
     let mut custom_properties = HashMap::new();
     custom_properties.insert("robots".to_string(), "noindex".to_string());
     custom_properties.insert("custom".to_string(), "properties".to_string());
 
     let metadata = PdfMetadata {
-        title: "Title タイトル (typster)".to_string(),
-        author: "Author 著者 (typster)".to_string(),
-        application: "Application アプリケーション (typster)".to_string(),
-        subject: "Subject 題名 (typster)".to_string(),
+        title: "Title タイトル (typwriter)".to_string(),
+        author: "Author 著者 (typwriter)".to_string(),
+        application: "Application アプリケーション (typwriter)".to_string(),
+        subject: "Subject 題名 (typwriter)".to_string(),
         copyright_status: true,
-        copyright_notice: "Copyright notice (typster)".to_string(),
-        keywords: vec!["typster".to_string(), "rust".to_string(), "pdf".to_string()],
+        copyright_notice: "Copyright notice (typwriter)".to_string(),
+        keywords: vec!["typwriter".to_string(), "rust".to_string(), "pdf".to_string()],
         language: "en".to_string(),
         custom_properties,
     };
@@ -104,18 +104,21 @@ fn test_update_metadata(ctx: &TypsterTestContext) -> Result<()> {
     assert!(out.metadata()?.len() > 0);
 
     let props = get_properties(out)?;
-    assert_eq!(props.get("Title"), Some(&"Title タイトル (typster)".to_string()));
-    assert_eq!(props.get("Author"), Some(&"Author 著者 (typster)".to_string()));
-    assert_eq!(props.get("Creator"), Some(&"Author 著者 (typster)".to_string()));
-    assert_eq!(props.get("Producer"), Some(&"Application アプリケーション (typster)".to_string()));
+    assert_eq!(props.get("Title"), Some(&"Title タイトル (typwriter)".to_string()));
+    assert_eq!(props.get("Author"), Some(&"Author 著者 (typwriter)".to_string()));
+    assert_eq!(props.get("Creator"), Some(&"Author 著者 (typwriter)".to_string()));
+    assert_eq!(
+        props.get("Producer"),
+        Some(&"Application アプリケーション (typwriter)".to_string())
+    );
     assert_eq!(
         props.get("Creator Tool"),
-        Some(&"Application アプリケーション (typster)".to_string())
+        Some(&"Application アプリケーション (typwriter)".to_string())
     );
-    assert_eq!(props.get("Subject"), Some(&"Subject 題名 (typster)".to_string()));
+    assert_eq!(props.get("Subject"), Some(&"Subject 題名 (typwriter)".to_string()));
     assert_eq!(props.get("Marked"), Some(&"True".to_string()));
-    assert_eq!(props.get("Rights"), Some(&"Copyright notice (typster)".to_string()));
-    assert_eq!(props.get("Keywords"), Some(&"typster, rust, pdf".to_string()));
+    assert_eq!(props.get("Rights"), Some(&"Copyright notice (typwriter)".to_string()));
+    assert_eq!(props.get("Keywords"), Some(&"typwriter, rust, pdf".to_string()));
     assert_eq!(props.get("Language"), Some(&"en".to_string()));
     assert_eq!(props.get("Robots"), Some(&"noindex".to_string()));
     assert_eq!(props.get("Custom"), Some(&"properties".to_string()));
@@ -124,10 +127,10 @@ fn test_update_metadata(ctx: &TypsterTestContext) -> Result<()> {
     Ok(())
 }
 
-#[test_context(TypsterTestContext)]
+#[test_context(TypwriterTestContext)]
 #[test]
-fn test_set_permission(ctx: &TypsterTestContext) -> Result<()> {
-    let TypsterTestContext {
+fn test_set_permission(ctx: &TypwriterTestContext) -> Result<()> {
+    let TypwriterTestContext {
         set_permission: (out_permission, (out, params)), ..
     } = ctx;
     assert!(compile(params).is_ok());
@@ -155,10 +158,10 @@ fn test_set_permission(ctx: &TypsterTestContext) -> Result<()> {
     Ok(())
 }
 
-#[test_context(TypsterTestContext)]
+#[test_context(TypwriterTestContext)]
 #[test]
-fn test_format(ctx: &TypsterTestContext) -> Result<()> {
-    let TypsterTestContext { format: (expected, params), .. } = ctx;
+fn test_format(ctx: &TypwriterTestContext) -> Result<()> {
+    let TypwriterTestContext { format: (expected, params), .. } = ctx;
     assert_eq!(*expected, format(params).map_err(|e| anyhow!(e.to_string()))?.trim());
 
     Ok(())

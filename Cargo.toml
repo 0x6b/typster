@@ -1,18 +1,18 @@
 [package]
-name = "typster"
+name = "typwriter"
 description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
 version = "0.14.19"
 edition = "2024"
 authors = ["kaoru <k@warpnine.io>"]
 license = "MIT"
-homepage = "https://github.com/0x6b/typster"
-repository = "https://github.com/0x6b/typster"
+homepage = "https://github.com/0x6b/typwriter"
+repository = "https://github.com/0x6b/typwriter"
 readme = "README.md"
 categories = ["text-processing"]
 keywords = ["text", "typst", "formatter", "pdf", "metadata"]
 
 [lib]
-name = "typster"
+name = "typwriter"
 path = "src/lib.rs"
 
 [dependencies]

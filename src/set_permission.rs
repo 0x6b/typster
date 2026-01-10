@@ -142,7 +142,7 @@ impl Default for PermissionParams {
 ///         .join("sample.pdf");
 ///
 /// // Compile a document first
-/// let params = typster::CompileParams {
+/// let params = typwriter::CompileParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample.typ"),
@@ -154,20 +154,20 @@ impl Default for PermissionParams {
 ///     package_cache_path: None,
 ///     pdf_standards: None,
 /// };
-/// match typster::compile(&params) {
+/// match typwriter::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
 ///     Err(why) => eprintln!("{why}"),
 /// }
 ///
 /// // Then set permission
-/// typster::set_permission(
+/// typwriter::set_permission(
 ///     output,
 ///     std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample-protected.pdf"),
-///     &typster::PermissionParams {
+///     &typwriter::PermissionParams {
 ///         owner_password: Some("owner".to_string()),
-///         allow_print: typster::PrintPermission::None,
+///         allow_print: typwriter::PrintPermission::None,
 ///         ..Default::default()
 ///     },
 /// ).unwrap();

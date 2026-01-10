@@ -79,7 +79,7 @@ const EXTENSIONS: [&str; 16] = [
 ///
 ///```no_run
 /// let rt = tokio::runtime::Runtime::new().unwrap();
-/// let params = typster::CompileParams {
+/// let params = typwriter::CompileParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample.typ"),
@@ -95,7 +95,7 @@ const EXTENSIONS: [&str; 16] = [
 /// };
 ///
 /// rt.block_on(async {
-///     if let Err(error) = typster::watch(&params, true, None, Some(typster::FittingType::Width)).await {
+///     if let Err(error) = typwriter::watch(&params, true, None, Some(typwriter::FittingType::Width)).await {
 ///         eprintln!("Server error: {}", error)
 ///     }
 /// });

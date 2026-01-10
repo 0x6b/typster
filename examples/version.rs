@@ -1,3 +1,3 @@
 fn main() {
-    println!("Typster version: {} (Typst {})", typster::version(), typster::typst_version());
+    println!("Typwriter version: {} (Typst {})", typwriter::version(), typwriter::typst_version());
 }

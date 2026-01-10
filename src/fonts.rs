@@ -253,7 +253,7 @@ use crate::CompileParams; // For documentation purposes.
 /// Following is an example of how to use the `list_fonts` function:
 ///
 /// `rust
-/// let params = typster::CompileParams {
+/// let params = typwriter::CompileParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample.typ"),
@@ -268,7 +268,7 @@ use crate::CompileParams; // For documentation purposes.
 ///     pdf_standards: None,
 /// };
 ///
-/// typster::list_fonts(&params.font_paths)
+/// typwriter::list_fonts(&params.font_paths)
 ///     .iter()
 ///     .for_each(|(family, _)| println!("{family}"));
 ///`

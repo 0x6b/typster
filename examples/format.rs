@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 fn main() {
-    let params = typster::FormatParams {
+    let params = typwriter::FormatParams {
         input: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .join("examples")
             .join("sample.typ"),
@@ -9,5 +9,5 @@ fn main() {
         tab_spaces: 2,
     };
 
-    println!("{}", typster::format(&params).unwrap_or_else(|why| why.to_string()));
+    println!("{}", typwriter::format(&params).unwrap_or_else(|why| why.to_string()));
 }

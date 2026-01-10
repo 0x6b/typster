@@ -1,11 +1,11 @@
 use std::path::PathBuf;
 
-use typster::compile;
+use typwriter::compile;
 
 fn main() {
     // equivalent to:
     //     typst compile examples/sample.typ examples/sample.pdf
-    let params = typster::CompileParams {
+    let params = typwriter::CompileParams {
         input: PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .join("examples")
             .join("sample.typ"),
