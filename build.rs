@@ -18,7 +18,7 @@ struct ProjectMetadata {
 #[derive(Deserialize)]
 struct Package {
     #[serde(rename = "version")]
-    typster_version: String,
+    typwriter_version: String,
 }
 
 #[derive(Deserialize)]
@@ -35,7 +35,7 @@ pub struct Typst {
 fn main() -> Result<(), Box<dyn Error>> {
     let mut f = File::create(Path::new(&var("OUT_DIR")?).join("version.rs"))?;
     let ProjectMetadata {
-        package: Package { typster_version },
+        package: Package { typwriter_version },
         dependencies: Dependencies { typst: Typst { typst_version } },
     } = from_str(&read_to_string("Cargo.toml")?)?;
 
@@ -50,16 +50,16 @@ fn main() -> Result<(), Box<dyn Error>> {
 /// # Example
 ///
 /// ```rust
-/// println!("Typster version: {{}}", typster::version());
+/// println!("Typwriter version: {{}}", typwriter::version());
 /// ```
-pub fn version() -> &'static str {{ "{typster_version}" }}
+pub fn version() -> &'static str {{ "{typwriter_version}" }}
 
 /// Returns the Typst version the library was compiled with.
 ///
 /// # Example
 ///
 /// ```rust
-/// println!("Typst version: {{}}", typster::typst_version());
+/// println!("Typst version: {{}}", typwriter::typst_version());
 /// ```
 pub fn typst_version() -> &'static str {{ "{typst_version}" }}
 "#,

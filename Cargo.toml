@@ -1,18 +1,20 @@
 [package]
-name = "typster"
-description = "Library provides a way to compile and format Typst documents, and update PDF metadata."
-version = "0.14.19"
+name = "typwriter"
+description = "A Rust library for compiling, formatting, and watching Typst documents, with PDF metadata and permission management."
+version = "0.14.20"
 edition = "2024"
 authors = ["kaoru <k@warpnine.io>"]
-license = "MIT"
-homepage = "https://github.com/0x6b/typster"
-repository = "https://github.com/0x6b/typster"
+license = "Apache-2.0"
+exclude = ["tests/", "examples/", ".gitignore", "rustfmt.toml", "*.pdf", "*.png"]
+homepage = "https://github.com/0x6b/typwriter"
+repository = "https://github.com/0x6b/typwriter"
+documentation = "https://docs.rs/typwriter"
 readme = "README.md"
 categories = ["text-processing"]
-keywords = ["text", "typst", "formatter", "pdf", "metadata"]
+keywords = ["typst", "typesetting", "compile", "pdf", "formatter"]
 
 [lib]
-name = "typster"
+name = "typwriter"
 path = "src/lib.rs"
 
 [dependencies]

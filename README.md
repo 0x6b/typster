@@ -1,11 +1,11 @@
-# typster
+# typwriter
 
-A naive Rust library that provides a way to work with [Typst](https://typst.app/) document and PDF file programmatically.
+A Rust library for compiling, formatting, and watching [Typst](https://typst.app/) documents, with PDF metadata and permission management.
 
 ## Usage
 
 ```toml
-typster = { git = "https://github.com/0x6b/typster", tag = "vx.x.x", features = ["full"] }
+typwriter = { git = "https://github.com/0x6b/typwriter", tag = "vx.x.x", features = ["full"] }
 ```
 
 ## Tested Environment
@@ -140,7 +140,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 
 > [!Warning]
 >
-> - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typster/blob/main/src/compile.rs#L101).
+> - The crate won't search system fonts to ensure the reproducibility. All fonts you need should be explicitly added via [`CompileParams.font_paths`](https://github.com/0x6b/typwriter/blob/main/src/compile.rs#L101).
 > - Embedding fonts will produce a large binary.
 
 ## Testing

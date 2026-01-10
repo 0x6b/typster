@@ -130,7 +130,7 @@ pub struct CompileParams {
 /// Following is an example of how to use the `compile` function:
 ///
 /// ```rust
-/// let params = typster::CompileParams {
+/// let params = typwriter::CompileParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample.typ"),
@@ -144,7 +144,7 @@ pub struct CompileParams {
 ///     package_cache_path: None,
 ///     pdf_standards: None,
 /// };
-/// match typster::compile(&params) {
+/// match typwriter::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
 ///     Err(why) => eprintln!("{why}"),
 /// }

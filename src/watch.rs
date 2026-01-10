@@ -3,8 +3,7 @@ use std::{
     fmt::{Display, Formatter},
     fs::remove_file,
     future::IntoFuture,
-    io,
-    io::{BufRead, BufReader},
+    io::{BufRead, BufReader, stdin},
     net::SocketAddr,
     path::PathBuf,
     sync::Arc,
@@ -79,7 +78,7 @@ const EXTENSIONS: [&str; 16] = [
 ///
 ///```no_run
 /// let rt = tokio::runtime::Runtime::new().unwrap();
-/// let params = typster::CompileParams {
+/// let params = typwriter::CompileParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample.typ"),
@@ -95,7 +94,7 @@ const EXTENSIONS: [&str; 16] = [
 /// };
 ///
 /// rt.block_on(async {
-///     if let Err(error) = typster::watch(&params, true, None, Some(typster::FittingType::Width)).await {
+///     if let Err(error) = typwriter::watch(&params, true, None, Some(typwriter::FittingType::Width)).await {
 ///         eprintln!("Server error: {}", error)
 ///     }
 /// });
@@ -166,7 +165,7 @@ pub async fn watch(
 
     let (stdin_tx, mut stdin_rx) = unbounded_channel();
     thread::spawn(move || {
-        let stdin = io::stdin();
+        let stdin = stdin();
         let reader = BufReader::new(stdin.lock());
         for _ in reader.lines().map_while(Result::ok) {
             if stdin_tx.send(()).is_err() {

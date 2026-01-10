@@ -59,7 +59,7 @@ impl Default for PdfMetadata {
         Self {
             title: "".to_string(),
             author: "".to_string(),
-            application: "typster".to_string(),
+            application: "typwriter".to_string(),
             subject: "".to_string(),
             copyright_status: true,
             copyright_notice: "© 2023 Author. All rights reserved.".to_string(),
@@ -94,7 +94,7 @@ impl Default for PdfMetadata {
 ///     .join("sample.pdf");
 ///
 /// // Compile a document first
-/// let params = typster::CompileParams {
+/// let params = typwriter::CompileParams {
 ///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 ///         .join("examples")
 ///         .join("sample.typ"),
@@ -106,7 +106,7 @@ impl Default for PdfMetadata {
 ///     package_cache_path: None,
 ///     pdf_standards: None,
 /// };
-/// match typster::compile(&params) {
+/// match typwriter::compile(&params) {
 ///     Ok(duration) => println!("Compilation succeeded in {duration:?}"),
 ///     Err(why) => eprintln!("{why}"),
 /// }
@@ -116,19 +116,19 @@ impl Default for PdfMetadata {
 /// custom_properties.insert("robots".to_string(), "noindex".to_string());
 /// custom_properties.insert("custom".to_string(), "properties".to_string());
 ///
-/// let metadata = typster::PdfMetadata {
-///     title: "Title (typster)".to_string(),
-///     author: "Author (typster)".to_string(),
-///     application: "Application (typster)".to_string(),
-///     subject: "Subject (typster)".to_string(),
+/// let metadata = typwriter::PdfMetadata {
+///     title: "Title (typwriter)".to_string(),
+///     author: "Author (typwriter)".to_string(),
+///     application: "Application (typwriter)".to_string(),
+///     subject: "Subject (typwriter)".to_string(),
 ///     copyright_status: true,
-///     copyright_notice: "Copyright notice (typster)".to_string(),
-///     keywords: vec!["typster".to_string(), "rust".to_string(), "pdf".to_string()],
+///     copyright_notice: "Copyright notice (typwriter)".to_string(),
+///     keywords: vec!["typwriter".to_string(), "rust".to_string(), "pdf".to_string()],
 ///     language: "en".to_string(),
 ///     custom_properties,
 /// };
 ///
-/// typster::update_metadata(&output, &metadata).unwrap();
+/// typwriter::update_metadata(&output, &metadata).unwrap();
 /// ```
 pub fn update_metadata(
     path: &Path,

@@ -3,7 +3,7 @@
 
 #set document(
   title: "確率論の基礎",
-  author: "typster",
+  author: "typwriter",
   keywords: "確率論, 確率空間, 確率測度, 確率質量関数, 可測空間, 可測集合, 事象, Event, 確率, 定理, 定義, 例",
   date: datetime(year: 2023, month: 1, day: 1, hour: 0, minute: 0, second: 0),
 )

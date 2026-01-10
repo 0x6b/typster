@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>typster watcher: {input}</title>
+    <title>typwriter watcher: {input}</title>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('target').focus();
@@ -13,11 +13,11 @@
 
         function onMessage(event) {
             if (event.data !== "refresh") {
-                console.error(`[typster] - Received unknown message from websocket: ${event.data}`)
+                console.error(`[typwriter] - Received unknown message from websocket: ${event.data}`)
                 return;
             }
 
-            console.log("[typster] - Got refresh message, updating pdf");
+            console.log("[typwriter] - Got refresh message, updating pdf");
             const pdf = document.getElementById("target")
             let url = new URL(pdf.src);
             url.search = '?t=' + Date.now();
@@ -25,11 +25,11 @@
         }
 
         function onOpen(event) {
-            console.log("[typster] - Connected to the listen endpoint");
+            console.log("[typwriter] - Connected to the listen endpoint");
         }
 
         function onClose(event) {
-            console.log("[typster] - Connection closed");
+            console.log("[typwriter] - Connection closed");
         }
 
         const ws = new WebSocket(path)
