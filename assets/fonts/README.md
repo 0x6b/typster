@@ -11,3 +11,4 @@ Fonts under this directory are licensed under its own license. See the respectiv
 | [iA Writer Duo](https://github.com/iaolo/iA-Fonts/)                         | `iAWriterDuo/iAWriterDuoS-*.ttf`            | [LICENSE](iAWriterDuo/LICENSE.md)                         |
 | [Warpnine Mono](https://github.com/0x6b/warpnine-fonts/)                    | `WarpnineMono/WarpnineMono-*.ttf`           | [LICENSE](WarpnineMono/OFL)                               |
 | [Warpnine Sans](https://github.com/0x6b/warpnine-fonts/)                    | `WarpnineSans/WarpnineSans-*.ttf`           | [LICENSE](WarpnineSans/OFL)                               |
+| [Warpnine Sans Condensed](https://github.com/0x6b/warpnine-fonts/)          | `WarpnineSans/WarpnineSansCondensed-*.ttf`  | [LICENSE](WarpnineSans/OFL)                               |
