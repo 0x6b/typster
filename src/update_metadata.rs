@@ -62,7 +62,10 @@ impl Default for PdfMetadata {
             application: "typwriter".to_string(),
             subject: "".to_string(),
             copyright_status: true,
-            copyright_notice: "© 2023 Author. All rights reserved.".to_string(),
+            copyright_notice: format!(
+                "© {} Author. All rights reserved.",
+                chrono::Local::now().format("%Y")
+            ),
             keywords: vec![],
             language: "en".to_string(),
             custom_properties: HashMap::new(),
