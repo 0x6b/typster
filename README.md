@@ -5,7 +5,13 @@ A Rust library for compiling, formatting, and watching [Typst](https://typst.app
 ## Usage
 
 ```toml
-typwriter = { git = "https://github.com/0x6b/typwriter", tag = "vx.x.x", features = ["full"] }
+typwriter = { version = "0.14", features = ["full"] }
+```
+
+or
+
+```console
+cargo add typwriter --fatures full
 ```
 
 ## Tested Environment
@@ -140,6 +146,7 @@ You can embed additional fonts in the binary for easier deployment. Each feature
 
 > [!Note]
 > The following font features require network access at build time to download fonts:
+>
 > - `embed_noto_sans_jp`
 > - `embed_noto_serif_jp`
 > - `embed_recursive`

@@ -56,7 +56,7 @@ impl FontSearcher {
             let path = match &face.source {
                 Source::File(path) | Source::SharedFile(path, _) => path,
                 // We never add binary sources to the database, so there
-                // shouln't be any.
+                // shouldn't be any.
                 Source::Binary(_) => continue,
             };
 
@@ -180,7 +180,7 @@ use crate::CompileParams; // For documentation purposes.
 /// - The crate won't search system fonts to ensure the reproducibility. All fonts you need should
 /// be explicitly added via [`CompileParams::font_paths`].
 ///
-/// # Argument
+/// # Arguments
 ///
 /// - `font_paths` - Paths to additional font directories.
 ///
@@ -190,28 +190,17 @@ use crate::CompileParams; // For documentation purposes.
 ///
 /// # Example
 ///
-/// Following is an example of how to use the `list_fonts` function:
-///
-/// `rust
-/// let params = typwriter::CompileParams {
-///     input: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-///         .join("examples")
-///         .join("sample.typ"),
-///     output: std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-///         .join("examples")
-///         .join("sample.pdf"),
-///     font_paths: vec![],
-///     dict: vec![("input".to_string(), "value".to_string())],
-///     ppi: None,
-///     package_path: None,
-///     package_cache_path: None,
-///     pdf_standards: None,
-/// };
-///
-/// typwriter::list_fonts(&params.font_paths)
+/// ```rust
+/// // List fonts with no additional font paths (only embedded fonts)
+/// typwriter::list_fonts(&[])
 ///     .iter()
 ///     .for_each(|(family, _)| println!("{family}"));
-///`
+///
+/// // List fonts with additional font directories
+/// typwriter::list_fonts(&["assets/fonts".into()])
+///     .iter()
+///     .for_each(|(family, _)| println!("{family}"));
+/// ```
 pub fn list_fonts(font_paths: &[PathBuf]) -> HashMap<String, Vec<FontInfo>> {
     let mut searcher = FontSearcher::new();
     searcher.search(font_paths);

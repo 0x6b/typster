@@ -42,13 +42,22 @@ use tokio::{
 
 use crate::{CompileParams, compile};
 
+/// Shared state for the watch server, containing server configuration and synchronization
+/// primitives.
 pub struct SharedState {
+    /// The port number the server is listening on.
     pub port: u16,
+    /// The IP address the server is bound to.
     pub address: String,
+    /// Path to the input Typst file being watched.
     pub input: PathBuf,
+    /// Path to the output PDF file.
     pub output: PathBuf,
+    /// Notifier for signaling when the source file has changed.
     pub changed: Notify,
+    /// Notifier for signaling server shutdown.
     pub shutdown: Notify,
+    /// The PDF fitting type for browser display.
     pub fitting_type: FittingType,
 }
 
@@ -61,7 +70,7 @@ const EXTENSIONS: [&str; 16] = [
 /// Starts a web server that serves the output PDF file, while watching for changes in the input
 /// Typst file and recompiles when a change is detected.
 ///
-///Changes for `typ` file, along with files with extension `cbor`, `csv`, `gif`, `htm`, `html`,
+/// Changes to `typ` files, along with files with extensions `cbor`, `csv`, `gif`, `htm`, `html`,
 /// `jpeg`, `jpg`, `json`, `png`, `svg`, `toml`, `txt`, `xml`, `yaml`, and `yml` in the same
 /// directory, recursively, will be watched. This is inspired by [ItsEthra/typst-live](https://github.com/ItsEthra/typst-live/).
 ///
@@ -237,6 +246,7 @@ pub async fn watch(
     Ok(())
 }
 
+/// Serves the root HTML page that embeds the PDF viewer.
 pub async fn root(State(state): State<Arc<SharedState>>) -> Html<String> {
     include_str!("../assets/index.html")
         .replace("{addr}", &state.address)
@@ -246,6 +256,7 @@ pub async fn root(State(state): State<Arc<SharedState>>) -> Html<String> {
         .into()
 }
 
+/// Serves the compiled PDF file.
 pub async fn pdf(State(state): State<Arc<SharedState>>) -> impl IntoResponse {
     Response::builder()
         .header("Content-Type", "application/pdf")
@@ -256,6 +267,7 @@ pub async fn pdf(State(state): State<Arc<SharedState>>) -> impl IntoResponse {
         .unwrap()
 }
 
+/// WebSocket endpoint that notifies clients when the PDF is recompiled.
 pub async fn listen(
     State(state): State<Arc<SharedState>>,
     ws: WebSocketUpgrade,
@@ -270,15 +282,18 @@ async fn handler(mut socket: WebSocket, state: Arc<SharedState>) {
     }
 }
 
-/// Fitting type for the PDF output (Google Chrome only, maybe)
+/// Fitting type for the PDF viewer.
+///
+/// These values correspond to Chrome's PDF viewer URL parameters.
+/// See [Chrome PDF viewer source](https://chromium.googlesource.com/chromium/src/+/6363f8da6aae63abedc87f60b629585f10bd8940/chrome/browser/resources/pdf/open_pdf_params_parser.js#61).
 #[derive(Debug, Clone, Default)]
 pub enum FittingType {
-    /// Fit to page
+    /// Fit the entire page in the viewport.
     Page,
-    /// Fit to width
+    /// Fit the page width to the viewport width.
     #[default]
     Width,
-    /// Fit to height
+    /// Fit the page height to the viewport height.
     Height,
 }
 

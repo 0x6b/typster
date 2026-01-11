@@ -19,7 +19,7 @@ pub struct FormatParams {
 
 /// Formats a Typst file with [Enter-tainer/typstyle](https://github.com/Enter-tainer/typstyle/).
 ///
-/// # Argument
+/// # Arguments
 ///
 /// - `params` - [`FormatParams`] struct.
 ///

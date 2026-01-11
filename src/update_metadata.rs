@@ -4,7 +4,7 @@ use lopdf::{Dictionary, Document, Object, Stream, text_string};
 use serde::{Deserialize, Serialize};
 use xmp_writer::{DateTime, LangId, XmpWriter};
 
-/// PDF, dublin core, and [Extensible Metadata Platform (XMP)](https://www.adobe.com/devnet/xmp.html) metadata for a PDF document.
+/// PDF, Dublin Core, and [Extensible Metadata Platform (XMP)](https://www.adobe.com/devnet/xmp.html) metadata for a PDF document.
 ///
 /// See also [`update_metadata()`] and [Extensible Metadata Platform (XMP) Specification: Part 1, Data Model, Serialization, and Core Properties](https://github.com/adobe/XMP-Toolkit-SDK/blob/main/docs/XMPSpecificationPart1.pdf) for detail.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -75,8 +75,8 @@ impl Default for PdfMetadata {
 /// Note that:
 ///
 /// - All metadata will be overwritten, not merged.
-/// - The creation is set automatically to the current date _without_ time information which means
-///   time is always 0:00 UTC, for some privacy reasons (or my preference.)
+/// - The creation date is set automatically to the current date without time information (time is
+///   always 0:00 UTC) to avoid exposing precise timestamps.
 /// - PDF/UA conformance (`pdfuaid:part`) is preserved if present in the original document.
 ///
 /// # Arguments
