@@ -52,9 +52,12 @@ fn cache_dir() -> PathBuf {
 #[allow(dead_code)]
 fn download(url: &str) -> Result<Vec<u8>, Box<dyn Error>> {
     println!("cargo::warning=Downloading {url}");
-    let response = get(url).call()?;
-    let mut bytes = Vec::new();
-    response.into_reader().read_to_end(&mut bytes)?;
+    let bytes = get(url)
+        .call()?
+        .body_mut()
+        .with_config()
+        .limit(500 * 1024 * 1024) // 500 MB limit
+        .read_to_vec()?;
     Ok(bytes)
 }
 
