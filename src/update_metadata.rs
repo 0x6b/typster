@@ -207,8 +207,10 @@ fn generate_xmp(metadata: &PdfMetadata, pdfua_part: Option<i32>) -> String {
     xmp.create_date(date);
     xmp.modify_date(date);
 
-    // PDF properties
+    // Keywords: dc:subject (RDF Bag) is displayed by Adobe Reader without quotes,
+    // while pdf:Keywords (simple text) is displayed with quotes.
     if !metadata.keywords.is_empty() {
+        xmp.subject(metadata.keywords.iter().map(String::as_str));
         xmp.pdf_keywords(&metadata.keywords.join(", "));
     }
 
