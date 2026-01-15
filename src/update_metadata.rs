@@ -233,8 +233,8 @@ fn update_xmp_stream(
     // Check if there's already a Metadata entry in the catalog
     {
         let catalog = doc.catalog()?;
-        if let Ok(metadata_ref) = catalog.get(b"Metadata") {
-            if let Ok(metadata_id) = metadata_ref.as_reference() {
+        if let Ok(metadata_ref) = catalog.get(b"Metadata")
+            && let Ok(metadata_id) = metadata_ref.as_reference() {
                 // Update existing metadata stream
                 if let Ok(Object::Stream(stream)) = doc.get_object_mut(metadata_id) {
                     stream.set_plain_content(xmp_string.as_bytes().to_vec());
@@ -244,7 +244,6 @@ fn update_xmp_stream(
                     return Ok(());
                 }
             }
-        }
     }
 
     // No existing metadata stream found, create a new one
