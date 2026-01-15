@@ -228,7 +228,7 @@ pub async fn watch(
                 state.changed.notify_one()
             }
         }
-        Err(e) => error!("watch error: {:?}", e),
+        Err(e) => error!("watch error: {e:?}"),
     })?;
     watcher.watch(input.parent().unwrap(), RecursiveMode::Recursive)?;
     let server = serve(listener, router).into_future();
@@ -262,7 +262,7 @@ pub async fn pdf(State(state): State<Arc<SharedState>>) -> impl IntoResponse {
         .header("Content-Type", "application/pdf")
         .body(Body::from(match read(&state.output).await {
             Ok(data) => data,
-            Err(why) => panic!("{:#?}", why),
+            Err(why) => panic!("{why:#?}"),
         }))
         .unwrap()
 }
