@@ -116,10 +116,7 @@ fn test_update_metadata(ctx: &TypwriterTestContext) -> Result<()> {
         Some(&"Application アプリケーション (typwriter)".to_string())
     );
     // dc:description contains the document subject (displayed as "Description" by exiftool)
-    assert_eq!(
-        props.get("Description"),
-        Some(&"Subject 題名 (typwriter)".to_string())
-    );
+    assert_eq!(props.get("Description"), Some(&"Subject 題名 (typwriter)".to_string()));
     // dc:subject contains keywords as RDF Bag (displayed as "Subject" by exiftool)
     // This is required for Adobe Reader to display keywords without quotes
     assert_eq!(props.get("Subject"), Some(&"typwriter, rust, pdf".to_string()));
