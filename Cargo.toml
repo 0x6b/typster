@@ -1,7 +1,7 @@
 [package]
 name = "typwriter"
 description = "A Rust library for compiling, formatting, and watching Typst documents, with PDF metadata and permission management."
-version = "0.14.23"
+version = "0.14.24"
 edition = "2024"
 authors = ["kaoru <k@warpnine.io>"]
 license = "Apache-2.0"
@@ -36,7 +36,7 @@ typst-utils = { version = "0.14.2", optional = true }
 typstyle-core = { version = "0.14", optional = true }
 
 # PDF metadata management
-lopdf = { version = "0.38", optional = true }
+lopdf = { version = "0.39", optional = true }
 xmp-writer = { version = "0.3", optional = true }
 
 # PDF permission setting
