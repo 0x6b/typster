@@ -1,7 +1,7 @@
 use std::{
     collections::HashMap,
     fmt,
-    fmt::Formatter,
+    fmt::{Display, Formatter},
     fs, io,
     io::{Error, Read},
     mem,
@@ -343,7 +343,7 @@ pub enum WorldCreationError {
     Io(Error),
 }
 
-impl fmt::Display for WorldCreationError {
+impl Display for WorldCreationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
             WorldCreationError::InputNotFound(path) => {
