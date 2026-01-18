@@ -6,7 +6,7 @@ use std::{
 };
 
 use anyhow::{Result, anyhow};
-use sha2_hasher::sync::Sha2Hasher;
+use sha2_hasher::Sha2Hasher;
 use test_context::{TestContext, test_context};
 use typwriter::{
     CompileParams, FormatParams, PdfMetadata, PermissionParams, PrintPermission, compile, format,
